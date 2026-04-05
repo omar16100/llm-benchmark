@@ -1,0 +1,384 @@
+[
+  {
+    "id": "R1",
+    "category": "reasoning",
+    "scoring": "exact",
+    "temperature": 0.0,
+    "max_tokens": 512,
+    "prompt": "Four analysts Ada, Ben, Chen, Diya are scheduled one per day Mon-Thu and each owns one file type PDF, CSV, JSON, XML. Clues: Chen works Tuesday. The XML review is Thursday. Ada works before Ben. Diya does not work Monday. Ben reviews CSV. The JSON review is immediately before Ben's review. Ada does not review XML. Determine each person's day and file. Answer only as minified JSON with keys Ada,Ben,Chen,Diya; each value has day and file.",
+    "expected": "{\"Ada\":{\"day\":\"Monday\",\"file\":\"PDF\"},\"Ben\":{\"day\":\"Wednesday\",\"file\":\"CSV\"},\"Chen\":{\"day\":\"Tuesday\",\"file\":\"JSON\"},\"Diya\":{\"day\":\"Thursday\",\"file\":\"XML\"}}"
+  },
+  {
+    "id": "R2",
+    "category": "reasoning",
+    "scoring": "exact",
+    "temperature": 0.0,
+    "max_tokens": 256,
+    "prompt": "Exactly one of these statements is false. A: 'B was at the office.' B: 'C was not at the office.' C: 'D was at the office.' D: 'A and C were both at the office.' Who was at the office? Answer with only the names in alphabetical order separated by commas.",
+    "expected": "A, B, D"
+  },
+  {
+    "id": "R3",
+    "category": "reasoning",
+    "scoring": "judge_keyword",
+    "temperature": 0.0,
+    "max_tokens": 256,
+    "prompt": "Incident timeline: 09:00 deploy v1.4 to API only. 09:05 error rate flat. 09:12 cache nodes restarted. 09:14 login latency spikes. 09:16 DB CPU flat. 09:18 cache miss rate jumps from 2% to 47%. 09:20 rollback API deploy; latency unchanged. 09:23 cache warm-up job found disabled by config typo. What is the most likely primary cause? Answer in one sentence.",
+    "expected_keywords": ["cache", "warm-up", "config", "typo"]
+  },
+  {
+    "id": "R4",
+    "category": "reasoning",
+    "scoring": "exact",
+    "temperature": 0.0,
+    "max_tokens": 256,
+    "prompt": "You have 10 sprint points. Tasks: T1 5 pts revenue +$8k; T2 3 pts reduces tickets 20% and depends on T4; T3 8 pts mandatory security patch; T4 2 pts infra refactor; T5 5 pts growth experiment +$3k. Choose the task set that maximizes value while obeying dependencies and including mandatory work. Answer only as task IDs joined by commas.",
+    "expected": "T3,T4"
+  },
+  {
+    "id": "R5",
+    "category": "reasoning",
+    "scoring": "exact",
+    "temperature": 0.0,
+    "max_tokens": 256,
+    "prompt": "Possible ETL failure causes: bad schema migration, expired credentials, disk full. Evidence: migration succeeded in staging 1 hour earlier; production error log says 'permission denied' on S3 PUT; local temp dir is 40% used; retry with a new IAM role succeeds without code change. Give the best-supported cause and the most strongly ruled-out cause. Answer as best=<cause>; ruled_out=<cause>.",
+    "expected": "best=expired credentials; ruled_out=disk full"
+  },
+  {
+    "id": "C1",
+    "category": "coding",
+    "scoring": "unit_tests",
+    "temperature": 0.0,
+    "max_tokens": 512,
+    "prompt": "Write Python 3 function compact_ranges(nums: list[int]) -> str for a sorted unique integer list. Consecutive runs become a-b; singles stay as a; join with commas. Example [1,2,3,5,7,8,9] -> '1-3,5,7-9'. Return code only.",
+    "test_code": "assert compact_ranges([]) == ''\nassert compact_ranges([1]) == '1'\nassert compact_ranges([1,2,3]) == '1-3'\nassert compact_ranges([1,2,3,5,7,8,9]) == '1-3,5,7-9'\nassert compact_ranges([1,3,5]) == '1,3,5'\nassert compact_ranges([1,2,3,5,6,8,10,11,12]) == '1-3,5-6,8,10-12'"
+  },
+  {
+    "id": "C2",
+    "category": "coding",
+    "scoring": "unit_tests",
+    "temperature": 0.0,
+    "max_tokens": 512,
+    "prompt": "Fix this Python function and return only the corrected function:\n\ndef rotate_right(items, k):\n    k = k % len(items)\n    return items[-k:] + items[:-k+1]\n",
+    "test_code": "assert rotate_right([1,2,3,4,5], 2) == [4,5,1,2,3]\nassert rotate_right([1,2,3,4,5], 0) == [1,2,3,4,5]\nassert rotate_right([1,2,3,4,5], 5) == [1,2,3,4,5]\nassert rotate_right([1,2,3,4,5], 7) == [4,5,1,2,3]\nassert rotate_right([1], 3) == [1]\nassert rotate_right(['a','b','c'], 1) == ['c','a','b']"
+  },
+  {
+    "id": "C3",
+    "category": "coding",
+    "scoring": "judge",
+    "temperature": 0.0,
+    "max_tokens": 512,
+    "prompt": "Given PostgreSQL tables customers(id,name), orders(id,customer_id,created_at), order_items(order_id,sku,qty,unit_price), write a query returning the top 3 customers by revenue in the last 30 days with columns customer_id, customer_name, revenue, breaking ties by smaller customer_id. Return SQL only.",
+    "expected_keywords": ["JOIN", "SUM", "GROUP BY", "ORDER BY", "LIMIT 3"]
+  },
+  {
+    "id": "C4",
+    "category": "coding",
+    "scoring": "unit_tests",
+    "temperature": 0.0,
+    "max_tokens": 768,
+    "prompt": "Implement Python class LRUCache with methods get(key) and put(key, value) and fixed capacity set in __init__. get returns None if missing. All operations must be O(1). Use standard library only. Return code only.",
+    "test_code": "c = LRUCache(2)\nc.put('a', 1)\nc.put('b', 2)\nassert c.get('a') == 1\nc.put('c', 3)\nassert c.get('b') is None\nc.put('d', 4)\nassert c.get('a') is None\nassert c.get('c') == 3\nassert c.get('d') == 4"
+  },
+  {
+    "id": "C5",
+    "category": "coding",
+    "scoring": "unit_tests",
+    "temperature": 0.0,
+    "max_tokens": 768,
+    "prompt": "Write Python function parse_nginx_status(line: str) -> dict for lines like 10.0.0.1 - - [05/Apr/2026:14:03:10 +0800] \"GET /health HTTP/1.1\" 200 17 0.003. Return keys ip, method, path, status, bytes, request_time. Raise ValueError on malformed input. Return code only.",
+    "test_code": "r = parse_nginx_status('10.0.0.1 - - [05/Apr/2026:14:03:10 +0800] \"GET /health HTTP/1.1\" 200 17 0.003')\nassert r['ip'] == '10.0.0.1'\nassert r['method'] == 'GET'\nassert r['path'] == '/health'\nassert r['status'] == 200 or r['status'] == '200'\nassert r['bytes'] == 17 or r['bytes'] == '17'\nassert float(r['request_time']) == 0.003\ntry:\n    parse_nginx_status('bad line')\n    assert False, 'Should raise ValueError'\nexcept ValueError:\n    pass"
+  },
+  {
+    "id": "M1",
+    "category": "math",
+    "scoring": "exact",
+    "temperature": 0.0,
+    "max_tokens": 256,
+    "prompt": "A box has 4 red, 3 blue, and 2 green balls. Two balls are drawn without replacement. What is the probability of drawing exactly one blue ball? Give the simplified fraction only.",
+    "expected": "5/12"
+  },
+  {
+    "id": "M2",
+    "category": "math",
+    "scoring": "exact",
+    "temperature": 0.0,
+    "max_tokens": 256,
+    "prompt": "Find the smallest positive integer n such that n mod 5 = 1, n mod 7 = 3, and n mod 9 = 4. Output only the integer.",
+    "expected": "31"
+  },
+  {
+    "id": "M3",
+    "category": "math",
+    "scoring": "exact",
+    "temperature": 0.0,
+    "max_tokens": 256,
+    "prompt": "A 6-digit number uses each of the digits 1,2,3,4,5,6 exactly once. How many such numbers are divisible by 4? Output only the integer.",
+    "expected": "192"
+  },
+  {
+    "id": "M4",
+    "category": "math",
+    "scoring": "exact",
+    "temperature": 0.0,
+    "max_tokens": 256,
+    "prompt": "A rectangle has perimeter 34 and diagonal 13. Find its side lengths. Answer only as two integers in ascending order separated by a comma.",
+    "expected": "5,12"
+  },
+  {
+    "id": "I1",
+    "category": "instruction",
+    "scoring": "exact",
+    "temperature": 0.0,
+    "max_tokens": 256,
+    "prompt": "Return ONLY valid minified JSON with keys in this exact order: product,price_usd,in_stock,tags. Use values: product='mechanical keyboard', price_usd=129, in_stock=true, tags=['wireless','75%','hot-swap']. No spaces, no markdown, no extra keys.",
+    "expected": "{\"product\":\"mechanical keyboard\",\"price_usd\":129,\"in_stock\":true,\"tags\":[\"wireless\",\"75%\",\"hot-swap\"]}"
+  },
+  {
+    "id": "I2",
+    "category": "instruction",
+    "scoring": "constraint_check",
+    "temperature": 0.0,
+    "max_tokens": 256,
+    "prompt": "Answer in exactly 3 bullet points. Each bullet must contain exactly 4 words. Topic: why backups matter. Do not use punctuation.",
+    "constraints": {
+      "bullet_count": 3,
+      "words_per_bullet": 4,
+      "no_punctuation": true
+    }
+  },
+  {
+    "id": "I3",
+    "category": "instruction",
+    "scoring": "exact",
+    "temperature": 0.0,
+    "max_tokens": 256,
+    "prompt": "From this text: Zebra-12, ant-3, Koala-7, ant-11, zebra-2. Output ONLY the unique animal names, lowercase, one per line, sorted alphabetically.",
+    "expected": "ant\nkoala\nzebra"
+  },
+  {
+    "id": "I4",
+    "category": "instruction",
+    "scoring": "constraint_check",
+    "temperature": 0.0,
+    "max_tokens": 256,
+    "prompt": "Write one sentence of exactly 17 words about databases. Include the words index, latency, and consistency. Do not use commas or semicolons.",
+    "constraints": {
+      "word_count": 17,
+      "required_words": ["index", "latency", "consistency"],
+      "forbidden_chars": [",", ";"]
+    }
+  },
+  {
+    "id": "W1",
+    "category": "creative",
+    "scoring": "judge",
+    "temperature": 0.8,
+    "max_tokens": 512,
+    "prompt": "Write a 120-140 word microstory about a night janitor who finds an unsigned apology note in a bank vault. Include a red umbrella, the phrase 'third copy', and a choice that costs money but restores trust. Avoid destiny and time-travel cliches.",
+    "constraints": {
+      "word_range": [120, 140],
+      "required_elements": ["red umbrella", "third copy"],
+      "forbidden_elements": ["destiny", "time-travel", "time travel"]
+    }
+  },
+  {
+    "id": "W2",
+    "category": "creative",
+    "scoring": "judge_constraint",
+    "temperature": 0.8,
+    "max_tokens": 512,
+    "prompt": "Write landing-page hero copy for a local-first AI benchmarking tool for Mac. Output exactly: 1 headline, 1 subheadline, 3 feature bullets, 1 CTA. Tone: technical, calm, credible. Do not use the words revolutionary, game-changing, or magic.",
+    "constraints": {
+      "structure": ["headline", "subheadline", "3 bullets", "CTA"],
+      "forbidden_words": ["revolutionary", "game-changing", "magic"]
+    }
+  },
+  {
+    "id": "W3",
+    "category": "creative",
+    "scoring": "judge_constraint",
+    "temperature": 0.8,
+    "max_tokens": 512,
+    "prompt": "Write exactly 10 lines of dialogue between a CFO and an infrastructure engineer arguing about RAM budgets. No narration. Each line must start with the speaker name. End with an uneasy compromise.",
+    "constraints": {
+      "line_count": 10,
+      "no_narration": true,
+      "starts_with_speaker": true
+    }
+  },
+  {
+    "id": "W4",
+    "category": "creative",
+    "scoring": "judge_constraint",
+    "temperature": 0.8,
+    "max_tokens": 512,
+    "prompt": "Write a 14-line poem about thermal throttling in a small aluminum computer. Use modern diction, not Shakespeare imitation. Mention fan curve and midnight compile.",
+    "constraints": {
+      "line_count": 14,
+      "required_elements": ["fan curve", "midnight compile"],
+      "forbidden_style": "shakespearean"
+    }
+  },
+  {
+    "id": "T1",
+    "category": "tool_use",
+    "scoring": "tool_trace_exact",
+    "temperature": 0.0,
+    "max_tokens": 512,
+    "prompt": "Order A1009 arrived late and the customer wants a refund. Follow the policy and take the correct action.",
+    "system": "You have access to tools. Policy: >7 days late => full refund; 3-7 days late => 25% store credit; <=2 days late => apology only.",
+    "tools": [
+      {
+        "type": "function",
+        "function": {
+          "name": "lookup_order",
+          "description": "Look up order details by order ID",
+          "parameters": {
+            "type": "object",
+            "properties": {"order_id": {"type": "string"}},
+            "required": ["order_id"]
+          }
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "create_refund",
+          "description": "Create a refund for an order",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "order_id": {"type": "string"},
+              "amount_usd": {"type": "number"},
+              "reason": {"type": "string"}
+            },
+            "required": ["order_id", "amount_usd", "reason"]
+          }
+        }
+      }
+    ],
+    "tool_responses": {
+      "lookup_order": "{\"order_id\":\"A1009\",\"amount_usd\":84.0,\"promised_delivery\":\"2026-03-01\",\"delivered_on\":\"2026-03-10\",\"status\":\"delivered\"}"
+    },
+    "expected_tool_call": "create_refund",
+    "expected_args_contain": {"order_id": "A1009", "amount_usd": 84.0}
+  },
+  {
+    "id": "T2",
+    "category": "tool_use",
+    "scoring": "tool_trace_exact",
+    "temperature": 0.0,
+    "max_tokens": 512,
+    "prompt": "I'm visiting San Francisco on 2026-05-12. If rain probability is over 60%, schedule the customer walk at 15:00 indoors; otherwise 10:00 outdoors. Create the event and tell me what you scheduled.",
+    "tools": [
+      {
+        "type": "function",
+        "function": {
+          "name": "get_weather",
+          "description": "Get weather forecast for a location and date",
+          "parameters": {
+            "type": "object",
+            "properties": {"location": {"type": "string"}, "date": {"type": "string"}},
+            "required": ["location", "date"]
+          }
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "create_calendar_event",
+          "description": "Create a calendar event",
+          "parameters": {
+            "type": "object",
+            "properties": {
+              "title": {"type": "string"},
+              "start_iso": {"type": "string"},
+              "end_iso": {"type": "string"},
+              "location": {"type": "string"},
+              "notes": {"type": "string"}
+            },
+            "required": ["title", "start_iso", "location"]
+          }
+        }
+      }
+    ],
+    "tool_responses": {
+      "get_weather": "{\"rain_probability\":72,\"condition\":\"rain\"}"
+    },
+    "expected_tool_call": "create_calendar_event",
+    "expected_args_contain": {"start_iso": "15:00"}
+  },
+  {
+    "id": "T3",
+    "category": "tool_use",
+    "scoring": "tool_trace_judge",
+    "temperature": 0.0,
+    "max_tokens": 512,
+    "prompt": "Find why login requests return 401 after yesterday's change. Use tools before answering. Give the single most likely root cause and the smallest fix in <=40 words.",
+    "tools": [
+      {
+        "type": "function",
+        "function": {
+          "name": "list_files",
+          "description": "List files in the project directory",
+          "parameters": {"type": "object", "properties": {}}
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "read_file",
+          "description": "Read contents of a file",
+          "parameters": {
+            "type": "object",
+            "properties": {"path": {"type": "string"}},
+            "required": ["path"]
+          }
+        }
+      }
+    ],
+    "tool_responses": {
+      "list_files": "[\"auth.py\",\"middleware.py\",\"settings.py\",\"README.md\"]",
+      "read_file:settings.py": "JWT_SECRET = os.getenv(\"API_JWT_SECRET\", \"\")",
+      "read_file:middleware.py": "def verify_request(request):\n    token = request.headers.get('Authorization', '').replace('Bearer ', '')\n    return verify_token(token, os.getenv(\"JWT_SECRET\", \"\"))",
+      "read_file:auth.py": "import jwt\nimport os\n\ndef verify_token(token, secret):\n    try:\n        return jwt.decode(token, secret, algorithms=['HS256'])\n    except jwt.InvalidTokenError:\n        return None"
+    },
+    "expected_keywords": ["JWT_SECRET", "API_JWT_SECRET", "env", "mismatch"]
+  },
+  {
+    "id": "T4",
+    "category": "tool_use",
+    "scoring": "tool_trace_exact",
+    "temperature": 0.0,
+    "max_tokens": 512,
+    "prompt": "Using the tools, find which product generated the most revenue from 2026-03-29 through 2026-04-04 inclusive. Return the product and revenue.",
+    "tools": [
+      {
+        "type": "function",
+        "function": {
+          "name": "get_schema",
+          "description": "Get database schema",
+          "parameters": {"type": "object", "properties": {}}
+        }
+      },
+      {
+        "type": "function",
+        "function": {
+          "name": "run_sql",
+          "description": "Execute SQL query and return results",
+          "parameters": {
+            "type": "object",
+            "properties": {"query": {"type": "string"}},
+            "required": ["query"]
+          }
+        }
+      }
+    ],
+    "tool_responses": {
+      "get_schema": "sales(order_date DATE, product TEXT, units INT, unit_price NUMERIC)",
+      "run_sql": "[{\"product\":\"Gizmo\",\"revenue\":100},{\"product\":\"Widget\",\"revenue\":80},{\"product\":\"Cable\",\"revenue\":50}]"
+    },
+    "expected_keywords": ["Gizmo", "100"]
+  }
+]

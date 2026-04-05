@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+.pytest_cache/
+.python-version
+
+results/
+bench.log
+judge.log
+
+.DS_Store
+*.log
