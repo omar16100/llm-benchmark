@@ -23,7 +23,8 @@ Ordered by average score over valid rows. `tok/s (real)` is derived from `result
 | 5 | Qwen3.5-397B-A17B | MLX Q4 | 57/78 | 2.78 | 26.0 | 224 GB |
 | 6 | GLM-4.7-Flash (32K) | GGUF Q4_K_M | 30/78 | 2.39 | 55.2 | 18 GB |
 | 7 | GLM-4.7-Flash | GGUF Q4_K_M | 24/78 | 2.14 | 62.3 | 18 GB |
-| 🥉 **NEW** | **Qwen3.5-122B-A10B Q8** | GGUF Q8_0 | **72/78** | **4.09** | 22.9 | 121 GB |
+| 🥈 **NEW** | **GLM-5.1** | MLX 3.6-bit | **75/78** | **4.37** | 6.6 | 382 GB |
+| 🥉 | Qwen3.5-122B-A10B Q8 | GGUF Q8_0 | 72/78 | 4.09 | 22.9 | 121 GB |
 | — | Qwen3.5-27B-Claude-Opus-Distilled | GGUF Q8_0 | 3/3 | 0.00 *(smoke)* | 14.0 | 27 GB |
 
 **SuperGemma4-26B overtook MiniMax-M2.7 on 2026-04-20**: +6% quality (4.41 vs 4.16), +74% faster (63 vs 36 tok/s), 8.6x smaller on disk (14 vs 121 GB). Perfect 5.00 on reasoning + instruction. Weaker on coding (3.75) and valid-row rate (69% vs 88%).

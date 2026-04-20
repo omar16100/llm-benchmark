@@ -31,9 +31,9 @@ BASE_URL = os.environ.get("BENCH_BASE_URL", "http://localhost:1234/v1")
 API_KEY = os.environ.get("BENCH_API_KEY", "lm-studio")
 
 MODELS = {
-    "qwen35_122b_a10b_q8": {
-        "served_model": "qwen3.5-122b-a10b",
-        "quant": "GGUF-Q8_0",
+    "glm_51_mlx_36bit": {
+        "served_model": "/Users/macmini/models/GLM-5.1-RAM-420GB-MLX",
+        "quant": "MLX-3.6bit",
         "thinking": True,
     },
 }
