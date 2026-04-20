@@ -7,6 +7,9 @@
 | [c4model.md](c4model.md) | evergreen | C4 architecture model |
 | [evaluation_frameworks.md](evaluation_frameworks.md) | evergreen | Eval frameworks: lm-eval, LiveCodeBench, DeepEval, bigcode |
 | [19042026_bengali_ocr_finetuning.md](19042026_bengali_ocr_finetuning.md) | dated | Bengali OCR fine-tuning experiment plan, decision log, mlx-vlm fix |
+| [08042026_experiments_glm5_1.md](08042026_experiments_glm5_1.md) | dated | GLM-5.1 experiment notes (from earlier session, merged from llm-benchmarks/) |
+| [08042026_glm5_1_benchmark.md](08042026_glm5_1_benchmark.md) | dated | GLM-5.1 benchmark results (from earlier session) |
+| [dsa_metal_implementation_plan.md](dsa_metal_implementation_plan.md) | evergreen | Dense Sparse Attention (DSA) Metal implementation plan for GLM-5.1 on Apple Silicon |
 
 ## Naming Conventions
 - Dated docs: `DDMMYYYY_topic.md`
