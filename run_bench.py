@@ -1,6 +1,6 @@
 """
-Benchmark runner: Gemma 4 31B vs Qwen 3.5 27B
-Sends prompts to both models via LM Studio OpenAI-compatible API,
+Benchmark runner: Qwen3.5-397B-A17B MLX (current primary)
+Sends prompts to models via LM Studio OpenAI-compatible API,
 captures timing metrics and responses, outputs CSV + JSONL.
 """
 
@@ -26,20 +26,15 @@ logging.basicConfig(
 )
 log = logging.getLogger(__name__)
 
-BASE_URL = "http://localhost:1234/v1"
-API_KEY = "lm-studio"
+import os
+BASE_URL = os.environ.get("BENCH_BASE_URL", "http://localhost:1234/v1")
+API_KEY = os.environ.get("BENCH_API_KEY", "lm-studio")
 
 MODELS = {
-    "gemma4_31b_bf16": {
-        "served_model": "gemma-4-31b",
-        "quant": "bf16",
-        "thinking": False,
-    },
-    "qwen35_27b_q8": {
-        "served_model": "qwen3.5-27b",
-        "quant": "Q8_0",
+    "qwen35_122b_a10b_q8": {
+        "served_model": "qwen3.5-122b-a10b",
+        "quant": "GGUF-Q8_0",
         "thinking": True,
-        "thinking_token_multiplier": 8,
     },
 }
 
@@ -51,16 +46,30 @@ SCORED_REPEATS = 3
 DETERMINISTIC_SEEDS = [42, 42, 42]
 CREATIVE_SEEDS = [41, 42, 43]
 
+# Always give models a generous token budget — length-truncation produces
+# invalid rows with no scoring signal. Per user policy 2026-04-14.
+# See memory/feedback_always_max_tokens.md.
+MAX_RESPONSE_TOKENS = 32768
+
 OUTPUT_DIR = Path("results")
 CSV_PATH = OUTPUT_DIR / "runs.csv"
 JSONL_PATH = OUTPUT_DIR / "transcripts.jsonl"
 
 CSV_COLUMNS = [
-    "run_id", "model_label", "served_model", "quant", "category",
+    "bench_run_id", "run_id", "model_label", "served_model", "quant", "category",
     "prompt_id", "repeat", "seed", "temperature", "top_p", "max_tokens",
     "ttft_s", "gen_s", "total_s", "output_tokens_approx", "tok_per_s",
-    "finish_reason", "score_raw", "score_type",
+    "finish_reason", "valid", "score_raw", "score_type",
 ]
+
+
+class TransportError(RuntimeError):
+    """Raised when the inference server is unreachable after retries."""
+
+
+MAX_TRANSPORT_RETRIES = 3
+RETRY_BACKOFF_S = 2.0
+SANITY_CHECK_AFTER = 3  # abort if first N scored runs all have empty content
 
 
 def create_client():
@@ -134,8 +143,9 @@ def stream_completion(client, model_cfg, messages, tools=None, max_tokens=512,
                             text_parts.append(content)
                             last_tok_t = now
 
-                        # capture reasoning_content (thinking)
-                        reasoning = delta.get("reasoning_content")
+                        # capture reasoning (thinking) — LM Studio uses
+                        # "reasoning_content", mlx_lm.server uses "reasoning"
+                        reasoning = delta.get("reasoning_content") or delta.get("reasoning")
                         if reasoning:
                             if first_tok_t is None:
                                 first_tok_t = now
@@ -162,24 +172,18 @@ def stream_completion(client, model_cfg, messages, tools=None, max_tokens=512,
                             finish_reason = fr
 
     except Exception as e:
-        log.error("stream error: %s", e)
-        return {
-            "response_text": "",
-            "reasoning_text": "",
-            "tool_calls": [],
-            "ttft_s": None,
-            "gen_s": 0,
-            "total_s": time.perf_counter() - t0,
-            "output_tokens_approx": 0,
-            "tok_per_s": 0,
-            "finish_reason": "error",
-            "error": str(e),
-        }
+        # propagate so caller can retry; do NOT synthesize a result that
+        # downstream scoring would silently accept as valid data
+        log.warning("stream error (will retry if attempts remain): %s", e)
+        raise TransportError(str(e)) from e
 
     text = "".join(text_parts).strip()
     reasoning_text = "".join(reasoning_parts)
-    # approximate token count: ~4 chars per token
-    output_tokens_approx = max(len(text) // 4, 1) if text else 0
+    # approximate token count: ~4 chars per token across BOTH channels.
+    # Thinking models emit most tokens in reasoning_content; counting only
+    # `text` under-reports throughput by 5-10x.
+    all_chars = len(text) + len(reasoning_text)
+    output_tokens_approx = max(all_chars // 4, 1) if all_chars else 0
     total_s = time.perf_counter() - t0
     gen_s = max((last_tok_t or t0) - (first_tok_t or t0), 1e-9)
 
@@ -197,6 +201,26 @@ def stream_completion(client, model_cfg, messages, tools=None, max_tokens=512,
         "tok_per_s": output_tokens_approx / gen_s if output_tokens_approx else 0,
         "finish_reason": finish_reason,
     }
+
+
+def stream_completion_retried(client, model_cfg, messages, **kwargs):
+    """Wrap stream_completion with retry/backoff. Re-raises TransportError on
+    persistent failure so the caller can abort cleanly instead of treating
+    transport noise as benchmark data."""
+    last_err = None
+    for attempt in range(1, MAX_TRANSPORT_RETRIES + 1):
+        try:
+            return stream_completion(client, model_cfg, messages, **kwargs)
+        except TransportError as e:
+            last_err = e
+            if attempt < MAX_TRANSPORT_RETRIES:
+                wait = RETRY_BACKOFF_S * (2 ** (attempt - 1))
+                log.warning(
+                    "transport retry %d/%d in %.1fs after: %s",
+                    attempt, MAX_TRANSPORT_RETRIES, wait, e,
+                )
+                time.sleep(wait)
+    raise last_err
 
 
 def _merge_tool_call_deltas(raw_deltas):
@@ -227,13 +251,11 @@ def run_tool_use_case(client, model_cfg, case, seed):
     all_results = []
     max_turns = 4
 
-    base_max_tokens = case.get("max_tokens", 512)
-    effective_max_tokens = base_max_tokens
-    if model_cfg.get("thinking"):
-        effective_max_tokens = base_max_tokens * model_cfg.get("thinking_token_multiplier", 8)
+    # Always use the generous ceiling — no artificial truncation.
+    effective_max_tokens = MAX_RESPONSE_TOKENS
 
     for turn in range(max_turns):
-        result = stream_completion(
+        result = stream_completion_retried(
             client, model_cfg, messages, tools=tools,
             max_tokens=effective_max_tokens,
             temperature=case.get("temperature", 0.0),
@@ -277,6 +299,7 @@ def run_tool_use_case(client, model_cfg, case, seed):
     # combine metrics from all turns
     combined = {
         "response_text": all_results[-1]["response_text"],
+        "reasoning_text": all_results[-1].get("reasoning_text", ""),
         "tool_calls_trace": [r["tool_calls"] for r in all_results],
         "ttft_s": all_results[0]["ttft_s"],
         "gen_s": sum(r["gen_s"] for r in all_results),
@@ -460,10 +483,40 @@ def score_tool_trace(result, case):
     return min(score, 5.0)
 
 
+def _scoreable_text(result):
+    """Extract the model's actual answer for scoring. Thinking models often
+    emit the answer in reasoning_content with empty content; in that case
+    the reasoning IS the answer."""
+    response = (result.get("response_text") or "").strip()
+    if response:
+        return response
+    reasoning = (result.get("reasoning_text") or "").strip()
+    return reasoning
+
+
+def is_invalid_result(result, case):
+    """A run is invalid (don't score) if the model produced no usable text or
+    finished due to error/length truncation on a non-creative case."""
+    fr = result.get("finish_reason")
+    if fr in ("error",):
+        return True
+    text = _scoreable_text(result)
+    if not text:
+        return True
+    # length-truncated answers on tasks with short max_tokens are noise
+    if fr == "length" and case.get("category") not in ("creative",):
+        return True
+    return False
+
+
 def score_case(result, case):
-    """Route to appropriate scoring function."""
+    """Route to appropriate scoring function. Returns (score, score_type) or
+    (None, 'invalid') if the result cannot be fairly scored."""
+    if is_invalid_result(result, case):
+        return None, "invalid"
+
     scoring = case.get("scoring", "judge")
-    response = result.get("response_text", "")
+    response = _scoreable_text(result)
 
     if scoring == "exact" and "expected" in case:
         return score_exact(response, case["expected"]), "exact"
@@ -505,111 +558,140 @@ def run_benchmark():
             log.error("model %s not loaded!", cfg["served_model"])
             return
 
-    csv_file = open(CSV_PATH, "w", newline="")
+    csv_exists = CSV_PATH.exists() and CSV_PATH.stat().st_size > 0
+    csv_file = open(CSV_PATH, "a", newline="")
     writer = csv.DictWriter(csv_file, fieldnames=CSV_COLUMNS)
-    writer.writeheader()
+    if not csv_exists:
+        writer.writeheader()
 
-    jsonl_file = open(JSONL_PATH, "w")
+    jsonl_file = open(JSONL_PATH, "a")
+
+    bench_run_id = str(uuid.uuid4())
+    log.info("bench_run_id=%s models=%s", bench_run_id, list(MODELS.keys()))
 
     total_cases = len(cases) * len(MODELS) * SCORED_REPEATS
     completed = 0
+    sanity_empty = 0  # count of consecutive empty responses for early abort
+    sanity_total = 0
 
-    for case in cases:
-        is_creative = case.get("temperature", 0.0) > 0
-        seeds = CREATIVE_SEEDS if is_creative else DETERMINISTIC_SEEDS
+    try:
+        for case in cases:
+            is_creative = case.get("temperature", 0.0) > 0
+            seeds = CREATIVE_SEEDS if is_creative else DETERMINISTIC_SEEDS
 
-        for model_label, model_cfg in MODELS.items():
-            # warmup
-            log.info("warmup: %s / %s", model_label, case["id"])
-            for _ in range(WARMUP_RUNS):
-                messages = [{"role": "user", "content": case["prompt"]}]
-                stream_completion(
-                    client, model_cfg, messages,
-                    max_tokens=min(case.get("max_tokens", 512), 64),
-                    temperature=case.get("temperature", 0.0),
-                )
-
-            # scored runs
-            for repeat_idx in range(SCORED_REPEATS):
-                seed = seeds[repeat_idx]
-                run_id = str(uuid.uuid4())[:8]
-
-                log.info(
-                    "[%d/%d] %s | %s | repeat %d",
-                    completed + 1, total_cases, case["id"], model_label, repeat_idx + 1,
-                )
-
-                is_tool_case = case["category"] == "tool_use"
-
-                # adjust max_tokens for thinking models
-                base_max_tokens = case.get("max_tokens", 512)
-                effective_max_tokens = base_max_tokens
-                if model_cfg.get("thinking"):
-                    effective_max_tokens = base_max_tokens * model_cfg.get("thinking_token_multiplier", 8)
-
-                if is_tool_case:
-                    result = run_tool_use_case(client, model_cfg, case, seed)
-                else:
+            for model_label, model_cfg in MODELS.items():
+                # warmup
+                log.info("warmup: %s / %s", model_label, case["id"])
+                for _ in range(WARMUP_RUNS):
                     messages = [{"role": "user", "content": case["prompt"]}]
-                    result = stream_completion(
+                    stream_completion_retried(
                         client, model_cfg, messages,
-                        tools=case.get("tools"),
-                        max_tokens=effective_max_tokens,
+                        max_tokens=min(case.get("max_tokens", 512), 64),
                         temperature=case.get("temperature", 0.0),
-                        seed=seed,
                     )
 
-                score_raw, score_type = score_case(result, case)
+                # scored runs
+                for repeat_idx in range(SCORED_REPEATS):
+                    seed = seeds[repeat_idx]
+                    run_id = str(uuid.uuid4())[:8]
 
-                row = {
-                    "run_id": run_id,
-                    "model_label": model_label,
-                    "served_model": model_cfg["served_model"],
-                    "quant": model_cfg["quant"],
-                    "category": case["category"],
-                    "prompt_id": case["id"],
-                    "repeat": repeat_idx + 1,
-                    "seed": seed,
-                    "temperature": case.get("temperature", 0.0),
-                    "top_p": 1.0 if not is_creative else 0.95,
-                    "max_tokens": case.get("max_tokens", 512),
-                    "ttft_s": round(result.get("ttft_s", 0) or 0, 4),
-                    "gen_s": round(result.get("gen_s", 0), 4),
-                    "total_s": round(result.get("total_s", 0), 4),
-                    "output_tokens_approx": result.get("output_tokens_approx", 0),
-                    "tok_per_s": round(result.get("tok_per_s", 0), 2),
-                    "finish_reason": result.get("finish_reason"),
-                    "score_raw": score_raw,
-                    "score_type": score_type,
-                }
-                writer.writerow(row)
-                csv_file.flush()
+                    log.info(
+                        "[%d/%d] %s | %s | repeat %d",
+                        completed + 1, total_cases, case["id"], model_label, repeat_idx + 1,
+                    )
 
-                transcript = {
-                    "run_id": run_id,
-                    "model_label": model_label,
-                    "prompt_id": case["id"],
-                    "category": case["category"],
-                    "prompt": case["prompt"],
-                    "response": result.get("response_text", ""),
-                    "tool_calls_trace": result.get("tool_calls_trace"),
-                    "score_raw": score_raw,
-                    "score_type": score_type,
-                    "metrics": {
-                        "ttft_s": result.get("ttft_s"),
-                        "gen_s": result.get("gen_s"),
-                        "total_s": result.get("total_s"),
-                        "tok_per_s": result.get("tok_per_s"),
-                    },
-                }
-                jsonl_file.write(json.dumps(transcript) + "\n")
-                jsonl_file.flush()
+                    is_tool_case = case["category"] == "tool_use"
 
-                completed += 1
+                    # Always use generous ceiling; no artificial truncation.
+                    effective_max_tokens = MAX_RESPONSE_TOKENS
 
-    csv_file.close()
-    jsonl_file.close()
-    log.info("benchmark complete. results: %s, transcripts: %s", CSV_PATH, JSONL_PATH)
+                    if is_tool_case:
+                        result = run_tool_use_case(client, model_cfg, case, seed)
+                    else:
+                        messages = [{"role": "user", "content": case["prompt"]}]
+                        result = stream_completion_retried(
+                            client, model_cfg, messages,
+                            tools=case.get("tools"),
+                            max_tokens=effective_max_tokens,
+                            temperature=case.get("temperature", 0.0),
+                            seed=seed,
+                        )
+
+                    score_raw, score_type = score_case(result, case)
+                    valid = score_type != "invalid"
+
+                    # write JSONL first (fsync) so on crash transcripts >= csv
+                    transcript = {
+                        "bench_run_id": bench_run_id,
+                        "run_id": run_id,
+                        "model_label": model_label,
+                        "prompt_id": case["id"],
+                        "category": case["category"],
+                        "prompt": case["prompt"],
+                        "response": result.get("response_text", ""),
+                        "reasoning": result.get("reasoning_text", ""),
+                        "tool_calls_trace": result.get("tool_calls_trace"),
+                        "valid": valid,
+                        "score_raw": score_raw,
+                        "score_type": score_type,
+                        "metrics": {
+                            "ttft_s": result.get("ttft_s"),
+                            "gen_s": result.get("gen_s"),
+                            "total_s": result.get("total_s"),
+                            "tok_per_s": result.get("tok_per_s"),
+                        },
+                    }
+                    jsonl_file.write(json.dumps(transcript) + "\n")
+                    jsonl_file.flush()
+
+                    row = {
+                        "bench_run_id": bench_run_id,
+                        "run_id": run_id,
+                        "model_label": model_label,
+                        "served_model": model_cfg["served_model"],
+                        "quant": model_cfg["quant"],
+                        "category": case["category"],
+                        "prompt_id": case["id"],
+                        "repeat": repeat_idx + 1,
+                        "seed": seed,
+                        "temperature": case.get("temperature", 0.0),
+                        "top_p": 1.0 if not is_creative else 0.95,
+                        "max_tokens": case.get("max_tokens", 512),
+                        "ttft_s": round(result.get("ttft_s", 0) or 0, 4),
+                        "gen_s": round(result.get("gen_s", 0), 4),
+                        "total_s": round(result.get("total_s", 0), 4),
+                        "output_tokens_approx": result.get("output_tokens_approx", 0),
+                        "tok_per_s": round(result.get("tok_per_s", 0), 2),
+                        "finish_reason": result.get("finish_reason"),
+                        "valid": valid,
+                        "score_raw": score_raw,
+                        "score_type": score_type,
+                    }
+                    writer.writerow(row)
+                    csv_file.flush()
+
+                    completed += 1
+
+                    # early abort: if the first SANITY_CHECK_AFTER scored runs
+                    # all produced empty/invalid output, the model is misconfigured
+                    sanity_total += 1
+                    if not _scoreable_text(result):
+                        sanity_empty += 1
+                    if sanity_total == SANITY_CHECK_AFTER and sanity_empty == SANITY_CHECK_AFTER:
+                        raise RuntimeError(
+                            f"sanity check failed: first {SANITY_CHECK_AFTER} runs all "
+                            f"produced empty text. Model misconfigured (thinking flag, "
+                            f"token budget, or chat template). Aborting bench_run_id={bench_run_id}."
+                        )
+    except TransportError as e:
+        log.error("transport error after retries — aborting bench_run_id=%s: %s", bench_run_id, e)
+        raise
+    finally:
+        csv_file.close()
+        jsonl_file.close()
+
+    log.info("benchmark complete. bench_run_id=%s rows=%d results=%s transcripts=%s",
+             bench_run_id, completed, CSV_PATH, JSONL_PATH)
 
 
 if __name__ == "__main__":

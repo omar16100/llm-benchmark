@@ -6,9 +6,12 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "anthropic>=0.89.0",
+    "deepeval>=3.9.5",
     "httpx>=0.28.1",
+    "lm-eval>=0.4.11",
     "openai>=2.30.0",
     "scipy>=1.17.1",
+    "transformers>=5.5.0",
 ]
 
 [dependency-groups]

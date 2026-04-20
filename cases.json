@@ -96,7 +96,7 @@
     "temperature": 0.0,
     "max_tokens": 256,
     "prompt": "A box has 4 red, 3 blue, and 2 green balls. Two balls are drawn without replacement. What is the probability of drawing exactly one blue ball? Give the simplified fraction only.",
-    "expected": "5/12"
+    "expected": "1/2"
   },
   {
     "id": "M2",

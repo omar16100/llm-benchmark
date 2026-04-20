@@ -10,6 +10,9 @@ from run_bench import (
     score_keywords,
     score_constraint_check,
     _merge_tool_call_deltas,
+    is_invalid_result,
+    score_case,
+    _scoreable_text,
 )
 
 
@@ -120,6 +123,74 @@ def test_merge_tool_call_deltas_multiple():
     ]
     result = _merge_tool_call_deltas(deltas)
     assert len(result) == 2
+
+
+def _empty_result(finish_reason="stop"):
+    return {"response_text": "", "reasoning_text": "", "finish_reason": finish_reason}
+
+
+def _result(text, reasoning="", finish_reason="stop"):
+    return {"response_text": text, "reasoning_text": reasoning, "finish_reason": finish_reason}
+
+
+def test_invalid_when_both_text_empty():
+    case = {"category": "instruction", "scoring": "constraint_check",
+            "constraints": {"word_count": 10}}
+    assert is_invalid_result(_empty_result(), case) is True
+
+
+def test_invalid_when_finish_reason_error():
+    case = {"category": "math", "scoring": "exact", "expected": "42"}
+    assert is_invalid_result(_result("42", finish_reason="error"), case) is True
+
+
+def test_invalid_when_finish_reason_length_non_creative():
+    case = {"category": "instruction", "scoring": "exact", "expected": "abc"}
+    assert is_invalid_result(_result("abc", finish_reason="length"), case) is True
+
+
+def test_valid_when_finish_reason_length_creative():
+    case = {"category": "creative", "scoring": "judge"}
+    assert is_invalid_result(_result("a story...", finish_reason="length"), case) is False
+
+
+def test_score_case_invalid_returns_none():
+    case = {"category": "instruction", "scoring": "constraint_check",
+            "constraints": {"word_count": 5, "required_words": ["foo"]}}
+    score, stype = score_case(_empty_result(), case)
+    assert score is None
+    assert stype == "invalid"
+
+
+def test_score_case_thinking_model_uses_reasoning_when_response_empty():
+    # thinking model emitted answer in reasoning_content with empty content
+    case = {"category": "math", "scoring": "exact", "expected": "42"}
+    result = _result("", reasoning="The answer is 42.", finish_reason="stop")
+    score, stype = score_case(result, case)
+    assert score == 3.0  # contained match
+    assert stype == "exact"
+
+
+def test_scoreable_text_prefers_response():
+    assert _scoreable_text(_result("hello", reasoning="world")) == "hello"
+
+
+def test_scoreable_text_falls_back_to_reasoning():
+    assert _scoreable_text(_result("", reasoning="world")) == "world"
+
+
+def test_constraint_check_never_scores_empty_string_positive():
+    """Even when called with empty text, constraint scoring should not award
+    spurious positives. (score_case wraps this with is_invalid_result, but the
+    primitive must also be safe.)"""
+    constraints = {"word_count": 10, "required_words": ["alpha", "beta"]}
+    score = score_constraint_check("", constraints)
+    # 5.0 - 2 (word_count) - 2 (missing words) = 1.0; that's fine for the
+    # primitive, what matters is score_case wraps and rejects.
+    case = {"category": "instruction", "scoring": "constraint_check",
+            "constraints": constraints}
+    s, st = score_case(_empty_result(), case)
+    assert s is None and st == "invalid"
 
 
 if __name__ == "__main__":

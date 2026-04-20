@@ -6,8 +6,13 @@ __pycache__/
 .python-version
 
 results/
+!results/runs.csv
+!results/transcripts.jsonl
 bench.log
 judge.log
 
 .DS_Store
 *.log
+
+# cloned evaluation frameworks
+eval_frameworks/
