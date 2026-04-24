@@ -11,7 +11,7 @@ import os
 import random
 from pathlib import Path
 
-import anthropic
+import subprocess
 
 logging.basicConfig(
     level=logging.INFO,
@@ -27,8 +27,8 @@ RESULTS_DIR = Path("results")
 TRANSCRIPTS_PATH = RESULTS_DIR / "transcripts.jsonl"
 JUDGED_CSV_PATH = RESULTS_DIR / "judged_results.csv"
 
-JUDGE_MODEL = "claude-sonnet-4-6-20250514"
-TIEBREAK_MODEL = "claude-opus-4-6-20250725"
+JUDGE_MODEL = "claude-sonnet-4-6"
+TIEBREAK_MODEL = "claude-opus-4-6"
 
 JUDGE_SYSTEM = """You are a strict, blind evaluator comparing two AI model outputs.
 You do not know which model produced which output. Evaluate purely on quality.
@@ -95,38 +95,47 @@ Respond with ONLY the JSON object."""
 
 
 def call_judge(client, prompt, model=JUDGE_MODEL):
-    """Call Claude to judge a pair of outputs."""
+    """Call Claude via CLI (non-interactive) to judge a pair of outputs.
+    Uses `claude -p` which inherits the session's authentication."""
+    import subprocess
     try:
-        response = client.messages.create(
-            model=model,
-            max_tokens=512,
-            temperature=0,
-            system=JUDGE_SYSTEM,
-            messages=[{"role": "user", "content": prompt}],
+        result = subprocess.run(
+            ["claude", "-p", "--model", model,
+             "--system-prompt", JUDGE_SYSTEM,
+             "--output-format", "text",
+             "--max-turns", "1",
+             prompt],
+            capture_output=True, text=True, timeout=120,
         )
-        text = response.content[0].text.strip()
+        text = result.stdout.strip()
+        if not text:
+            log.error("judge CLI returned empty output, stderr: %s", result.stderr[:200])
+            return None
         # parse JSON from response
         if text.startswith("```"):
             text = text.split("```")[1]
             if text.startswith("json"):
                 text = text[4:]
+        # find JSON object in response
+        start = text.find("{")
+        end = text.rfind("}") + 1
+        if start >= 0 and end > start:
+            text = text[start:end]
         return json.loads(text)
     except json.JSONDecodeError as e:
         log.error("judge JSON parse error: %s | response: %s", e, text[:200])
         return None
+    except subprocess.TimeoutExpired:
+        log.error("judge CLI timeout (120s)")
+        return None
     except Exception as e:
-        log.error("judge API error: %s", e)
+        log.error("judge CLI error: %s", e)
         return None
 
 
 def run_judge():
     """Main judging loop."""
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
-    if not api_key:
-        log.error("ANTHROPIC_API_KEY not set")
-        return
-
-    client = anthropic.Anthropic(api_key=api_key)
+    client = None  # using claude CLI, no SDK client needed
     transcripts = load_transcripts()
     models = list({t["model_label"] for pid in transcripts for t in transcripts[pid].values()})
 
