@@ -2,10 +2,11 @@
 """Benchmark GLM-5.1 with varying prompt lengths."""
 
 import json
-import time
-import requests
 
-API_URL = "http://localhost:1234/v1/chat/completions"
+import bench_common
+
+BASE_URL = "http://localhost:1234"
+MODEL = "GLM-5.1-UD-IQ3_XXS"
 
 # base text block (~100 tokens per repetition)
 BLOCK = (
@@ -29,23 +30,18 @@ def build_prompt(target_tok):
 
 def bench(target_tok):
     prompt = build_prompt(target_tok)
-    payload = {
-        "model": "GLM-5.1-UD-IQ3_XXS",
-        "messages": [{"role": "user", "content": prompt}],
-        "max_tokens": MAX_GEN,
-    }
-    t0 = time.time()
-    resp = requests.post(API_URL, json=payload, timeout=600)
-    wall = time.time() - t0
-    data = resp.json()
-    t = data.get("timings", {})
+    res = bench_common.chat_completion(
+        BASE_URL, MODEL, [{"role": "user", "content": prompt}],
+        max_tokens=MAX_GEN, temperature=None, timeout=600,  # omit temp (original behavior)
+    )
+    t = res["timings"]
     return {
         "target_tokens": target_tok,
         "prompt_n": t.get("prompt_n", 0),
         "prompt_per_second": round(t.get("prompt_per_second", 0), 2),
         "predicted_n": t.get("predicted_n", 0),
         "predicted_per_second": round(t.get("predicted_per_second", 0), 2),
-        "wall_seconds": round(wall, 1),
+        "wall_seconds": round(res["wall_s"], 1),
     }
 
 if __name__ == "__main__":

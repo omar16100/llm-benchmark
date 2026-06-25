@@ -21,6 +21,7 @@ The benchmark is a single-user local tool that exercises LLMs served by two alte
 - **`aggregate_results.py`** — merges outputs from all frameworks into `results/aggregate.csv`.
 - **`judge_claude.py`** — reads `transcripts.jsonl`, issues blind pairwise comparisons to the Claude API, writes judged CSV.
 - **`cases.json`** — the 26-prompt suite (6 categories).
+- **`bench_longctx.py` / `bench_long_prompt.py` / `bench_common.py`**: standalone long-context tools, independent of the `run_bench.py` scoring pipeline. They hit the same `BENCH_BASE_URL` OpenAI-compatible endpoint (accepting a base URL with or without `/v1`) and read the server `timings` block for prefill/decode throughput. `bench_longctx.py` does needle-in-haystack retrieval over a (length x depth) grid; `bench_long_prompt.py` does a plain prompt-length sweep. Neither writes to `results/`; they print and optionally emit JSON/CSV to a path given by the caller. See `longctx_bench.md`.
 - **`eval_frameworks/`** — cloned repos of external eval suites.
 - **`results/`** — output directory. Contains `runs.csv`, `transcripts.jsonl`, per-framework subdirs, and `snapshots/` (10-minute rolling backups, up to 12 retained).
 - **Snapshot watcher** — shell loop `/tmp/llm-bench-logs/snapshot_runs.sh` that `cp`s the results files to `results/snapshots/` every 600s. Guards against mid-write corruption.
@@ -62,6 +63,11 @@ output_tokens_approx, tok_per_s, finish_reason, valid, score_raw, score_type
 
 ### `run_eval.py`
 - `run_lm_eval()` / `run_bigcode()` / `run_livecodebench()` / `run_deepeval()` — thin wrappers over each harness, targeting the same `BASE_URL`/`API_KEY`.
+
+### Long-context bench (`bench_longctx.py`, `bench_common.py`)
+- `bench_common.chat_completion()`: one OpenAI-compatible call (sync or `--stream`). Builds the URL from a base with or without `/v1`, optionally sends `chat_template_kwargs` and `extra_body` (for example `{"cache_prompt": false}`), and returns `content`, `usage`, `timings`, `wall_s`, and `ttft_s`. The streaming path is a proper SSE accumulator (multi-line events, `[DONE]`) and records TTFT at the first non-empty content token.
+- `bench_common.prefill_tps()` / `decode_tps()` / `prompt_tokens()`: pull throughput from the server `timings` block (never from client wall clock); `prompt_tokens()` prefers `usage.prompt_tokens` (full context) over `timings.prompt_n` (evaluated subset).
+- `bench_longctx.build_prompt()`: sizes the haystack by `target_tokens / tokens_per_word` and splices a unique needle at a depth percentage. `run_cell()` runs one grid cell; recall is an exact boundary-anchored code match. Caching is disabled per cell by default (`cache_prompt: false`) for comparable cold prefill.
 
 ### `aggregate_results.py`
 - `collect_custom_benchmark()` — reads `results/runs.csv`; should filter `valid=True` when computing averages.
@@ -121,5 +127,5 @@ BENCH_BASE_URL=http://localhost:8081/v1 BENCH_API_KEY=none \
 
 Test coverage:
 ```bash
-uv run pytest tests/ -q   # 28 passing as of 2026-04-14
+uv run pytest tests/ -q   # 39 passing as of 2026-06-25
 ```
