@@ -68,10 +68,13 @@ Full analysis in [docs/results.md](docs/results.md).
 ## Architecture
 
 ```
-cases.json          26 prompts with metadata, expected answers, constraints
-run_bench.py        Benchmark runner: streams to LM Studio, scores, writes CSV
-judge_claude.py     Blind pairwise Claude-as-judge scorer
-tests/              Unit tests for scoring functions (19 tests)
+cases.json            26 prompts with metadata, expected answers, constraints
+run_bench.py          Benchmark runner: streams to LM Studio, scores, writes CSV
+judge_claude.py       Blind pairwise Claude-as-judge scorer
+bench_longctx.py      Long-context needle + prefill-throughput eval (any OpenAI-compatible server)
+bench_long_prompt.py  Prompt-length sweep; prefill/decode tok/s from server timings
+bench_common.py       Shared OpenAI-compatible chat call + server timing extraction
+tests/                Unit tests for scoring and the long-context bench (36 tests)
 results/
   runs.csv          Per-run metrics (timing, scores)
   transcripts.jsonl Full responses + reasoning traces
@@ -80,6 +83,21 @@ results/
 ### Streaming & Thinking Models
 
 The runner uses raw `httpx` streaming to capture `reasoning_content` (Qwen thinking mode) separately from `content`. Thinking models get an 8x `max_tokens` multiplier since reasoning tokens share the budget with the final answer.
+
+## Long-Context Needle Benchmark
+
+`bench_longctx.py` measures long-context retrieval and prefill throughput against any OpenAI-compatible endpoint (llama-server, LM Studio, vLLM). It builds a haystack of roughly N tokens, inserts a unique needle at each requested depth, asks for it back, and checks exact recall. Prefill and decode tok/s come from the server `timings` block when present (true server-side throughput), so client wall clock is never reported as prefill.
+
+```bash
+uv run python bench_longctx.py \
+  --base-url http://127.0.0.1:8081 --model glm-5.2 \
+  --target-tokens 2000 8000 32000 --depths 25 50 90 \
+  --no-thinking --stream --json out.json --csv out.csv
+```
+
+Each result row records: `target_tokens`, `depth_pct`, `prompt_tokens`, `prefill_tps`, `decode_tps`, `ttft_s` (with `--stream`), `end_to_end_s`, `recall` (PASS/FAIL), and a free-text `server` label. Use `--no-thinking` for GLM and Qwen reasoning models (it sends `chat_template_kwargs.enable_thinking=false`); omit it for servers that reject unknown template kwargs. `bench_common.py` holds the shared endpoint call and timing extraction, reused by `bench_long_prompt.py`.
+
+By default each cell disables server prompt caching (`cache_prompt: false`, llama.cpp) so prefill is measured cold and is comparable across cells; pass `--cache-prompt` to keep caching on. `prompt_tokens` is the full context size from `usage`, not the server-evaluated subset.
 
 ## Adding New Prompts
 

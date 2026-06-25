@@ -7,6 +7,7 @@
 - [x] judge_claude.py — blind pairwise Claude-as-judge
 - [x] tests/test_scoring.py — 19 unit tests for scoring functions (all passing)
 - [x] docs (index, benchmark_design, c4model)
+- [x] bench_longctx.py + bench_common.py: long-context needle + prefill eval for any OpenAI-compatible server (depth x length grid, server-timings prefill, optional streaming TTFT, JSON/CSV). Refactored bench_long_prompt.py to reuse bench_common. Added tests/test_bench_longctx.py (8 tests). Declared requests dep, gitignored .claude/. Verified live against GLM-5.2 (recall PASS, prefill 135.6 tok/s, TTFT 6.9s).
 
 ## Pending (revised 2026-04-13 14:50)
 

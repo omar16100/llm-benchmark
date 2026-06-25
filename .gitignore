@@ -4,6 +4,7 @@ __pycache__/
 .venv/
 .pytest_cache/
 .python-version
+.claude/
 
 results/
 !results/runs.csv
