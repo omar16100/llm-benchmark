@@ -3,6 +3,7 @@
 | File | Category | Description |
 |------|----------|-------------|
 | [benchmark_design.md](benchmark_design.md) | evergreen | Benchmark suite design, categories, scoring methodology |
+| [longctx_bench.md](longctx_bench.md) | evergreen | Long-context needle-in-haystack + prefill-throughput bench (bench_longctx.py, bench_common.py) for any OpenAI-compatible server |
 | [results.md](results.md) | evergreen | Multi-model leaderboard (MiniMax-M2.7, Qwen3.5-122B/397B, GLM-4.7-Flash, SuperGemma4) + bench history |
 | [c4model.md](c4model.md) | evergreen | C4 architecture model |
 | [evaluation_frameworks.md](evaluation_frameworks.md) | evergreen | Eval frameworks: lm-eval, LiveCodeBench, DeepEval, bigcode |

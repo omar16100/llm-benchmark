@@ -106,6 +106,30 @@ def test_recall_rejects_substring_superset(monkeypatch):
     assert row["recall"] == "FAIL"
 
 
+def test_chat_completion_url_handles_v1_suffix(monkeypatch):
+    seen = {}
+
+    class FakeResp:
+        def raise_for_status(self):
+            pass
+
+        def json(self):
+            return {"choices": [{"message": {"content": "hi"}}], "usage": {}, "timings": {}}
+
+    def fake_post(url, **kw):
+        seen["url"] = url
+        return FakeResp()
+
+    monkeypatch.setattr(bench_common.requests, "post", fake_post)
+    msg = [{"role": "user", "content": "x"}]
+    bench_common.chat_completion("http://h:1234", "m", msg)
+    assert seen["url"] == "http://h:1234/v1/chat/completions"
+    bench_common.chat_completion("http://h:1234/v1", "m", msg)
+    assert seen["url"] == "http://h:1234/v1/chat/completions"
+    bench_common.chat_completion("http://h:1234/v1/", "m", msg)
+    assert seen["url"] == "http://h:1234/v1/chat/completions"
+
+
 def test_no_thinking_false_omits_template_kwargs(monkeypatch):
     captured = {}
 

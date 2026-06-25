@@ -17,6 +17,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import os
 import re
 import sys
 
@@ -81,9 +82,11 @@ def run_cell(args, target: int, depth: int, idx: int) -> dict:
 
 def parse_args(argv=None):
     ap = argparse.ArgumentParser(description="Long-context needle + prefill eval (OpenAI-compatible).")
-    ap.add_argument("--base-url", default="http://127.0.0.1:8081")
+    ap.add_argument("--base-url", default=os.environ.get("BENCH_BASE_URL", "http://127.0.0.1:8081"),
+                    help="OpenAI-compatible base URL, with or without a /v1 suffix (env: BENCH_BASE_URL)")
     ap.add_argument("--model", default="glm-5.2")
-    ap.add_argument("--api-key", default=None)
+    ap.add_argument("--api-key", default=os.environ.get("BENCH_API_KEY"),
+                    help="bearer token if the server requires one (env: BENCH_API_KEY)")
     ap.add_argument("--target-tokens", type=int, nargs="+", required=True,
                     help="one or more context sizes; a grid runs over target x depth")
     ap.add_argument("--depths", type=int, nargs="+", default=[25, 50, 90],

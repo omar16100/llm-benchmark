@@ -74,7 +74,7 @@ judge_claude.py       Blind pairwise Claude-as-judge scorer
 bench_longctx.py      Long-context needle + prefill-throughput eval (any OpenAI-compatible server)
 bench_long_prompt.py  Prompt-length sweep; prefill/decode tok/s from server timings
 bench_common.py       Shared OpenAI-compatible chat call + server timing extraction
-tests/                Unit tests for scoring and the long-context bench (36 tests)
+tests/                Unit tests for scoring and the long-context bench (39 tests)
 results/
   runs.csv          Per-run metrics (timing, scores)
   transcripts.jsonl Full responses + reasoning traces
@@ -97,7 +97,7 @@ uv run python bench_longctx.py \
 
 Each result row records: `target_tokens`, `depth_pct`, `prompt_tokens`, `prefill_tps`, `decode_tps`, `ttft_s` (with `--stream`), `end_to_end_s`, `recall` (PASS/FAIL), and a free-text `server` label. Use `--no-thinking` for GLM and Qwen reasoning models (it sends `chat_template_kwargs.enable_thinking=false`); omit it for servers that reject unknown template kwargs. `bench_common.py` holds the shared endpoint call and timing extraction, reused by `bench_long_prompt.py`.
 
-By default each cell disables server prompt caching (`cache_prompt: false`, llama.cpp) so prefill is measured cold and is comparable across cells; pass `--cache-prompt` to keep caching on. `prompt_tokens` is the full context size from `usage`, not the server-evaluated subset.
+By default each cell disables server prompt caching (`cache_prompt: false`, llama.cpp) so prefill is measured cold and is comparable across cells; pass `--cache-prompt` to keep caching on. `prompt_tokens` is the full context size from `usage`, not the server-evaluated subset. The base URL is accepted with or without a `/v1` suffix and falls back to `BENCH_BASE_URL` / `BENCH_API_KEY` (the same contract as `run_bench.py`). Full reference: [docs/longctx_bench.md](docs/longctx_bench.md).
 
 ## Adding New Prompts
 

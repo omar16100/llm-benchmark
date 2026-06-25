@@ -37,7 +37,9 @@ def chat_completion(
     Returns a dict with content, usage, timings, wall_s, and (when stream=True)
     ttft_s, the client-observed time to the first non-empty content token.
     """
-    url = base_url.rstrip("/") + "/v1/chat/completions"
+    base = base_url.rstrip("/")
+    # accept a base URL with or without a trailing /v1 (matches the repo's BENCH_BASE_URL)
+    url = base + ("/chat/completions" if base.endswith("/v1") else "/v1/chat/completions")
     payload: dict[str, Any] = {
         "model": model,
         "messages": messages,
