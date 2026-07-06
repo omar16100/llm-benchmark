@@ -1,0 +1,196 @@
+<meta charset="utf-8">
+<title>Kimi-Linear 1M Scaling on M3 Ultra</title>
+<style>
+  :root{
+    --surface-1:#fcfcfb; --surface-2:#f4f3f0; --border:#e3e1db;
+    --text-primary:#0b0b0b; --text-secondary:#52514e; --text-muted:#8a887f;
+    --grid:#e8e6e0;
+    --prefill:#2a78d6; --decode:#1baf7a; --ram:#4a3aa7; --time:#eb6834;
+    --proj:#8a887f; --good:#0ca30c;
+  }
+  [data-theme="dark"]{
+    --surface-1:#1a1a19; --surface-2:#232320; --border:#38372f;
+    --text-primary:#ffffff; --text-secondary:#c3c2b7; --text-muted:#8f8d82;
+    --grid:#2c2b26;
+    --prefill:#3987e5; --decode:#199e70; --ram:#9085e9; --time:#d95926;
+    --proj:#8f8d82; --good:#0ca30c;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--surface-1);color:var(--text-primary);
+    font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;
+    margin:0;padding:28px 20px 60px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto}
+  h1{font-size:22px;font-weight:650;margin:0 0 4px;letter-spacing:-.01em}
+  .sub{color:var(--text-secondary);font-size:14px;margin:0 0 20px;max-width:760px}
+  .sub b{color:var(--text-primary);font-weight:600}
+  .toggle{position:absolute;top:24px;right:20px;background:var(--surface-2);
+    border:1px solid var(--border);color:var(--text-secondary);border-radius:8px;
+    padding:6px 11px;font-size:12.5px;cursor:pointer}
+  .tiles{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 26px}
+  .tile{background:var(--surface-2);border:1px solid var(--border);border-radius:12px;
+    padding:12px 15px;min-width:132px;flex:1}
+  .tile .k{font-size:12px;color:var(--text-muted);margin-bottom:3px}
+  .tile .v{font-size:20px;font-weight:650;letter-spacing:-.01em}
+  .tile .v small{font-size:13px;font-weight:500;color:var(--text-secondary)}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:720px){.grid{grid-template-columns:1fr}}
+  .panel{background:var(--surface-2);border:1px solid var(--border);border-radius:14px;
+    padding:14px 12px 8px}
+  .panel h3{margin:2px 6px 2px;font-size:14px;font-weight:600}
+  .panel .cap{margin:0 6px 6px;font-size:12px;color:var(--text-muted)}
+  svg{width:100%;height:auto;display:block;overflow:visible}
+  .axis text{fill:var(--text-muted);font-size:10.5px}
+  .axis line{stroke:var(--grid)}
+  .axlabel{fill:var(--text-secondary);font-size:11px}
+  .dot{stroke:var(--surface-2);stroke-width:2}
+  .projdot{fill:var(--surface-2);stroke-width:2;stroke-dasharray:0}
+  .hoverline{stroke:var(--text-muted);stroke-width:1;stroke-dasharray:3 3;opacity:0}
+  .tip{position:fixed;pointer-events:none;background:var(--surface-1);
+    border:1px solid var(--border);border-radius:8px;padding:7px 10px;font-size:12px;
+    box-shadow:0 4px 18px rgba(0,0,0,.16);opacity:0;transition:opacity .08s;z-index:9;
+    color:var(--text-primary);white-space:nowrap}
+  .tip .tk{color:var(--text-muted);font-size:11px}
+  table{border-collapse:collapse;width:100%;margin-top:26px;font-size:13px}
+  th,td{padding:7px 10px;text-align:right;border-bottom:1px solid var(--border)}
+  th:first-child,td:first-child{text-align:left}
+  thead th{color:var(--text-secondary);font-weight:600;font-size:12px}
+  td.ok{color:var(--good);font-weight:600}
+  .note{margin-top:18px;font-size:12.5px;color:var(--text-secondary);
+    border-left:3px solid var(--time);padding:2px 0 2px 12px}
+  .legendmark{display:inline-block;width:9px;height:9px;border-radius:2px;
+    vertical-align:middle;margin-right:5px}
+</style>
+
+<button class="toggle" onclick="toggleTheme()" id="tbtn">◐ Dark</button>
+<div class="wrap">
+  <h1>Kimi-Linear-48B-A3B: native 1M context scaling</h1>
+  <p class="sub">Needle-in-a-haystack verification on a <b>Mac Studio M3 Ultra, 512GB</b> (mlx-lm 8-bit).
+    Multi-needle retrieval (8 needles at 8 depths) stayed <b>perfect 8/8 at every length</b> with a
+    truncation guard proving full-context ingestion. The cost is <b>prefill time</b>, which explodes with
+    context because of the model's 7 full-attention MLA layers. The full ladder is now measured
+    <b>2K to 1M</b>: native 1M holds, with perfect recall at a real <b>1,048,692-token</b> prompt and
+    prefill (~5.0 h at 1M) the only steep price.</p>
+
+  <div class="tiles">
+    <div class="tile"><div class="k">Retrieval (2K to 1M)</div><div class="v" style="color:var(--good)">8/8 <small>every length</small></div></div>
+    <div class="tile"><div class="k">Decode @ short ctx</div><div class="v">86 <small>tok/s</small></div></div>
+    <div class="tile"><div class="k">Decode @ 1M</div><div class="v">5.1 <small>tok/s</small></div></div>
+    <div class="tile"><div class="k">Prefill wall @ 1M</div><div class="v">5.0 <small>hours</small></div></div>
+    <div class="tile"><div class="k">Peak RAM @ 1M</div><div class="v">220 <small>GB</small></div></div>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <div class="note" id="note"></div>
+
+  <table id="tbl"></table>
+</div>
+<div class="tip" id="tip"></div>
+
+<script>
+// x = context tokens (log scale); measured points solid, 1M projected (hollow/dashed)
+const N = [
+  {name:"2K",   x:2113,   prefill:1201, decode:86.3, ram:54.1, wall:3.0,    proj:false, flag:false},
+  {name:"8K",   x:8113,   prefill:2518, decode:87.4, ram:55.0, wall:4.5,    proj:false, flag:false},
+  {name:"32K",  x:32113,  prefill:2077, decode:82.3, ram:58.6, wall:16.4,   proj:false, flag:false},
+  {name:"128K", x:131186, prefill:986,  decode:58.6, ram:74.3, wall:134,    proj:false, flag:false},
+  {name:"256K", x:262258, prefill:179,  decode:14.7, ram:95.1, wall:1470,   proj:false, flag:true},
+  {name:"512K", x:524404, prefill:120,  decode:9.9,  ram:136.8,wall:4398,   proj:false, flag:false},
+  {name:"1M",   x:1048692,prefill:58,   decode:5.1,  ram:219.9,wall:18004,  proj:false, flag:false},
+];
+const PANELS = [
+  {key:"prefill", title:"Prefill throughput", cap:"tokens/sec ingesting the prompt (higher = faster)", color:"var(--prefill)", unit:" t/s", log:false, fmt:v=>v.toFixed(0)},
+  {key:"decode",  title:"Decode throughput",  cap:"tokens/sec generating the answer",                 color:"var(--decode)",  unit:" t/s", log:false, fmt:v=>v.toFixed(1)},
+  {key:"ram",     title:"Peak RAM",           cap:"gigabytes resident (of 512 available)",             color:"var(--ram)",     unit:" GB",  log:false, fmt:v=>v.toFixed(0)},
+  {key:"wall",    title:"Prefill wall-clock", cap:"seconds to ingest the whole prompt (log scale)",    color:"var(--time)",    unit:" s",   log:true,  fmt:fmtT},
+];
+function fmtT(s){ if(s<90)return s.toFixed(0)+" s"; if(s<5400)return (s/60).toFixed(1)+" min"; return (s/3600).toFixed(1)+" h"; }
+const W=480,H=210,ML=52,MR=16,MT=14,MB=34;
+const lx=v=>Math.log10(v);
+const XMIN=lx(1800),XMAX=lx(1250000);
+const XT=[[2113,"2K"],[8113,"8K"],[32113,"32K"],[131186,"128K"],[524404,"512K"],[1048692,"1M"]];
+
+function sx(x){ return ML + (lx(x)-XMIN)/(XMAX-XMIN)*(W-ML-MR); }
+
+function panelSVG(p){
+  const vals=N.map(d=>d[p.key]);
+  let lo=0, hi=Math.max(...vals);
+  const yv = p.log ? (v=>Math.log10(Math.max(v,1))) : (v=>v);
+  let ylo = p.log? Math.log10(2) : 0;
+  let yhi = p.log? Math.log10(hi*1.3) : hi*1.12;
+  const sy=v=> MT + (1-(yv(v)-ylo)/(yhi-ylo))*(H-MT-MB);
+  // y ticks
+  let yticks=[];
+  if(p.log){ [1,10,60,600,3600,18000].forEach(t=>{ if(t>=2&&t<=hi*1.3) yticks.push(t); }); }
+  else { const step=niceStep(yhi,4); for(let t=0;t<=yhi;t+=step) yticks.push(t); }
+  let g="";
+  // gridlines + y labels
+  yticks.forEach(t=>{ const y=sy(t);
+    g+=`<line class="ax" x1="${ML}" y1="${y.toFixed(1)}" x2="${W-MR}" y2="${y.toFixed(1)}" stroke="var(--grid)"/>`;
+    g+=`<text x="${ML-7}" y="${(y+3.5).toFixed(1)}" text-anchor="end" fill="var(--text-muted)" font-size="10.5">${p.log?fmtAxisT(t):trim(t)}</text>`;
+  });
+  // x labels
+  XT.forEach(([xv,lab])=>{ const x=sx(xv);
+    g+=`<text x="${x.toFixed(1)}" y="${H-MB+18}" text-anchor="middle" fill="var(--text-muted)" font-size="10.5">${lab}</text>`;
+  });
+  // solid line over measured points
+  const meas=N.filter(d=>!d.proj);
+  let dpath=meas.map((d,i)=>`${i?"L":"M"}${sx(d.x).toFixed(1)},${sy(d[p.key]).toFixed(1)}`).join("");
+  g+=`<path d="${dpath}" fill="none" stroke="${p.color}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
+  // dashed connector to a projected point (only if one exists)
+  const last=meas[meas.length-1], pj=N.find(d=>d.proj);
+  if(pj) g+=`<path d="M${sx(last.x).toFixed(1)},${sy(last[p.key]).toFixed(1)} L${sx(pj.x).toFixed(1)},${sy(pj[p.key]).toFixed(1)}" fill="none" stroke="${p.color}" stroke-width="2" stroke-dasharray="5 4" opacity="0.6"/>`;
+  // dots
+  N.forEach(d=>{ const x=sx(d.x),y=sy(d[p.key]);
+    if(d.proj) g+=`<circle class="projdot" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="4.5" fill="var(--surface-2)" stroke="${p.color}"/>`;
+    else g+=`<circle class="dot" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="4.5" fill="${p.color}"/>`;
+  });
+  // hover targets
+  g+=`<line class="hoverline" id="hl_${p.key}" x1="0" y1="${MT}" x2="0" y2="${H-MB}"/>`;
+  N.forEach((d,i)=>{ g+=`<rect x="${(sx(d.x)-16).toFixed(1)}" y="0" width="32" height="${H}" fill="transparent"
+     data-p="${p.key}" data-i="${i}" class="ht" style="cursor:pointer"/>`; });
+  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${p.title}">
+    <text class="axlabel" x="${ML-40}" y="${MT-2}"></text>${g}</svg>`;
+}
+function niceStep(max,n){ const raw=max/n; const p=Math.pow(10,Math.floor(Math.log10(raw)));
+  const c=[1,2,2.5,5,10].map(m=>m*p); return c.find(s=>raw<=s)||10*p; }
+function trim(v){ return (Math.round(v*10)/10).toString(); }
+function fmtAxisT(t){ if(t<60)return t+"s"; if(t<3600)return (t/60)+"m"; return (t/3600)+"h"; }
+
+function render(){
+  document.getElementById("grid").innerHTML = PANELS.map(p=>
+    `<div class="panel"><h3><span class="legendmark" style="background:${p.color}"></span>${p.title}</h3>
+     <p class="cap">${p.cap}</p>${panelSVG(p)}</div>`).join("");
+  // table
+  let th=`<thead><tr><th>Context</th><th>Prompt tokens</th><th>Prefill t/s</th><th>Decode t/s</th><th>Peak GB</th><th>Prefill time</th><th>Needles</th></tr></thead><tbody>`;
+  let tb=N.map(d=>`<tr><td>${d.name}</td><td>${d.x.toLocaleString()}</td><td>${d.proj?"~"+d.prefill:d.prefill}</td>
+    <td>${d.proj?"~"+d.decode:d.decode}</td><td>${d.proj?"~"+d.ram:d.ram}</td><td>${fmtT(d.wall)}${d.flag?" †":""}</td>
+    <td class="${d.proj?'':'ok'}">${d.proj?"running":"8/8"}</td></tr>`).join("");
+  document.getElementById("tbl").innerHTML=th+tb+"</tbody>";
+  document.getElementById("note").innerHTML=
+    "All seven points are <b>measured</b>, including 1M (prefill 58 t/s over ~5.0 h, decode 5.1 t/s, 220 GB, 8/8 recall). "+
+    "&nbsp; † <b>256K prefill time is inflated</b> by concurrent debug probing; the clean prefill trend is set by 128K, 512K and 1M.";
+  bindHover();
+}
+function bindHover(){
+  const tip=document.getElementById("tip");
+  document.querySelectorAll(".ht").forEach(r=>{
+    r.addEventListener("mousemove",e=>{
+      const p=r.dataset.p, i=+r.dataset.i, d=N[i], pan=PANELS.find(x=>x.key===p);
+      tip.innerHTML=`<div class="tk">${d.name} · ${d.x.toLocaleString()} tokens${d.proj?" (projected)":""}</div>
+        <b>${pan.fmt(d[p])}${pan.unit.trim()?" "+pan.unit.trim():""}</b>`;
+      tip.style.left=(e.clientX+14)+"px"; tip.style.top=(e.clientY-10)+"px"; tip.style.opacity=1;
+      const hl=document.getElementById("hl_"+p); if(hl){ hl.setAttribute("x1",sx(d.x)); hl.setAttribute("x2",sx(d.x)); hl.style.opacity=.7; }
+    });
+    r.addEventListener("mouseleave",()=>{ tip.style.opacity=0;
+      document.querySelectorAll(".hoverline").forEach(h=>h.style.opacity=0); });
+  });
+}
+function toggleTheme(){
+  const b=document.body, dark=b.getAttribute("data-theme")==="dark";
+  b.setAttribute("data-theme",dark?"light":"dark");
+  document.getElementById("tbtn").textContent=dark?"◐ Dark":"◑ Light";
+}
+if(matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches){document.body.setAttribute("data-theme","dark");document.getElementById("tbtn").textContent="◑ Light";}
+render();
+</script>
