@@ -8,6 +8,7 @@
 - [x] tests/test_scoring.py — 19 unit tests for scoring functions (all passing)
 - [x] docs (index, benchmark_design, c4model)
 - [x] bench_longctx.py + bench_common.py: long-context needle + prefill eval for any OpenAI-compatible server (depth x length grid, server-timings prefill, optional streaming TTFT, JSON/CSV). Refactored bench_long_prompt.py to reuse bench_common. Added tests/test_bench_longctx.py (8 tests). Declared requests dep, gitignored .claude/. Verified live against GLM-5.2 (recall PASS, prefill 135.6 tok/s, TTFT 6.9s).
+- [x] 2026-07-06 Kimi-Linear-48B-A3B native-1M verification (in-process mlx-lm NIAH). Added bench_niah_mlx.py (staged length ladder, truncation guard now RAISES on prompt_tokens != built), niah_haystack.py (token-accurate 8-needle haystack, unique-code enforced), tests/test_niah_haystack.py (9 passing; skips cleanly when tiktoken/model absent). Results: 8/8 recall at every length up to a real 1,048,692-token prompt, decode 86->5.1 tok/s, prefill ~5.0h, peak 219.9GB. Raw data force-added under results/1m_candidates/ (dir is gitignored). Docs: 06072026_kimi_linear_1m_verification.md + scaling_curves.html; c4model + index + findings updated. Blog: omarshabab.com/kimi-linear-1m-context.
 
 ## Pending (revised 2026-04-13 14:50)
 

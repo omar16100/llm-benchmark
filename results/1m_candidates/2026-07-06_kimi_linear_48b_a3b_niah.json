@@ -1,0 +1,460 @@
+{
+  "model": "/Users/macmini/models/Kimi-Linear-48B-A3B-Instruct-8bit",
+  "runs": [
+    {
+      "name": "control_2k",
+      "target_ctx_tokens": 2000,
+      "built_prompt_tokens": 2113,
+      "model_saw_prompt_tokens": 2113,
+      "truncated": false,
+      "prompt_tps": 1201.0,
+      "generation_tps": 86.28,
+      "generation_tokens": 80,
+      "peak_memory_gb": 54.13,
+      "wall_seconds": 3.0,
+      "prefill_est_seconds": 1.8,
+      "retrieval_rate": 1.0,
+      "association_rate": 1.0,
+      "n_needles": 8,
+      "association_correct": 8,
+      "coherence": {
+        "empty": false,
+        "looping": false,
+        "unique_word_ratio": 1.0
+      },
+      "per_city": {
+        "Reykjavik": {
+          "code": "13072624",
+          "present": true,
+          "associated": true
+        },
+        "Ouagadougou": {
+          "code": "66427265",
+          "present": true,
+          "associated": true
+        },
+        "Valparaiso": {
+          "code": "26979109",
+          "present": true,
+          "associated": true
+        },
+        "Nakhodka": {
+          "code": "26792965",
+          "present": true,
+          "associated": true
+        },
+        "Timbuktu": {
+          "code": "12718180",
+          "present": true,
+          "associated": true
+        },
+        "Kirkwall": {
+          "code": "21725170",
+          "present": true,
+          "associated": true
+        },
+        "Ushuaia": {
+          "code": "41719230",
+          "present": true,
+          "associated": true
+        },
+        "Yakutsk": {
+          "code": "28245879",
+          "present": true,
+          "associated": true
+        }
+      },
+      "generated_answer": "Reykjavik: 13072624\nOuagadougou: 66427265\nValparaiso: 26979109\nNakhodka: 26792965\nTimbuktu: 12718180\nKirkwall: 21725170\nUshuaia: 41719230\nYakutsk: 28245879"
+    },
+    {
+      "name": "8k",
+      "target_ctx_tokens": 8000,
+      "built_prompt_tokens": 8113,
+      "model_saw_prompt_tokens": 8113,
+      "truncated": false,
+      "prompt_tps": 2517.9,
+      "generation_tps": 87.41,
+      "generation_tokens": 80,
+      "peak_memory_gb": 54.97,
+      "wall_seconds": 4.5,
+      "prefill_est_seconds": 3.2,
+      "retrieval_rate": 1.0,
+      "association_rate": 1.0,
+      "n_needles": 8,
+      "association_correct": 8,
+      "coherence": {
+        "empty": false,
+        "looping": false,
+        "unique_word_ratio": 1.0
+      },
+      "per_city": {
+        "Reykjavik": {
+          "code": "13072624",
+          "present": true,
+          "associated": true
+        },
+        "Ouagadougou": {
+          "code": "66427265",
+          "present": true,
+          "associated": true
+        },
+        "Valparaiso": {
+          "code": "26979109",
+          "present": true,
+          "associated": true
+        },
+        "Nakhodka": {
+          "code": "26792965",
+          "present": true,
+          "associated": true
+        },
+        "Timbuktu": {
+          "code": "12718180",
+          "present": true,
+          "associated": true
+        },
+        "Kirkwall": {
+          "code": "21725170",
+          "present": true,
+          "associated": true
+        },
+        "Ushuaia": {
+          "code": "41719230",
+          "present": true,
+          "associated": true
+        },
+        "Yakutsk": {
+          "code": "28245879",
+          "present": true,
+          "associated": true
+        }
+      },
+      "generated_answer": "Reykjavik: 13072624\nOuagadougou: 66427265\nValparaiso: 26979109\nNakhodka: 26792965\nTimbuktu: 12718180\nKirkwall: 21725170\nUshuaia: 41719230\nYakutsk: 28245879"
+    },
+    {
+      "name": "32k",
+      "target_ctx_tokens": 32000,
+      "built_prompt_tokens": 32113,
+      "model_saw_prompt_tokens": 32113,
+      "truncated": false,
+      "prompt_tps": 2076.9,
+      "generation_tps": 82.33,
+      "generation_tokens": 80,
+      "peak_memory_gb": 58.58,
+      "wall_seconds": 16.4,
+      "prefill_est_seconds": 15.5,
+      "retrieval_rate": 1.0,
+      "association_rate": 1.0,
+      "n_needles": 8,
+      "association_correct": 8,
+      "coherence": {
+        "empty": false,
+        "looping": false,
+        "unique_word_ratio": 1.0
+      },
+      "per_city": {
+        "Reykjavik": {
+          "code": "13072624",
+          "present": true,
+          "associated": true
+        },
+        "Ouagadougou": {
+          "code": "66427265",
+          "present": true,
+          "associated": true
+        },
+        "Valparaiso": {
+          "code": "26979109",
+          "present": true,
+          "associated": true
+        },
+        "Nakhodka": {
+          "code": "26792965",
+          "present": true,
+          "associated": true
+        },
+        "Timbuktu": {
+          "code": "12718180",
+          "present": true,
+          "associated": true
+        },
+        "Kirkwall": {
+          "code": "21725170",
+          "present": true,
+          "associated": true
+        },
+        "Ushuaia": {
+          "code": "41719230",
+          "present": true,
+          "associated": true
+        },
+        "Yakutsk": {
+          "code": "28245879",
+          "present": true,
+          "associated": true
+        }
+      },
+      "generated_answer": "Reykjavik: 13072624\nOuagadougou: 66427265\nValparaiso: 26979109\nNakhodka: 26792965\nTimbuktu: 12718180\nKirkwall: 21725170\nUshuaia: 41719230\nYakutsk: 28245879"
+    },
+    {
+      "name": "128k",
+      "target_ctx_tokens": 131072,
+      "built_prompt_tokens": 131186,
+      "model_saw_prompt_tokens": 131186,
+      "truncated": false,
+      "prompt_tps": 985.8,
+      "generation_tps": 58.61,
+      "generation_tokens": 80,
+      "peak_memory_gb": 74.34,
+      "wall_seconds": 134.4,
+      "prefill_est_seconds": 133.1,
+      "retrieval_rate": 1.0,
+      "association_rate": 1.0,
+      "n_needles": 8,
+      "association_correct": 8,
+      "coherence": {
+        "empty": false,
+        "looping": false,
+        "unique_word_ratio": 1.0
+      },
+      "per_city": {
+        "Reykjavik": {
+          "code": "13072624",
+          "present": true,
+          "associated": true
+        },
+        "Ouagadougou": {
+          "code": "66427265",
+          "present": true,
+          "associated": true
+        },
+        "Valparaiso": {
+          "code": "26979109",
+          "present": true,
+          "associated": true
+        },
+        "Nakhodka": {
+          "code": "26792965",
+          "present": true,
+          "associated": true
+        },
+        "Timbuktu": {
+          "code": "12718180",
+          "present": true,
+          "associated": true
+        },
+        "Kirkwall": {
+          "code": "21725170",
+          "present": true,
+          "associated": true
+        },
+        "Ushuaia": {
+          "code": "41719230",
+          "present": true,
+          "associated": true
+        },
+        "Yakutsk": {
+          "code": "28245879",
+          "present": true,
+          "associated": true
+        }
+      },
+      "generated_answer": "Reykjavik: 13072624\nOuagadougou: 66427265\nValparaiso: 26979109\nNakhodka: 26792965\nTimbuktu: 12718180\nKirkwall: 21725170\nUshuaia: 41719230\nYakutsk: 28245879"
+    },
+    {
+      "name": "256k",
+      "target_ctx_tokens": 262144,
+      "built_prompt_tokens": 262258,
+      "model_saw_prompt_tokens": 262258,
+      "truncated": false,
+      "prompt_tps": 179.0,
+      "generation_tps": 14.69,
+      "generation_tokens": 80,
+      "peak_memory_gb": 95.14,
+      "wall_seconds": 1470.5,
+      "prefill_est_seconds": 1465.0,
+      "retrieval_rate": 1.0,
+      "association_rate": 1.0,
+      "n_needles": 8,
+      "association_correct": 8,
+      "coherence": {
+        "empty": false,
+        "looping": false,
+        "unique_word_ratio": 1.0
+      },
+      "per_city": {
+        "Reykjavik": {
+          "code": "13072624",
+          "present": true,
+          "associated": true
+        },
+        "Ouagadougou": {
+          "code": "66427265",
+          "present": true,
+          "associated": true
+        },
+        "Valparaiso": {
+          "code": "26979109",
+          "present": true,
+          "associated": true
+        },
+        "Nakhodka": {
+          "code": "26792965",
+          "present": true,
+          "associated": true
+        },
+        "Timbuktu": {
+          "code": "12718180",
+          "present": true,
+          "associated": true
+        },
+        "Kirkwall": {
+          "code": "21725170",
+          "present": true,
+          "associated": true
+        },
+        "Ushuaia": {
+          "code": "41719230",
+          "present": true,
+          "associated": true
+        },
+        "Yakutsk": {
+          "code": "28245879",
+          "present": true,
+          "associated": true
+        }
+      },
+      "generated_answer": "Reykjavik: 13072624\nOuagadougou: 66427265\nValparaiso: 26979109\nNakhodka: 26792965\nTimbuktu: 12718180\nKirkwall: 21725170\nUshuaia: 41719230\nYakutsk: 28245879"
+    },
+    {
+      "name": "512k",
+      "target_ctx_tokens": 524288,
+      "built_prompt_tokens": 524404,
+      "model_saw_prompt_tokens": 524404,
+      "truncated": false,
+      "prompt_tps": 119.5,
+      "generation_tps": 9.9,
+      "generation_tokens": 80,
+      "peak_memory_gb": 136.75,
+      "wall_seconds": 4398.5,
+      "prefill_est_seconds": 4390.1,
+      "retrieval_rate": 1.0,
+      "association_rate": 1.0,
+      "n_needles": 8,
+      "association_correct": 8,
+      "coherence": {
+        "empty": false,
+        "looping": false,
+        "unique_word_ratio": 1.0
+      },
+      "per_city": {
+        "Reykjavik": {
+          "code": "13072624",
+          "present": true,
+          "associated": true
+        },
+        "Ouagadougou": {
+          "code": "66427265",
+          "present": true,
+          "associated": true
+        },
+        "Valparaiso": {
+          "code": "26979109",
+          "present": true,
+          "associated": true
+        },
+        "Nakhodka": {
+          "code": "26792965",
+          "present": true,
+          "associated": true
+        },
+        "Timbuktu": {
+          "code": "12718180",
+          "present": true,
+          "associated": true
+        },
+        "Kirkwall": {
+          "code": "21725170",
+          "present": true,
+          "associated": true
+        },
+        "Ushuaia": {
+          "code": "41719230",
+          "present": true,
+          "associated": true
+        },
+        "Yakutsk": {
+          "code": "28245879",
+          "present": true,
+          "associated": true
+        }
+      },
+      "generated_answer": "Reykjavik: 13072624\nOuagadougou: 66427265\nValparaiso: 26979109\nNakhodka: 26792965\nTimbuktu: 12718180\nKirkwall: 21725170\nUshuaia: 41719230\nYakutsk: 28245879"
+    },
+    {
+      "name": "1m",
+      "target_ctx_tokens": 1048576,
+      "built_prompt_tokens": 1048692,
+      "model_saw_prompt_tokens": 1048692,
+      "truncated": false,
+      "prompt_tps": 58.2,
+      "generation_tps": 5.1,
+      "generation_tokens": 80,
+      "peak_memory_gb": 219.89,
+      "wall_seconds": 18019.7,
+      "prefill_est_seconds": 18003.9,
+      "retrieval_rate": 1.0,
+      "association_rate": 1.0,
+      "n_needles": 8,
+      "association_correct": 8,
+      "coherence": {
+        "empty": false,
+        "looping": false,
+        "unique_word_ratio": 1.0
+      },
+      "per_city": {
+        "Reykjavik": {
+          "code": "13072624",
+          "present": true,
+          "associated": true
+        },
+        "Ouagadougou": {
+          "code": "66427265",
+          "present": true,
+          "associated": true
+        },
+        "Valparaiso": {
+          "code": "26979109",
+          "present": true,
+          "associated": true
+        },
+        "Nakhodka": {
+          "code": "26792965",
+          "present": true,
+          "associated": true
+        },
+        "Timbuktu": {
+          "code": "12718180",
+          "present": true,
+          "associated": true
+        },
+        "Kirkwall": {
+          "code": "21725170",
+          "present": true,
+          "associated": true
+        },
+        "Ushuaia": {
+          "code": "41719230",
+          "present": true,
+          "associated": true
+        },
+        "Yakutsk": {
+          "code": "28245879",
+          "present": true,
+          "associated": true
+        }
+      },
+      "generated_answer": "Reykjavik: 13072624\nOuagadougou: 66427265\nValparaiso: 26979109\nNakhodka: 26792965\nTimbuktu: 12718180\nKirkwall: 21725170\nUshuaia: 41719230\nYakutsk: 28245879"
+    }
+  ]
+}

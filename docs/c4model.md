@@ -69,6 +69,9 @@ output_tokens_approx, tok_per_s, finish_reason, valid, score_raw, score_type
 - `bench_common.prefill_tps()` / `decode_tps()` / `prompt_tokens()`: pull throughput from the server `timings` block (never from client wall clock); `prompt_tokens()` prefers `usage.prompt_tokens` (full context) over `timings.prompt_n` (evaluated subset).
 - `bench_longctx.build_prompt()`: sizes the haystack by `target_tokens / tokens_per_word` and splices a unique needle at a depth percentage. `run_cell()` runs one grid cell; recall is an exact boundary-anchored code match. Caching is disabled per cell by default (`cache_prompt: false`) for comparable cold prefill.
 
+### In-process MLX NIAH bench (`bench_niah_mlx.py`, `niah_haystack.py`)
+- A second long-context path that loads the model **in-process via mlx-lm** rather than over HTTP, used when a model needs its native mlx-lm class or when a hard truncation guarantee is required. `niah_haystack.build_haystack()` builds a token-accurate multi-needle haystack (8 needles at 8 depths) with the real tokenizer; `score_answer()` scores exact code-to-city association. `bench_niah_mlx.run_length()` passes pre-tokenized ids to `stream_generate` and **asserts `prompt_tokens == tokens built`** (truncation guard) before trusting any result; it checkpoints per length to JSON. Tests: `tests/test_niah_haystack.py`. See `06072026_kimi_linear_1m_verification.md`.
+
 ### `aggregate_results.py`
 - `collect_custom_benchmark()` — reads `results/runs.csv`; should filter `valid=True` when computing averages.
 - `collect_lm_eval()` / `collect_bigcode()` / `collect_deepeval()` — framework-specific readers.
