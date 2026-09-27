@@ -89,3 +89,10 @@ Disk-aware execution sequence. Each step ends in a known disk + RAM state.
 - [x] absolute paths -> flags / env vars / __file__-relative; hosts stay 127.0.0.1
 - [x] guard tests moved to tests/, plus client-agreement tests and mlx-marked tests
 - [x] mlx-marked tests pass on Apple silicon with `uv run --with mlx-lm pytest tests/test_bench_niah_mlx.py` (4 passed, 27/09/2026)
+
+## 27/09/2026 - Security dependency upgrades (docs/27092026_security_deps_plan.md)
+- [x] uv.lock: nltk 3.10.3, aiohttp 3.14.3, anyio 4.15.1, transformers 5.17.0, urllib3 2.8.0, idna 3.20, lxml 6.1.3, setuptools 84.0.0, pydantic-settings 2.15.0, pytest 9.1.1 (52 of 54 Dependabot alerts)
+- [x] pyproject floors: transformers>=5.10.0, pytest>=9.0.3
+- [x] tests unchanged: 131 passed / 12 skipped; mlx-marked 4 passed; Kimi tokenizer ids identical under transformers 5.5.0 and 5.17.0 for the full 2K to 1M NIAH ladder
+- [x] nltk GHSA-8mgp-746c-j5xp and sqlitedict GHSA-g4r7-86gm-pgqc (no fixed release) dismissed as tolerable risk with reasons
+- [ ] tests/test_niah_haystack.py: import fails without PYTHONPATH=., and test_chat_template_exists expects a list (transformers 5.x returns a dict unless return_dict=False); pre-existing on 5.5.0

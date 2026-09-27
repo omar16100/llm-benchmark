@@ -12,12 +12,12 @@ dependencies = [
     "openai>=2.30.0",
     "requests>=2.31.0",
     "scipy>=1.17.1",
-    "transformers>=5.5.0",
+    "transformers>=5.10.0",
 ]
 
 [dependency-groups]
 dev = [
-    "pytest>=9.0.2",
+    "pytest>=9.0.3",
 ]
 
 [tool.pytest.ini_options]
