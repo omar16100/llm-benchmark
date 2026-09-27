@@ -81,4 +81,11 @@ Disk-aware execution sequence. Each step ends in a known disk + RAM state.
 - [x] README: max_tokens policy, claude -p judge, test count, em dashes
 - [x] .gitignore: dead !results/ negations replaced with a pointer to data/
 - [x] CI: ubuntu + setup-uv + uv run --locked pytest tests/
-- [ ] 256K NIAH harnesses (PR 2)
+- [x] 256K NIAH harnesses (PR 2, see below)
+
+## 27/09/2026 - 256K+ NIAH harnesses (docs/niah_harnesses.md)
+- [x] bench_niah_mlx.py: slope decode metric, <think> split, KV-cache quant flags, alternate loaders
+- [x] raw-prompt NIAH clients (mlx-lm, llama-server, oMLX, mlx-dspark, glm5_next fork), make_1m_prompt.py, LiveCodeBench wrapper + guards, macmon reporter, nemotron token test script
+- [x] absolute paths -> flags / env vars / __file__-relative; hosts stay 127.0.0.1
+- [x] guard tests moved to tests/, plus client-agreement tests and mlx-marked tests
+- [x] mlx-marked tests pass on Apple silicon with `uv run --with mlx-lm pytest tests/test_bench_niah_mlx.py` (4 passed, 27/09/2026)

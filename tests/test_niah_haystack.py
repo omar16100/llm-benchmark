@@ -1,6 +1,6 @@
 """Fast unit tests for the NIAH context builder (no model load).
 
-Run: .venv/bin/python -m pytest tests/test_niah_haystack.py -q
+Run: NIAH_TOKENIZER_DIR=/path/to/Kimi-Linear-48B-A3B-Instruct-8bit uv run pytest tests/test_niah_haystack.py -q
 Needs transformers + tiktoken + blobfile and the model dir's tokenizer.
 Uses the REAL Kimi tiktoken tokenizer so token-count guarantees are genuine.
 """
@@ -16,10 +16,11 @@ pytest.importorskip("blobfile")
 from transformers import AutoTokenizer
 import niah_haystack as cb
 
-TOKDIR = "/Users/macmini/models/Kimi-Linear-48B-A3B-Instruct-8bit"
-if not os.path.isdir(TOKDIR):
-    pytest.skip("Kimi model dir not present; NIAH tokenizer tests need it",
-                allow_module_level=True)
+# local Kimi-Linear-48B-A3B-Instruct model dir (only its tokenizer is read)
+TOKDIR = os.environ.get("NIAH_TOKENIZER_DIR", "")
+if not TOKDIR or not os.path.isdir(TOKDIR):
+    pytest.skip("set NIAH_TOKENIZER_DIR to a Kimi-Linear model dir to run the NIAH "
+                "tokenizer tests", allow_module_level=True)
 logging.basicConfig(level=logging.WARNING)
 
 
