@@ -16,6 +16,7 @@
 | [dsa_metal_implementation_plan.md](dsa_metal_implementation_plan.md) | evergreen | Dense Sparse Attention (DSA) Metal implementation plan for GLM-5.1 on Apple Silicon |
 | [27092026_readme_results_backing_plan.md](27092026_readme_results_backing_plan.md) | dated | README results table backed by committed data (data/runs_20apr2026.csv, scripts/runs_data.py), CI, 256K NIAH harnesses |
 | [27092026_security_deps_plan.md](27092026_security_deps_plan.md) | dated | Dependabot security upgrades in uv.lock (nltk, aiohttp, anyio, transformers, urllib3 and others), two unfixed alerts dismissed with reasons |
+| [27092026_macmon_percentiles_plan.md](27092026_macmon_percentiles_plan.md) | dated | macmon_clamp_report.py: statistics.median for medians and numpy-default linear percentiles for p10, with regression tests |
 
 ## Naming Conventions
 - Dated docs: `DDMMYYYY_topic.md`

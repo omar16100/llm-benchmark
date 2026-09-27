@@ -70,3 +70,4 @@ column was derived from `results/transcripts.jsonl` (16 MB, not published).
 - 27/09/2026: `mlx_raw_niah_client.py` now records `raw_prompt: false` and a matching engine
   label when `--chat-template` is used. Left as is (owner's choice): `macmon_clamp_report.py`
   uses the upper-middle sample as the median and `round` (not `ceil`) for nearest-rank p10.
+  Fixed later the same day: see `27092026_macmon_percentiles_plan.md`.

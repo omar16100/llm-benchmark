@@ -91,7 +91,7 @@ lcb_local_runner.py   LiveCodeBench against a local server, with lcb_guards.py
 macmon_clamp_report.py  GPU clock / RAM summary for a macmon trace
 scripts/runs_data.py  Export a publishable runs CSV and generate the sample results table
 data/                 Published run data (runs_20apr2026.csv)
-tests/                Unit tests: 131 run without a model, server, or GPU; the DeepEval
+tests/                Unit tests: 142 run without a model, server, or GPU; the DeepEval
                       tests need a live endpoint, the NIAH haystack tests need tiktoken
                       plus a local tokenizer, and the mlx tests need mlx-lm, so they
                       skip otherwise

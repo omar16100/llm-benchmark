@@ -15,11 +15,42 @@ It also standardises two things that are easy to recompute inconsistently per ru
     macmon traces at all. Runs can share that floor and differ only in how long they dwell
     there, which p10 and the at-or-under-400 percentage show.
 
+STATISTICS. Medians use statistics.median, so an even-sized trace reports the mean of its
+two middle samples. p10 uses linear interpolation between the closest ranks, the same as
+numpy.percentile's default 'linear' method (Hyndman and Fan type 7); see percentile().
+
 Usage:
     python3 macmon_clamp_report.py <macmon.jsonl> [label]
 """
 import json
+import math
+import statistics
 import sys
+
+
+def percentile(sorted_vals: list, p: float) -> float:
+    """The p-th percentile (0 to 100) of an ascending list, by linear interpolation.
+
+    Matches numpy.percentile(vals, p) with its default method='linear' (Hyndman and Fan
+    type 7): the position is h = (n - 1) * (p / 100) on the 0-based sorted list, and the
+    result is x[floor(h)] + (h - floor(h)) * (x[floor(h) + 1] - x[floor(h)]). So p0 is the
+    minimum, p100 the maximum, p50 equals statistics.median, and p10 of [800, 1300] is 850.
+    Like numpy, a fraction of 0.5 or more is interpolated back from the upper sample, which
+    keeps the result exact at the ends and avoids cancellation when the samples differ by
+    many orders of magnitude.
+    """
+    if not sorted_vals:
+        raise ValueError("percentile of an empty list")
+    if not 0 <= p <= 100:
+        raise ValueError("percentile must be between 0 and 100, got %r" % p)
+    h = (len(sorted_vals) - 1) * (p / 100.0)
+    lo = math.floor(h)
+    hi = min(lo + 1, len(sorted_vals) - 1)
+    t = h - lo
+    below, above = sorted_vals[lo], sorted_vals[hi]
+    if t >= 0.5:
+        return above - (above - below) * (1 - t)
+    return below + (above - below) * t
 
 
 def summarise(rows: list) -> dict:
@@ -35,19 +66,14 @@ def summarise(rows: list) -> dict:
     ram = sorted(r["memory"]["ram_usage"] / 2 ** 30 for r in rows)
     n = len(freq)
 
-    def pct(sorted_vals, p):
-        # nearest-rank, so p10 of 10 samples is the 1st, not an interpolation nobody can check
-        idx = min(len(sorted_vals) - 1, max(0, int(round(p / 100.0 * len(sorted_vals))) - 1))
-        return sorted_vals[idx]
-
     return {
         "n_samples": n,
-        "clock_median_mhz": freq[n // 2],
-        "clock_p10_mhz": pct(freq, 10),
+        "clock_median_mhz": statistics.median(freq),
+        "clock_p10_mhz": percentile(freq, 10),
         "clock_min_mhz": freq[0],
         "clock_max_mhz": freq[-1],
         "pct_at_or_under_400": 100.0 * sum(1 for f in freq if f <= 400) / n,
-        "power_median_w": power[len(power) // 2],
+        "power_median_w": statistics.median(power),
         "ram_floor_gib": ram[0],
         "ram_peak_gib": ram[-1],
         "ram_delta_gib": ram[-1] - ram[0],
