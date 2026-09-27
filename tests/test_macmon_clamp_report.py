@@ -9,7 +9,12 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from macmon_clamp_report import format_line, summarise
+from macmon_clamp_report import format_line, percentile, summarise
+
+try:
+    import numpy
+except ImportError:          # the cross-check below is optional; hand values cover the rest
+    numpy = None
 
 
 def sample(freq, ram_gib=100.0, power=50.0):
@@ -27,10 +32,17 @@ class TestSummarise(unittest.TestCase):
     def test_p10_exposes_a_tail_that_the_clamp_percentage_misses(self):
         """THE CASE THIS FILE EXISTS FOR: 0 percent clamped, yet a tenth of the run sits far
         below the typical clock without ever crossing 400 MHz. Only p10 shows it."""
-        rows = [sample(800)] + [sample(1300)] * 9      # one low sample in ten
+        rows = [sample(800)] * 11 + [sample(1300)] * 89    # 11 low samples in 100
         s = summarise(rows)
         self.assertEqual(s["pct_at_or_under_400"], 0.0)   # the old metric sees nothing
         self.assertEqual(s["clock_p10_mhz"], 800)          # p10 sees it
+        self.assertEqual(s["clock_median_mhz"], 1300)
+
+    def test_p10_of_one_low_sample_in_ten_interpolates(self):
+        """With linear interpolation, one low sample in ten pulls p10 below the median but
+        not all the way down: h = 9 * 0.10 = 0.9, so 800 + 0.9 * (1300 - 800) = 1250."""
+        s = summarise([sample(800)] + [sample(1300)] * 9)
+        self.assertAlmostEqual(s["clock_p10_mhz"], 1250.0)
         self.assertEqual(s["clock_median_mhz"], 1300)
 
     def test_338_floor_is_flagged(self):
@@ -56,6 +68,93 @@ class TestSummarise(unittest.TestCase):
         s = summarise([sample(700)])
         self.assertEqual(s["clock_median_mhz"], 700)
         self.assertEqual(s["clock_p10_mhz"], 700)
+
+
+class TestMedianAndPercentile(unittest.TestCase):
+    """Regression tests for the median and percentile definitions. The reporter used to
+    take the upper-middle sample as the median (median of [800, 1300] came out as 1300)
+    and a rounded nearest rank for p10. Expected values below are numpy.percentile's
+    default 'linear' method, worked by hand: h = (n - 1) * p / 100, then interpolate
+    between the samples at floor(h) and floor(h) + 1."""
+
+    def test_even_sized_median_averages_the_two_middle_samples(self):
+        s = summarise([sample(800), sample(1300)])
+        self.assertEqual(s["clock_median_mhz"], 1050)
+        s = summarise([sample(338), sample(700), sample(900), sample(1300)])
+        self.assertEqual(s["clock_median_mhz"], 800)
+
+    def test_odd_sized_median_is_the_middle_sample(self):
+        s = summarise([sample(1300), sample(338), sample(900)])
+        self.assertEqual(s["clock_median_mhz"], 900)
+
+    def test_power_median_uses_the_same_definition(self):
+        s = summarise([sample(1000, power=40.0), sample(1000, power=60.0)])
+        self.assertAlmostEqual(s["power_median_w"], 50.0)
+        s = summarise([sample(1000, power=p) for p in (70.0, 40.0, 55.0)])
+        self.assertAlmostEqual(s["power_median_w"], 55.0)
+
+    def test_p10_even_and_odd_sizes(self):
+        # n=2: h = 0.1 -> 800 + 0.1 * 500 = 850
+        self.assertAlmostEqual(summarise([sample(800), sample(1300)])["clock_p10_mhz"], 850.0)
+        # n=5: h = 0.4 -> 338 + 0.4 * (500 - 338) = 402.8
+        rows = [sample(f) for f in (1300, 338, 900, 500, 700)]
+        self.assertAlmostEqual(summarise(rows)["clock_p10_mhz"], 402.8)
+
+    def test_percentile_even_size_p10_p50_p90(self):
+        vals = [100, 200, 300, 400]                     # n=4, h = 3 * p / 100
+        self.assertAlmostEqual(percentile(vals, 10), 130.0)    # h=0.3
+        self.assertAlmostEqual(percentile(vals, 50), 250.0)    # h=1.5
+        self.assertAlmostEqual(percentile(vals, 90), 370.0)    # h=2.7
+
+    def test_percentile_odd_size_p10_p50_p90(self):
+        vals = [10, 20, 30, 40, 50]                     # n=5, h = 4 * p / 100
+        self.assertAlmostEqual(percentile(vals, 10), 14.0)     # h=0.4
+        self.assertAlmostEqual(percentile(vals, 50), 30.0)     # h=2.0, exact rank
+        self.assertAlmostEqual(percentile(vals, 90), 46.0)     # h=3.6
+
+    def test_percentile_ends_and_single_value(self):
+        vals = [338, 700, 1300]
+        self.assertEqual(percentile(vals, 0), 338)
+        self.assertEqual(percentile(vals, 100), 1300)
+        self.assertEqual(percentile([700], 10), 700)
+        self.assertEqual(percentile([700], 90), 700)
+
+    def test_percentile_interpolates_from_the_upper_sample_past_halfway(self):
+        """numpy computes a fraction t >= 0.5 as b - (b - a) * (1 - t). With samples many
+        orders of magnitude apart, a + (b - a) * t cancels badly: here it gave -2.0, while
+        numpy gives 1 - 1e16 * 2**-53 = -0.1102230246251565."""
+        self.assertAlmostEqual(percentile([-1e16, 1.0], 99.99999999999999),
+                               1.0 - 1e16 * 2.0 ** -53, places=9)
+
+    def test_percentile_rejects_empty_and_out_of_range(self):
+        with self.assertRaises(ValueError):
+            percentile([], 10)
+        with self.assertRaises(ValueError):
+            percentile([1, 2], 101)
+        with self.assertRaises(ValueError):
+            percentile([1, 2], -1)
+
+    @unittest.skipIf(numpy is None, "numpy not installed")
+    def test_matches_numpy_default_method(self):
+        traces = [
+            [800, 1300],
+            [338, 700, 900],
+            [1300, 338, 900, 500, 700, 650, 1200, 400, 399, 1000, 338],
+            [338] * 12 + [700] * 88,
+            list(range(338, 1400, 7)),
+            [-1e16, 1.0],
+            [0.1, 0.2, 0.3, 1e9],
+        ]
+        for vals in traces:
+            ordered = sorted(vals)
+            for p in (0, 10, 25, 50, 75, 90, 99.99999999999999, 100):
+                self.assertAlmostEqual(percentile(ordered, p),
+                                       float(numpy.percentile(vals, p)), places=9,
+                                       msg="p%r of %d samples" % (p, len(vals)))
+            s = summarise([sample(f) for f in vals])
+            self.assertAlmostEqual(s["clock_median_mhz"], float(numpy.median(vals)), places=9)
+            self.assertAlmostEqual(s["clock_p10_mhz"], float(numpy.percentile(vals, 10)),
+                                   places=9)
 
 
 class TestRealTraceShapes(unittest.TestCase):

@@ -80,7 +80,7 @@ output_tokens_approx, tok_per_s, finish_reason, valid, score_raw, score_type
 - `bench_niah_mlx.py` additions: slope from per-token timestamps (`generation_tps_slope`, `token_times`), final-answer scoring after the last `</think>` with the whole-output score kept, `generated_tail`, KV-cache quantization flags (`--kv-bits`), and alternate loaders (`--loader bonsai`, `--nonstrict`).
 - `make_1m_prompt.py`: builds a ~995K-token raw NIAH prompt from a source prompt's needle wording and codes, with its own filler and question and needles at evenly spaced depths (1/9 to 8/9), capped at 1,010,000 tokens.
 - `lcb_local_runner.py` + `lcb_guards.py`: LiveCodeBench pass@1 against a local OpenAI-compatible server (default `127.0.0.1:8090`) without editing the vendored clone; counts null and empty-extraction completions and optionally logs per-request metadata. `lcb_guards.py` is pure functions (truncation, inconclusive, no-extractable-answer, refusal, summaries).
-- `macmon_clamp_report.py`: GPU clock (median, p10, min, share at or under 400 MHz) and RAM floor/peak/delta for a macmon JSONL trace, with a delta-validity check.
+- `macmon_clamp_report.py`: GPU clock (median, p10 by numpy-default linear interpolation, min, share at or under 400 MHz) and RAM floor/peak/delta for a macmon JSONL trace, with a delta-validity check.
 - `scripts/run_nemotron_mlx8_token_test.sh`: `mlx_lm.benchmark` long-context profile for a local MLX model (`NEMOTRON_MLX8_DIR`), writing a log and CSV under `results/1m_candidates/`.
 - Tests: `tests/test_niah_guards.py`, `tests/test_niah_clients.py`, `tests/test_lcb_guards.py`, `tests/test_macmon_clamp_report.py` (no model, GPU, or network); `tests/test_bench_niah_mlx.py` (marker `mlx`, skips without mlx-lm). See `niah_harnesses.md`.
 

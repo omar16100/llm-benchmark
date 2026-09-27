@@ -96,3 +96,8 @@ Disk-aware execution sequence. Each step ends in a known disk + RAM state.
 - [x] tests unchanged: 131 passed / 12 skipped; mlx-marked 4 passed; Kimi tokenizer ids identical under transformers 5.5.0 and 5.17.0 for the full 2K to 1M NIAH ladder
 - [x] nltk GHSA-8mgp-746c-j5xp and sqlitedict GHSA-g4r7-86gm-pgqc (no fixed release) dismissed as tolerable risk with reasons
 - [ ] tests/test_niah_haystack.py: import fails without PYTHONPATH=., and test_chat_template_exists expects a list (transformers 5.x returns a dict unless return_dict=False); pre-existing on 5.5.0
+
+## 27/09/2026 - macmon reporter median and percentile (docs/27092026_macmon_percentiles_plan.md)
+- [x] macmon_clamp_report.py: statistics.median for clock and power medians (even-sized traces averaged the wrong way), p10 by linear interpolation matching numpy.percentile's default
+- [x] tests: even/odd medians, p10/p50/p90 hand-worked values, numpy cross-check; 142 passed / 12 skipped
+- [x] no committed doc quotes numbers from this script, so nothing published changes
