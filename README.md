@@ -20,17 +20,17 @@ lms load your-model-2 --identifier model-2
 # 4. Run benchmark
 uv run python run_bench.py
 
-# 5. (Optional) Claude-as-judge scoring
-export ANTHROPIC_API_KEY=sk-ant-...
+# 5. (Optional) Claude-as-judge scoring: shells out to the `claude` CLI
+#    (`claude -p`), which uses that CLI's own login
 uv run python judge_claude.py
 ```
 
 ## What It Does
 
-Runs 26 prompts across 6 categories against two models head-to-head. Captures:
+Runs 26 prompts across 6 categories against each model configured in `MODELS` (`run_bench.py`). Captures:
 - **Quality**: exact match, unit tests, constraint checks, tool-call validation, Claude-as-judge
-- **Performance**: tokens/second, time-to-first-token, total time
-- **Statistical comparison**: paired wins/losses per prompt
+- **Performance**: time-to-first-token, generation time, total time, approximate tokens/second
+- **Pairwise judging**: `judge_claude.py` compares two models blind, per prompt (A, B, or tie)
 
 ### Categories
 
@@ -43,27 +43,34 @@ Runs 26 prompts across 6 categories against two models head-to-head. Captures:
 | W | creative | 4 | judge, constraint |
 | T | tool_use | 4 | tool trace |
 
-## Sample Results: Gemma 4 31B vs Qwen 3.5 27B
+## Sample Results (run data from 20 Apr 2026)
 
-Tested on Mac Mini (192GB RAM, Apple Silicon):
+The table below is generated from [data/runs_20apr2026.csv](data/runs_20apr2026.csv), a copy of a local `results/runs.csv` (705 rows) exported with `scripts/runs_data.py` (the only change is that absolute model paths are reduced to their directory names):
 
-| Category | Gemma4 (bf16) | Qwen3.5 (Q8) |
-|---|---|---|
-| reasoning | **3.60** | 2.60 |
-| coding | **5.00** | **5.00** |
-| math | **1.25** | 0.75 |
-| instruction | **5.00** | 3.00 |
-| creative | **5.00** | 3.00 |
-| tool_use | **3.12** | 2.50 |
-| **Overall** | **3.77** | 2.79 |
+```bash
+uv run python scripts/runs_data.py summary data/runs_20apr2026.csv
+```
 
-**Performance** (median):
-- Gemma4 bf16: 8.2 tok/s, 8.0s total per prompt
-- Qwen3.5 Q8: 3.4 tok/s, 65.6s total per prompt (thinking mode overhead)
+| model_label | quant | valid/total | scored | mean /5 | reasoning | coding | math | instruction | creative | tool_use | median total_s |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| supergemma4_26b_mlx4_v2 | MLX-4bit | 54/78 | 48 | 4.41 | 5.00 | 5.00 | 3.33 | 5.00 | 4.78 | 3.75 | 18.0 |
+| glm_51_mlx_36bit | MLX-3.6bit | 75/78 | 69 | 4.37 | 4.00 | 5.00 | 3.25 | 5.00 | 5.00 | 4.17 | 131.3 |
+| minimax_m27_mlx4_mxfp4 | MLX-4bit-mxfp4 | 69/78 | 63 | 4.16 | 2.80 | 5.00 | 3.33 | 5.00 | 5.00 | 4.06 | 18.9 |
+| qwen35_122b_a10b_q8 | GGUF-Q8_0 | 72/78 | 66 | 4.09 | 3.00 | 5.00 | 2.50 | 5.00 | 5.00 | 3.76 | 61.4 |
+| minimax_m27_mlx4_mxfp4_mlxlm | MLX-4bit-mxfp4 | 60/78 | 54 | 3.73 | 0.60 | 5.00 | 3.33 | 5.00 | 4.89 | 2.81 | 15.6 |
+| qwen35_122b_a10b_q4km | GGUF-Q4_K_M | 51/78 | 45 | 3.58 | 2.50 | 5.00 | 0.00 | 5.00 | 4.56 | 3.76 | 41.1 |
+| qwen35_397b_mlx4 | MLX-Q4 | 57/78 | 51 | 2.78 | 2.50 | 5.00 | 1.00 | 5.00 | 4.78 | 0.00 | 41.7 |
+| glm_47_flash_q4km_32k | GGUF-Q4_K_M | 30/78 | 27 | 2.39 | 2.75 | n/a | n/a | 0.00 | 3.67 | 2.50 | 48.1 |
+| glm_47_flash_q4km | GGUF-Q4_K_M | 24/78 | 21 | 2.14 | n/a | n/a | n/a | 0.00 | 3.33 | 2.50 | 8.9 |
+| qwen35_27b_claude_opus_distilled_q8 | GGUF-Q8_0 | 3/3 | 3 | 0.00 | n/a | n/a | 0.00 | n/a | n/a | n/a | 50.3 |
 
-**Head-to-head**: Gemma4 wins 9, Qwen3.5 wins 4, Ties 11
+How to read it:
+- `mean /5` and the category columns average `score_raw` over valid rows that have a programmatic score. Rows scored `needs_judge` have none, so `scored` can be lower than `valid`; `n/a` means no scored rows in that category.
+- A row is invalid when the response errored, was empty, or was length-truncated on a non-creative prompt (`is_invalid_result` in `run_bench.py`). A full run is 26 prompts x 3 repeats = 78 rows; `qwen35_27b_claude_opus_distilled_q8` is a 3-row smoke run.
+- `median total_s` is the median of the per-row `total_s` over valid rows (wall time of one scored run; for tool-use cases, the sum over its turns). Throughput is not shown because `tok_per_s` is not comparable across these runs: rows written before the runner started counting reasoning characters (commit fd9c240) under-count thinking models (see [docs/results.md](docs/results.md)).
+- Models ran on different runtimes (LM Studio, `mlx_lm.server`) and quantizations, so this is a deployment comparison, not an architecture ranking (see Fair Comparison Caveats below). Hardware is not recorded in the run data.
 
-Full analysis in [docs/results.md](docs/results.md).
+Per-model notes and run history: [docs/results.md](docs/results.md).
 
 ## Architecture
 
@@ -74,15 +81,19 @@ judge_claude.py       Blind pairwise Claude-as-judge scorer
 bench_longctx.py      Long-context needle + prefill-throughput eval (any OpenAI-compatible server)
 bench_long_prompt.py  Prompt-length sweep; prefill/decode tok/s from server timings
 bench_common.py       Shared OpenAI-compatible chat call + server timing extraction
-tests/                Unit tests for scoring and the long-context bench (39 tests)
-results/
+scripts/runs_data.py  Export a publishable runs CSV and generate the sample results table
+data/                 Published run data (runs_20apr2026.csv)
+tests/                Unit tests: 46 run without a model or server; the DeepEval tests
+                      need a live endpoint and the NIAH haystack tests need tiktoken
+                      plus a local tokenizer, so they skip otherwise
+results/              Local outputs, gitignored
   runs.csv          Per-run metrics (timing, scores)
   transcripts.jsonl Full responses + reasoning traces
 ```
 
 ### Streaming & Thinking Models
 
-The runner uses raw `httpx` streaming to capture `reasoning_content` (Qwen thinking mode) separately from `content`. Thinking models get an 8x `max_tokens` multiplier since reasoning tokens share the budget with the final answer.
+The runner uses raw `httpx` streaming to capture reasoning (`reasoning_content` from LM Studio, `reasoning` from `mlx_lm.server`) separately from `content`. Every scored request (including each tool-use turn) uses `MAX_RESPONSE_TOKENS = 32768` because reasoning tokens share the budget with the final answer; warmup calls use `min(case max_tokens, 64)`. The `max_tokens` column in `runs.csv` records the case's nominal budget from `cases.json`.
 
 ## Long-Context Needle Benchmark
 
@@ -116,12 +127,13 @@ Edit `cases.json`:
 ```
 
 Scoring types:
-- `exact` — requires `expected` field, checks exact match (5pt) or substring (3pt)
-- `judge_keyword` — requires `expected_keywords` list
-- `unit_tests` — requires `test_code` (Python assertions)
-- `constraint_check` — requires `constraints` dict (word_count, required_words, forbidden_chars, line_count, word_range, etc.)
-- `tool_trace_exact` / `tool_trace_judge` — for tool_use cases with mock responses
-- `judge` / `judge_constraint` — defers to Claude judge
+- `exact`: requires `expected` field, checks exact match (5pt) or substring (3pt)
+- `judge_keyword`: requires `expected_keywords` list
+- `unit_tests`: requires `test_code` (Python assertions)
+- `constraint_check`: requires `constraints` dict (word_count, required_words, forbidden_chars, line_count, word_range, etc.)
+- `tool_trace_exact` / `tool_trace_judge`: for tool_use cases with mock responses
+- `judge`: deferred to the Claude judge (`score_type` `needs_judge`)
+- `judge_constraint`: constraint score when `constraints` is present, otherwise deferred to the Claude judge
 
 ## Adding New Models
 
@@ -138,7 +150,6 @@ MODELS = {
         "served_model": "another-id",
         "quant": "Q8_0",
         "thinking": True,
-        "thinking_token_multiplier": 8,
     },
 }
 ```
@@ -158,7 +169,7 @@ uv run pytest tests/ -v
 
 ### Fair Comparison Caveats
 
-This is a **deployment comparison**, not pure architecture. Comparing bf16 vs Q8_0 folds together:
+This is a **deployment comparison**, not pure architecture. Comparing models at different quantizations (bf16, Q8_0, Q4, MLX 4-bit) and runtimes folds together:
 - Model quality
 - Quantization precision
 - Memory bandwidth

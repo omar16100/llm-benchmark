@@ -13,6 +13,7 @@
 | [08042026_experiments_glm5_1.md](08042026_experiments_glm5_1.md) | dated | GLM-5.1 experiment notes (from earlier session, merged from llm-benchmarks/) |
 | [08042026_glm5_1_benchmark.md](08042026_glm5_1_benchmark.md) | dated | GLM-5.1 benchmark results (from earlier session) |
 | [dsa_metal_implementation_plan.md](dsa_metal_implementation_plan.md) | evergreen | Dense Sparse Attention (DSA) Metal implementation plan for GLM-5.1 on Apple Silicon |
+| [27092026_readme_results_backing_plan.md](27092026_readme_results_backing_plan.md) | dated | README results table backed by committed data (data/runs_20apr2026.csv, scripts/runs_data.py), CI, 256K NIAH harnesses |
 
 ## Naming Conventions
 - Dated docs: `DDMMYYYY_topic.md`
