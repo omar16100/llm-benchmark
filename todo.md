@@ -2,10 +2,10 @@
 
 ## Done
 - [x] Project setup (uv, git, dependencies)
-- [x] cases.json — 26 prompts across 6 categories
-- [x] run_bench.py — benchmark runner with streaming, timing, programmatic scoring
-- [x] judge_claude.py — blind pairwise Claude-as-judge
-- [x] tests/test_scoring.py — 19 unit tests for scoring functions (all passing)
+- [x] cases.json: 26 prompts across 6 categories
+- [x] run_bench.py: benchmark runner with streaming, timing, programmatic scoring
+- [x] judge_claude.py: blind pairwise Claude-as-judge
+- [x] tests/test_scoring.py: 19 unit tests for scoring functions (all passing)
 - [x] docs (index, benchmark_design, c4model)
 - [x] bench_longctx.py + bench_common.py: long-context needle + prefill eval for any OpenAI-compatible server (depth x length grid, server-timings prefill, optional streaming TTFT, JSON/CSV). Refactored bench_long_prompt.py to reuse bench_common. Added tests/test_bench_longctx.py (8 tests). Declared requests dep, gitignored .claude/. Verified live against GLM-5.2 (recall PASS, prefill 135.6 tok/s, TTFT 6.9s).
 - [x] 2026-07-06 Kimi-Linear-48B-A3B native-1M verification (in-process mlx-lm NIAH). Added bench_niah_mlx.py (staged length ladder, truncation guard now RAISES on prompt_tokens != built), niah_haystack.py (token-accurate 8-needle haystack, unique-code enforced), tests/test_niah_haystack.py (9 passing; skips cleanly when tiktoken/model absent). Results: 8/8 recall at every length up to a real 1,048,692-token prompt, decode 86->5.1 tok/s, prefill ~5.0h, peak 219.9GB. Raw data force-added under results/1m_candidates/ (dir is gitignored). Docs: 06072026_kimi_linear_1m_verification.md + scaling_curves.html; c4model + index + findings updated. Blog: omarshabab.com/kimi-linear-1m-context.
@@ -19,13 +19,13 @@ Disk-aware execution sequence. Each step ends in a known disk + RAM state.
 - [~] Download MiniMax-M2.7 mlx-community/4-bit-mxfp4 (PID 51740, ~74%, ETA 15 min)
 
 ### Queued (in order, with disk + RAM state expected after each)
-1. **MiniMax-M2.7** — needs unload of Qwen3.5-397B from RAM first; bench then unload. Disk after: ~47 GB free.
-2. **Qwen3.5-397B rerun** — restore lost baseline. Weights still on disk; reload into RAM. Disk unchanged.
-3. **GLM-4.7-Flash Q4_K_M** — small; load alongside 397B if RAM allows, otherwise unload first. Disk unchanged.
-4. **Qwen3.5-122B-A10B Q4_K_M** — 71 GB on disk. Load, bench, **then delete Q4 weights** (frees 71 GB).
-5. **Delete `~/models/Qwen3.5-397B-A17B-MLX-4bit`** (frees ~224 GB) — required because Q8 won't fit in 47+71=118 GB; need 224+71+47=342 GB free total.
+1. **MiniMax-M2.7**: needs unload of Qwen3.5-397B from RAM first; bench then unload. Disk after: ~47 GB free.
+2. **Qwen3.5-397B rerun**: restore lost baseline. Weights still on disk; reload into RAM. Disk unchanged.
+3. **GLM-4.7-Flash Q4_K_M**: small; load alongside 397B if RAM allows, otherwise unload first. Disk unchanged.
+4. **Qwen3.5-122B-A10B Q4_K_M**: 71 GB on disk. Load, bench, **then delete Q4 weights** (frees 71 GB).
+5. **Delete `~/models/Qwen3.5-397B-A17B-MLX-4bit`** (frees ~224 GB): required because Q8 won't fit in 47+71=118 GB; need 224+71+47=342 GB free total.
 6. **Download + bench Qwen3.5-122B-A10B Q8_0** (~122 GB).
-7. **GLM-5.1 / Kimi K2.5** — only after step 6, when 200+ GB is free.
+7. **GLM-5.1 / Kimi K2.5**: only after step 6, when 200+ GB is free.
 
 ### Post-processing (run after each new bench lands)
 - [ ] Run Claude judge on results (judge_claude.py)
@@ -36,25 +36,25 @@ Disk-aware execution sequence. Each step ends in a known disk + RAM state.
 - [x] Append-mode CSV/JSONL writes (run_bench.py:506-516)
 - [x] Results files unignored from .gitignore (git-recoverable)
 - [x] HF_TOKEN authed
-- [x] **Transport errors retry then raise** — never persisted as fake rows (run_bench.py:159-179)
+- [x] **Transport errors retry then raise**: never persisted as fake rows (run_bench.py:159-179)
 - [x] **Thinking-model scoring fallback to reasoning_text** when response_text empty (run_bench.py `_scoreable_text`)
-- [x] **Validity flag per row** — `valid=False` if response/reasoning both empty or finish_reason in {error, length} for non-creative
-- [x] **`bench_run_id` UUID per invocation** — tags each row to its run, enables session isolation without per-session dirs
-- [x] **Sanity early-abort** — bails if first 3 scored runs all empty (catches misconfigured thinking models)
-- [x] **JSONL written before CSV per row** — on crash transcripts ≥ csv (re-derivable)
+- [x] **Validity flag per row**: `valid=False` if response/reasoning both empty or finish_reason in {error, length} for non-creative
+- [x] **`bench_run_id` UUID per invocation**: tags each row to its run, enables session isolation without per-session dirs
+- [x] **Sanity early-abort**: bails if first 3 scored runs all empty (catches misconfigured thinking models)
+- [x] **JSONL written before CSV per row**: on crash transcripts ≥ csv (re-derivable)
 - [x] Periodic 10-min snapshots → `results/snapshots/` (last 12 retained)
 - [x] 28 unit tests cover empty-text invalidation + thinking model scoring
-- [ ] Atomic write across CSV+JSONL pair (codex #4 — current ordering helps but not transactional)
-- [ ] Per-session output dirs (deferred — flat files + bench_run_id sufficient)
-- [ ] Disk-free guard before download/load (deferred — manual sequencing suffices)
+- [ ] Atomic write across CSV+JSONL pair (codex #4: current ordering helps but not transactional)
+- [ ] Per-session output dirs (deferred: flat files + bench_run_id sufficient)
+- [ ] Disk-free guard before download/load (deferred: manual sequencing suffices)
 - [ ] Driver script for automatic handoff (deferred)
 
 ### Codex review findings (full output kept locally, not published)
 - Confirmed transport-error rows were silently scored as data; **fixed**
 - Confirmed empty responses scored non-zero (codex said 12; verified 36 of 55); **fixed via _scoreable_text + is_invalid_result**
 - Confirmed CSV/JSONL divergence; **mitigated via JSONL-first write order**
-- Concurrent downloads-during-bench claim — **acknowledged** (no concurrent dl during current M2.7 bench), claim still untested for actual tok/s impact
-- Per-session dirs / SQLite / driver script — deferred as overkill at current scale
+- Concurrent downloads-during-bench claim: **acknowledged** (no concurrent dl during current M2.7 bench), claim still untested for actual tok/s impact
+- Per-session dirs / SQLite / driver script: deferred as overkill at current scale
 
 ### Done
 - [x] Set up lm-evaluation-harness v0.4.11 (MMLU, GPQA, GSM8K, IFEval, HumanEval)
@@ -101,3 +101,10 @@ Disk-aware execution sequence. Each step ends in a known disk + RAM state.
 - [x] macmon_clamp_report.py: statistics.median for clock and power medians (even-sized traces averaged the wrong way), p10 by linear interpolation matching numpy.percentile's default
 - [x] tests: even/odd medians, p10/p50/p90 hand-worked values, numpy cross-check; 142 passed / 12 skipped
 - [x] no committed doc quotes numbers from this script, so nothing published changes
+
+## 27/09/2026 - Recovered 5 Apr 2026 Gemma 4 vs Qwen 3.5 run (docs/27092026_recovered_gemma4_qwen35_run.md)
+- [x] scripts/recover_lmstudio_log.py: benchmark-only classification of LM Studio server-log requests (exact match against cases.json, truncation aware), llama.cpp task pairing, alignment with bench.log, log-evidence scoring with the harness's own scorers
+- [x] data/recovered_05apr2026_gemma4_qwen35.csv (647 calls), data/recovered_05apr2026_gemma4_qwen35_generations.csv (329 generations), data/bench_log_05apr2026.txt (bench.log lines 1 to 1133)
+- [x] scripts/recovered_run_summary.py writes the doc tables; tests pin every quoted number and re-derive the bench.log fields from the committed excerpt
+- [x] Findings: run D is the published run; median totals, coding scores, setup claims reproduced; per-token speed claim contradicted (Qwen decodes faster); most quality numbers unrecoverable (streamed responses are not logged)
+- [ ] Blog post correction: separate PR on the site repo (draft, not merged here)

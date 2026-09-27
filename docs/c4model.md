@@ -24,7 +24,8 @@ The benchmark is a single-user local tool that exercises LLMs served by two alte
 - **`bench_longctx.py` / `bench_long_prompt.py` / `bench_common.py`**: standalone long-context tools, independent of the `run_bench.py` scoring pipeline. They hit the same `BENCH_BASE_URL` OpenAI-compatible endpoint (accepting a base URL with or without `/v1`) and read the server `timings` block for prefill/decode throughput. `bench_longctx.py` does needle-in-haystack retrieval over a (length x depth) grid; `bench_long_prompt.py` does a plain prompt-length sweep. Neither writes to `results/`; they print and optionally emit JSON/CSV to a path given by the caller. See `longctx_bench.md`.
 - **`eval_frameworks/`**: cloned repos of external eval suites.
 - **`scripts/runs_data.py`**: `export` writes a publishable copy of `results/runs.csv` (absolute `served_model` paths reduced to directory names); `summary` prints the per-model markdown table used in the README.
-- **`data/`**: committed, sanitized run data (`runs_20apr2026.csv`). The README sample results table is generated from it and `tests/test_runs_data.py` checks they match.
+- **`data/`**: committed, sanitized run data (`runs_20apr2026.csv`). The README sample results table is generated from it and `tests/test_runs_data.py` checks they match. Also the recovered 5 Apr 2026 Gemma 4 vs Qwen 3.5 run (`recovered_05apr2026_gemma4_qwen35*.csv`, `bench_log_05apr2026.txt`).
+- **`scripts/recover_lmstudio_log.py`** (offline, local inputs only): reads LM Studio server logs and the harness `bench.log`, keeps only requests matching a `cases.json` prompt, pairs each with its llama.cpp slot timings, aligns it with the harness call that sent it, and scores a generation only where the logs determine it (reusing `run_bench.score_tool_trace`). Writes the calls and generations CSVs. **`scripts/recovered_run_summary.py`** prints (or writes into the findings doc) the tables derived from them. See `27092026_recovered_gemma4_qwen35_run.md`.
 - **CI** (`.github/workflows/ci.yml`): ubuntu, `astral-sh/setup-uv`, `uv run --locked pytest tests/` on pushes and pull requests to main. Tests needing a model dir, a live server, or MLX skip themselves.
 - **`results/`**: gitignored local output directory. Contains `runs.csv`, `transcripts.jsonl`, per-framework subdirs, and `snapshots/` (10-minute rolling backups, up to 12 retained).
 - **Snapshot watcher** (local helper, not in this repo): shell loop `/tmp/llm-bench-logs/snapshot_runs.sh` that `cp`s the results files to `results/snapshots/` every 600s. Guards against mid-write corruption.
@@ -109,6 +110,13 @@ cases.json ──► run_bench.py ──► [BENCH_BASE_URL]/v1/chat/completions
                                      ├── judge_claude.py ─► claude -p ──► results/judged_results.csv
                                      └── aggregate_results.py ──────────► results/aggregate.csv
 
+LM Studio server log (~/.lmstudio/server-logs) ─┐
+bench.log (harness logger) ─────────────────────┴─► scripts/recover_lmstudio_log.py
+        (benchmark requests only; other traffic dropped)   │
+                               data/recovered_05apr2026_gemma4_qwen35{,_generations}.csv
+                                                           │
+                            scripts/recovered_run_summary.py ─► tables in docs/
+
 run_eval.py ──┬── lm-eval ─────► [BENCH_BASE_URL] ─► results/lm-eval/
               ├── bigcode-eval ─► [BENCH_BASE_URL] ─► results/bigcode/
               ├── LiveCodeBench ► [BENCH_BASE_URL] ─► results/livecodebench/
@@ -142,10 +150,11 @@ BENCH_BASE_URL=http://localhost:8081/v1 BENCH_API_KEY=none \
 
 Test coverage:
 ```bash
-uv run pytest tests/ -q   # 131 passing; DeepEval, NIAH tokenizer, and mlx tests skip without an endpoint, tokenizer dir, or mlx-lm (27/09/2026)
+uv run pytest tests/ -q   # 161 passing, 12 skipped; DeepEval, NIAH tokenizer, and mlx tests skip without an endpoint, tokenizer dir, or mlx-lm (27/09/2026)
 ```
 
 ## Change log
 
 - 27/09/2026: `scripts/runs_data.py`, `data/runs_20apr2026.csv`, CI workflow; judge described as `claude -p` CLI; `.gitignore` invariant corrected. See [27092026_readme_results_backing_plan.md](27092026_readme_results_backing_plan.md).
 - 27/09/2026: 256K+ NIAH harnesses (raw-prompt clients for mlx-lm, llama-server, oMLX, mlx-dspark, glm5_next fork), LiveCodeBench wrapper and guards, macmon reporter, 1M prompt builder; local paths moved to flags and environment variables. See [niah_harnesses.md](niah_harnesses.md).
+- 27/09/2026: log recovery of the 5 Apr 2026 Gemma 4 vs Qwen 3.5 run: `scripts/recover_lmstudio_log.py`, `scripts/recovered_run_summary.py`, recovered CSVs and the 5 Apr `bench.log` excerpt under `data/`. See [27092026_recovered_gemma4_qwen35_run.md](27092026_recovered_gemma4_qwen35_run.md).
