@@ -81,11 +81,20 @@ judge_claude.py       Blind pairwise Claude-as-judge scorer
 bench_longctx.py      Long-context needle + prefill-throughput eval (any OpenAI-compatible server)
 bench_long_prompt.py  Prompt-length sweep; prefill/decode tok/s from server timings
 bench_common.py       Shared OpenAI-compatible chat call + server timing extraction
+bench_niah_mlx.py     8-needle NIAH ladder, in-process mlx-lm (templated haystack)
+*_niah_client.py      Same NIAH scoring for raw prompts on mlx-lm, llama-server,
+                      oMLX, mlx-dspark, and a glm5_next mlx-vlm fork
+niah_haystack.py      Token-accurate 8-needle haystack builder
+make_1m_prompt.py     Build a ~1M-token NIAH prompt from a source prompt's needles
+                      (evenly spaced depths)
+lcb_local_runner.py   LiveCodeBench against a local server, with lcb_guards.py
+macmon_clamp_report.py  GPU clock / RAM summary for a macmon trace
 scripts/runs_data.py  Export a publishable runs CSV and generate the sample results table
 data/                 Published run data (runs_20apr2026.csv)
-tests/                Unit tests: 46 run without a model or server; the DeepEval tests
-                      need a live endpoint and the NIAH haystack tests need tiktoken
-                      plus a local tokenizer, so they skip otherwise
+tests/                Unit tests: 131 run without a model, server, or GPU; the DeepEval
+                      tests need a live endpoint, the NIAH haystack tests need tiktoken
+                      plus a local tokenizer, and the mlx tests need mlx-lm, so they
+                      skip otherwise
 results/              Local outputs, gitignored
   runs.csv          Per-run metrics (timing, scores)
   transcripts.jsonl Full responses + reasoning traces
@@ -109,6 +118,19 @@ uv run python bench_longctx.py \
 Each result row records: `target_tokens`, `depth_pct`, `prompt_tokens`, `prefill_tps`, `decode_tps`, `ttft_s` (with `--stream`), `end_to_end_s`, `recall` (PASS/FAIL), and a free-text `server` label. Use `--no-thinking` for GLM and Qwen reasoning models (it sends `chat_template_kwargs.enable_thinking=false`); omit it for servers that reject unknown template kwargs. `bench_common.py` holds the shared endpoint call and timing extraction, reused by `bench_long_prompt.py`.
 
 By default each cell disables server prompt caching (`cache_prompt: false`, llama.cpp) so prefill is measured cold and is comparable across cells; pass `--cache-prompt` to keep caching on. `prompt_tokens` is the full context size from `usage`, not the server-evaluated subset. The base URL is accepted with or without a `/v1` suffix and falls back to `BENCH_BASE_URL` / `BENCH_API_KEY` (the same contract as `run_bench.py`). Full reference: [docs/longctx_bench.md](docs/longctx_bench.md).
+
+## 256K+ NIAH Harnesses
+
+A second family of long-context tools runs an 8-needle needle-in-a-haystack prompt at 256K tokens and beyond through several local engines. They share the needle format and record retrieval and association scores, a decode figure (a least-squares slope over per-token times for most clients), and guard fields: `truncated` when the engine saw a different number of prompt tokens than were built (`bench_niah_mlx.py` refuses to score such a run), and `answer_inconclusive` when a reasoning model hit the generation cap inside an unterminated `<think>` block. Which client has which guard, and where the scorers and decode figures differ, is tabulated in the docs. Engines covered: mlx-lm in-process (`bench_niah_mlx.py` with a templated haystack, `mlx_raw_niah_client.py` with a raw prompt file), `llama-server`, oMLX, mlx-dspark, and a patched mlx-vlm fork for `glm5_next` models. All default endpoints are on `127.0.0.1`; local paths come from flags or environment variables (`NIAH_MODEL_DIR`, `GLM53_FLASH_MLX_DIR`, `NIAH_256K_PROMPT`, `LCB_DIR`, `NEMOTRON_MLX8_DIR`, `BONSAI_FAST_DIR`).
+
+```bash
+# same raw prompt file through two engines
+uv run --with mlx-lm python mlx_raw_niah_client.py --model-dir /path/to/model \
+  --prompt-file niah_256k_prompt.txt --out mlx_raw.json
+uv run python llamacpp_niah_client.py --prompt-file niah_256k_prompt.txt --out llamacpp.json
+```
+
+These harnesses were built for a 256K cross-engine comparison kept elsewhere; no results from it are published in this repo. Details, the prompt format, how to build a prompt file, and the main flags: [docs/niah_harnesses.md](docs/niah_harnesses.md).
 
 ## Adding New Prompts
 

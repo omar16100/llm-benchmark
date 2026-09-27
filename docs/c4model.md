@@ -75,6 +75,15 @@ output_tokens_approx, tok_per_s, finish_reason, valid, score_raw, score_type
 ### In-process MLX NIAH bench (`bench_niah_mlx.py`, `niah_haystack.py`)
 - A second long-context path that loads the model **in-process via mlx-lm** rather than over HTTP, used when a model needs its native mlx-lm class or when a hard truncation guarantee is required. `niah_haystack.build_haystack()` builds a token-accurate multi-needle haystack (8 needles at 8 depths) with the real tokenizer; `score_answer()` scores exact code-to-city association. `bench_niah_mlx.run_length()` passes pre-tokenized ids to `stream_generate` and **asserts `prompt_tokens == tokens built`** (truncation guard) before trusting any result; it checkpoints per length to JSON. Tests: `tests/test_niah_haystack.py`. See `06072026_kimi_linear_1m_verification.md`.
 
+### 256K+ NIAH harnesses (raw-prompt clients, LiveCodeBench wrapper, reporters)
+- `mlx_raw_niah_client.py` (mlx-lm in-process), `llamacpp_niah_client.py` (`llama-server` `/completion`), `omlx_niah_client.py` (oMLX `/v1/completions`, streaming), `dspark_niah_client.py` (mlx-dspark `/v1/chat/completions`, streaming, imports the regex/scorer/slope from `omlx_niah_client`), `glm53_niah_client.py` (patched mlx-vlm fork for `glm5_next`, in-process). Each reads a raw 8-needle prompt file (or, for oMLX, can build the templated haystack with `niah_haystack.build_haystack`), scores `retrieval` and same-line `assoc`, records a decode figure (least-squares slope over token times, except llama.cpp, which uses the server's `predicted_n / (predicted_ms / 1000)`), and writes one JSON record. Guards differ per client (see `niah_harnesses.md`): prompt-token truncation checks in mlx_raw, llama.cpp, and oMLX (usage-based, direct or indirect); dspark records served tokens only; output-keyed unterminated-`<think>` flags in mlx_raw and glm53 only. Default endpoints are `127.0.0.1` ports 8081 (llama-server), 8082 (oMLX), 8091 (mlx-dspark).
+- `bench_niah_mlx.py` additions: slope from per-token timestamps (`generation_tps_slope`, `token_times`), final-answer scoring after the last `</think>` with the whole-output score kept, `generated_tail`, KV-cache quantization flags (`--kv-bits`), and alternate loaders (`--loader bonsai`, `--nonstrict`).
+- `make_1m_prompt.py`: builds a ~995K-token raw NIAH prompt from a source prompt's needle wording and codes, with its own filler and question and needles at evenly spaced depths (1/9 to 8/9), capped at 1,010,000 tokens.
+- `lcb_local_runner.py` + `lcb_guards.py`: LiveCodeBench pass@1 against a local OpenAI-compatible server (default `127.0.0.1:8090`) without editing the vendored clone; counts null and empty-extraction completions and optionally logs per-request metadata. `lcb_guards.py` is pure functions (truncation, inconclusive, no-extractable-answer, refusal, summaries).
+- `macmon_clamp_report.py`: GPU clock (median, p10, min, share at or under 400 MHz) and RAM floor/peak/delta for a macmon JSONL trace, with a delta-validity check.
+- `scripts/run_nemotron_mlx8_token_test.sh`: `mlx_lm.benchmark` long-context profile for a local MLX model (`NEMOTRON_MLX8_DIR`), writing a log and CSV under `results/1m_candidates/`.
+- Tests: `tests/test_niah_guards.py`, `tests/test_niah_clients.py`, `tests/test_lcb_guards.py`, `tests/test_macmon_clamp_report.py` (no model, GPU, or network); `tests/test_bench_niah_mlx.py` (marker `mlx`, skips without mlx-lm). See `niah_harnesses.md`.
+
 ### `aggregate_results.py`
 - `collect_custom_benchmark()`: reads `results/runs.csv`; should filter `valid=True` when computing averages.
 - `collect_lm_eval()` / `collect_bigcode()` / `collect_deepeval()`: framework-specific readers.
@@ -133,9 +142,10 @@ BENCH_BASE_URL=http://localhost:8081/v1 BENCH_API_KEY=none \
 
 Test coverage:
 ```bash
-uv run pytest tests/ -q   # 46 passing, 10 DeepEval tests skipped without an endpoint (27/09/2026)
+uv run pytest tests/ -q   # 131 passing; DeepEval, NIAH tokenizer, and mlx tests skip without an endpoint, tokenizer dir, or mlx-lm (27/09/2026)
 ```
 
 ## Change log
 
 - 27/09/2026: `scripts/runs_data.py`, `data/runs_20apr2026.csv`, CI workflow; judge described as `claude -p` CLI; `.gitignore` invariant corrected. See [27092026_readme_results_backing_plan.md](27092026_readme_results_backing_plan.md).
+- 27/09/2026: 256K+ NIAH harnesses (raw-prompt clients for mlx-lm, llama-server, oMLX, mlx-dspark, glm5_next fork), LiveCodeBench wrapper and guards, macmon reporter, 1M prompt builder; local paths moved to flags and environment variables. See [niah_harnesses.md](niah_harnesses.md).
