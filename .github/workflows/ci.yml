@@ -1,0 +1,21 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    # Pure-Python tests only. Tests that need a model directory, a live
+    # OpenAI-compatible server, or MLX (Apple silicon) skip themselves.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10.2.0
+      - name: unit tests
+        run: uv run --locked pytest tests/ -v -rs

@@ -12,39 +12,41 @@ Each row in `results/runs.csv` is tagged with a `bench_run_id` (UUID per `run_be
 
 ## Leaderboard (as of 2026-04-20)
 
-Ordered by average score over valid rows. `tok/s (real)` is derived from `results/transcripts.jsonl` as `(response_chars + reasoning_chars) / 4 / gen_s` — this corrects the under-count of thinking tokens in the raw CSV column.
+Ordered by average score over valid rows. `Valid/Total` and `Overall /5` are reproducible from [../data/runs_20apr2026.csv](../data/runs_20apr2026.csv) with `uv run python scripts/runs_data.py summary data/runs_20apr2026.csv` (the README sample results table). `tok/s (real)` and `Disk` come from local files that are not published (`results/transcripts.jsonl`, the model directories), so they cannot be checked from this repo. `tok/s (real)` is derived from `results/transcripts.jsonl` as `(response_chars + reasoning_chars) / 4 / gen_s`, which corrects the under-count of thinking tokens in the raw CSV column.
 
 | Rank | Model | Quant | Valid/Total | Overall /5 | tok/s (real) | Disk |
 |---:|---|---|---:|---:|---:|---:|
-| 🥇 **NEW** | **SuperGemma4-26B** (mlx_lm.server) | MLX 4-bit | 54/78 | **4.41** | **63.3** ⚡ | 14 GB |
-| 🥈 | MiniMax-M2.7 (LM Studio) | MLX 4-bit mxfp4 | 69/78 | 4.16 | 36.3 | 121 GB |
-| 🥉 | M2.7 (mlx_lm.server) | MLX 4-bit mxfp4 | 60/78 | 3.73 | 34.9 | 121 GB |
-| 4 | Qwen3.5-122B-A10B | GGUF Q4_K_M | 51/78 | 3.58 | 25.4 | 71 GB |
-| 5 | Qwen3.5-397B-A17B | MLX Q4 | 57/78 | 2.78 | 26.0 | 224 GB |
-| 6 | GLM-4.7-Flash (32K) | GGUF Q4_K_M | 30/78 | 2.39 | 55.2 | 18 GB |
-| 7 | GLM-4.7-Flash | GGUF Q4_K_M | 24/78 | 2.14 | 62.3 | 18 GB |
-| 🥈 **NEW** | **GLM-5.1** | MLX 3.6-bit | **75/78** | **4.37** | 6.6 | 382 GB |
-| 🥉 | Qwen3.5-122B-A10B Q8 | GGUF Q8_0 | 72/78 | 4.09 | 22.9 | 121 GB |
-| — | Qwen3.5-27B-Claude-Opus-Distilled | GGUF Q8_0 | 3/3 | 0.00 *(smoke)* | 14.0 | 27 GB |
+| 1 | SuperGemma4-26B (mlx_lm.server) | MLX 4-bit | 54/78 | 4.41 | 63.3 | 14 GB |
+| 2 | GLM-5.1 | MLX 3.6-bit | 75/78 | 4.37 | 6.6 | 382 GB |
+| 3 | MiniMax-M2.7 (LM Studio) | MLX 4-bit mxfp4 | 69/78 | 4.16 | 36.3 | 121 GB |
+| 4 | Qwen3.5-122B-A10B Q8 | GGUF Q8_0 | 72/78 | 4.09 | 22.9 | 121 GB |
+| 5 | M2.7 (mlx_lm.server) | MLX 4-bit mxfp4 | 60/78 | 3.73 | 34.9 | 121 GB |
+| 6 | Qwen3.5-122B-A10B | GGUF Q4_K_M | 51/78 | 3.58 | 25.4 | 71 GB |
+| 7 | Qwen3.5-397B-A17B | MLX Q4 | 57/78 | 2.78 | 26.0 | 224 GB |
+| 8 | GLM-4.7-Flash (32K) | GGUF Q4_K_M | 30/78 | 2.39 | 55.2 | 18 GB |
+| 9 | GLM-4.7-Flash | GGUF Q4_K_M | 24/78 | 2.14 | 62.3 | 18 GB |
+| n/a | Qwen3.5-27B-Claude-Opus-Distilled | GGUF Q8_0 | 3/3 | 0.00 *(smoke)* | 14.0 | 27 GB |
 
-**SuperGemma4-26B overtook MiniMax-M2.7 on 2026-04-20**: +6% quality (4.41 vs 4.16), +74% faster (63 vs 36 tok/s), 8.6x smaller on disk (14 vs 121 GB). Perfect 5.00 on reasoning + instruction. Weaker on coding (3.75) and valid-row rate (69% vs 88%).
+**SuperGemma4-26B overtook MiniMax-M2.7 on 2026-04-20**: +6% quality (4.41 vs 4.16), +74% faster (63 vs 36 tok/s), 8.6x smaller on disk (14 vs 121 GB). Perfect 5.00 on reasoning, coding and instruction. Weaker on tool_use (3.75 vs 4.06) and valid-row rate (69% vs 88%).
 
-MiniMax-M2.7 wins **every single category** in this run. 122B-A10B trails by ~0.6 overall but matches on instruction and coding. 397B and GLM-Flash are held back by validity rates (many runs length-truncated before the patched 32K-token policy — rerun pending).
+Before the SuperGemma4-26B and GLM-5.1 runs, MiniMax-M2.7 led every category. 122B-A10B (Q4_K_M) trails it by ~0.6 overall but matches on instruction and coding. 397B and GLM-Flash are held back by validity rates (many runs length-truncated before the patched 32K-token policy; rerun pending at the time).
 
-### Per-category winners (best of the completed benches)
+### Per-category leaders (all runs in data/runs_20apr2026.csv)
 
-| Category | Leader | Score | n |
+Highest mean score over valid, programmatically scored rows; `n` is that model's scored rows in the category.
+
+| Category | Leader(s) | Score | n |
 |---|---|---:|---:|
-| coding | MiniMax-M2.7 | 5.00 | 12 |
-| creative | MiniMax-M2.7 | 5.00 | 9 |
-| instruction | MiniMax-M2.7 (tied with 122B-A10B, 397B) | 5.00 | 9 |
-| math | MiniMax-M2.7 | 3.33 | 9 |
-| reasoning | MiniMax-M2.7 | 2.80 | 12 |
-| tool_use | MiniMax-M2.7 | 4.06 | 12 |
+| coding | 7-way tie: SuperGemma4-26B, GLM-5.1, MiniMax-M2.7 (both runtimes), Qwen3.5-122B-A10B (Q8 and Q4_K_M), Qwen3.5-397B | 5.00 | 6 to 12 |
+| creative | GLM-5.1, MiniMax-M2.7 (LM Studio), Qwen3.5-122B-A10B Q8 | 5.00 | 9 each |
+| instruction | 7-way tie (same models as coding) | 5.00 | 6 to 12 |
+| math | SuperGemma4-26B, MiniMax-M2.7 (both runtimes) | 3.33 | 9 each |
+| reasoning | SuperGemma4-26B | 5.00 | 6 |
+| tool_use | GLM-5.1 | 4.17 | 9 |
 
 ## Per-model detail
 
-### 🥇 MiniMax-M2.7 MLX-4bit-mxfp4 (LM Studio)
+### MiniMax-M2.7 MLX-4bit-mxfp4 (LM Studio)
 
 - **bench_run_id**: `dd67f270-c3d1-44d5-b91f-753237a5d8e0`
 - **Weights**: `mlx-community/MiniMax-M2.7-4bit-mxfp4` (121 GB)
@@ -53,7 +55,7 @@ MiniMax-M2.7 wins **every single category** in this run. 122B-A10B trails by ~0.
 - **Weak**: math 3.33, reasoning 2.80
 - First fully clean bench under the patched runner — landmark data point.
 
-### 🥈 Qwen3.5-122B-A10B Q4_K_M (GGUF, LM Studio)
+### Qwen3.5-122B-A10B Q4_K_M (GGUF, LM Studio)
 
 - **bench_run_id**: `b8579c32-0403-4a26-a3f2-4f0a31ab45dd`
 - **Weights**: `unsloth/Qwen3.5-122B-A10B-GGUF` (71 GB, 3 shards, now deleted to reclaim disk)
@@ -61,7 +63,7 @@ MiniMax-M2.7 wins **every single category** in this run. 122B-A10B trails by ~0.
 - coding 5.00, instruction 5.00, creative 4.56, tool_use 3.76 — solid generalist
 - **math 0.00** ⚠️ complete failure, consistent with other Qwen3.5 models on M1 (see anomalies)
 
-### 🥉 Qwen3.5-397B-A17B MLX-Q4 (LM Studio)
+### Qwen3.5-397B-A17B MLX-Q4 (LM Studio)
 
 - **bench_run_id**: `6ad21732-c0d0-4f7f-bd71-5f98d6e75b4d`
 - **Weights**: `mlx-community/Qwen3.5-397B-A17B-4bit` (224 GB, still on disk)
@@ -70,7 +72,7 @@ MiniMax-M2.7 wins **every single category** in this run. 122B-A10B trails by ~0.
 - **tool_use 0.00** ⚠️ — scoring path didn't register any tool calls; could be an MLX-backend streaming quirk for tool-call deltas. Needs investigation.
 - math 1.00 — same pattern as 122B.
 
-### 4. GLM-4.7-Flash Q4_K_M (GGUF, LM Studio)
+### GLM-4.7-Flash Q4_K_M (GGUF, LM Studio)
 
 - **bench_run_id**: `5ab520af-d36d-47a2-9fa2-16bd42c84e4d`
 - **Weights**: `unsloth/GLM-4.7-Flash-GGUF` (17 GB)
@@ -87,7 +89,7 @@ MiniMax-M2.7 wins **every single category** in this run. 122B-A10B trails by ~0.
 - **Research agent's +30% speedup prediction did NOT hold** for `mlx_lm.server` in HTTP mode. Likely the community benchmarks were done with `mlx_lm.generate` CLI, which bypasses the server's HTTP/JSON overhead.
 - **Decision: LM Studio stays the default runtime for M2.7** — runtime switch is not worth quality regression.
 
-### SuperGemma4-26B (multiple attempts, no valid data yet)
+### SuperGemma4-26B (earlier attempts, before the valid 20 Apr run above)
 
 - LM Studio's MLX engine returns `"Gemma 4 support is not ready yet, stay tuned!"` — model is unloadable there.
 - Switched to `mlx_lm.server` on port 8081. Immediate issue: `delta.reasoning` field (not `delta.reasoning_content`) — runner patched to accept both.
@@ -108,7 +110,7 @@ MiniMax-M2.7 wins **every single category** in this run. 122B-A10B trails by ~0.
 
 ## New bench policy (2026-04-14)
 
-`run_bench.py` no longer scales `max_tokens` by case budget × multiplier. Every request now uses:
+`run_bench.py` no longer scales `max_tokens` by case budget × multiplier. Every scored request (including tool-use turns) now uses the line below; warmup calls use `min(case max_tokens, 64)`:
 
 ```python
 MAX_RESPONSE_TOKENS = 32768
@@ -122,13 +124,13 @@ Rationale: length-truncation produces `valid=False` rows with no scoring signal 
 - `run_bench.py:503,507` opened outputs in `"w"` mode, wiping all history per invocation. Lost the 78-run MiniMax-M2.5 sweep and 78+ runs of Qwen3.5-397B PLD.
 - Fixed to append mode with header-skip; added periodic 10-min snapshots under `results/snapshots/`.
 
-### 2026-04-13 — codex review (`/Users/macmini/projects/codex/llm_bench_mitigation_review_13apr2026.txt`)
+### 2026-04-13: Codex review (review output kept locally, not published)
 Five bugs surfaced and patched:
 
 1. **Transport errors were silently scored as data.** The `except` in `stream_completion` synthesised a zero-valued result. Replaced with retry (3 × exponential backoff) + `TransportError` raise. Aborted benches no longer persist fake rows.
 2. **Empty `response_text` scored non-zero on 36/55 rows.** Constraint scoring subtracted penalties from a base of 5.0; empty strings still came out positive. Added `is_invalid_result()` and `_scoreable_text()` (falls back to `reasoning_text` for thinking models that put answers there).
 3. **Cross-session mashup in judge/aggregate.** Added `bench_run_id` UUID column per invocation so rows can be sliced by run.
-4. **CSV/JSONL divergence** (different row counts after crash). Write order is now JSONL → fsync → CSV → fsync, so transcripts ≥ csv after any crash.
+4. **CSV/JSONL divergence** (different row counts after crash). Write order is now JSONL, flush, CSV, flush (the code calls `flush()`, not `os.fsync`), so transcripts ≥ csv after a process crash.
 5. **Sanity early-abort.** If the first 3 scored runs all produce empty `response+reasoning`, the bench raises — catches misconfigured chat templates or wrong `thinking` flag.
 
 ### 2026-04-14 — streaming alias + max-token policy
@@ -161,6 +163,6 @@ Five bugs surfaced and patched:
 ## Caveats
 
 - Sample size per category is small (3–5 prompts × 3 repeats = 9–15 valid rows per model-category cell). Treat per-category conclusions as directional.
-- LM Studio doesn't support Gemma 4 yet; all Gemma 4 comparisons go through `mlx_lm.server`, a different runtime whose overhead profile we're still characterising.
+- At the time of these April 2026 runs, LM Studio did not load Gemma 4, so all Gemma 4 comparisons here went through `mlx_lm.server`, a different runtime whose overhead profile was still being characterised.
 - Thinking-model runs with `MAX_RESPONSE_TOKENS = 32768` are slow (multi-minute per request). Benches that would take 30 min previously now take 2–4h.
 - Disk budget (926 GB total, frequently under 50 GB free during active benching) is the limiting factor for bigger experiments (Kimi K2.5, GLM-5.1, 122B-Q8).

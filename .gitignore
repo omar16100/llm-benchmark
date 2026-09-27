@@ -6,9 +6,9 @@ __pycache__/
 .python-version
 .claude/
 
+# local run outputs (runs.csv, transcripts.jsonl, snapshots/). Publish a sanitized
+# copy under data/ with scripts/runs_data.py instead of un-ignoring these.
 results/
-!results/runs.csv
-!results/transcripts.jsonl
 bench.log
 judge.log
 

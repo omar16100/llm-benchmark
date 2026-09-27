@@ -49,7 +49,7 @@ Disk-aware execution sequence. Each step ends in a known disk + RAM state.
 - [ ] Disk-free guard before download/load (deferred — manual sequencing suffices)
 - [ ] Driver script for automatic handoff (deferred)
 
-### Codex review findings (full output: /Users/macmini/projects/codex/llm_bench_mitigation_review_13apr2026.txt)
+### Codex review findings (full output kept locally, not published)
 - Confirmed transport-error rows were silently scored as data; **fixed**
 - Confirmed empty responses scored non-zero (codex said 12; verified 36 of 55); **fixed via _scoreable_text + is_invalid_result**
 - Confirmed CSV/JSONL divergence; **mitigated via JSONL-first write order**
@@ -74,3 +74,11 @@ Disk-aware execution sequence. Each step ends in a known disk + RAM state.
 - [x] Write README.md
 - [x] Add .gitignore and LICENSE (MIT)
 - [x] Create docs/results.md with findings
+
+## 27/09/2026 - README results backing, CI (docs/27092026_readme_results_backing_plan.md)
+- [x] Removed the unbacked Gemma 4 31B vs Qwen 3.5 27B table, performance lines, head-to-head tally (24 of 26), and hardware line (no data for any of them)
+- [x] scripts/runs_data.py (export + summary) and data/runs_20apr2026.csv (705 rows, served_model paths reduced to names); README table generated from it and pinned by tests/test_runs_data.py
+- [x] README: max_tokens policy, claude -p judge, test count, em dashes
+- [x] .gitignore: dead !results/ negations replaced with a pointer to data/
+- [x] CI: ubuntu + setup-uv + uv run --locked pytest tests/
+- [ ] 256K NIAH harnesses (PR 2)
