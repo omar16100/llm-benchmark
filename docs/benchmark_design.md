@@ -6,8 +6,12 @@ Head-to-head comparison of Gemma 4 31B (bf16) vs Qwen 3.5 27B (Q8_0) served via 
 ## Details
 
 ### Models
-- **gemma-4-31b**: 31B dense, bf16, 61.4GB RAM, quadratic attention, vision
-- **qwen3.5-27b**: 27B dense, Q8_0, 28.6GB RAM, DeltaNet linear attention, vision
+- **gemma-4-31b**: 31B dense, bf16 GGUF weights of 57.18 GiB (61.4 GB), sliding-window (1024 tokens) plus global attention layers, vision
+- **qwen3.5-27b**: 27B dense, Q8_0 GGUF weights of 26.62 GiB (28.6 GB), hybrid linear-attention (DeltaNet) layers with full attention every 4th layer, vision
+
+Weight sizes and attention layout are from the GGUF metadata in the LM Studio load log of 5 Apr 2026.
+The run of that day was recovered from server logs: see
+[27092026_recovered_gemma4_qwen35_run.md](27092026_recovered_gemma4_qwen35_run.md).
 
 ### Categories (26 prompts)
 - Reasoning (R1-R5): logic puzzles, incident RCA, sprint planning, ETL diagnosis
@@ -33,8 +37,8 @@ Head-to-head comparison of Gemma 4 31B (bf16) vs Qwen 3.5 27B (Q8_0) served via 
 # run benchmarks
 uv run python run_bench.py
 
-# run Claude judge (requires ANTHROPIC_API_KEY)
-ANTHROPIC_API_KEY=... uv run python judge_claude.py
+# run Claude judge (shells out to the local `claude -p` CLI and its login)
+uv run python judge_claude.py
 ```
 
 Results: `results/runs.csv`, `results/transcripts.jsonl`, `results/judged_results.csv`

@@ -1,0 +1,1133 @@
+2026-04-05 10:46:37,494 INFO HTTP Request: GET http://localhost:1234/v1/models "HTTP/1.1 200 OK"
+2026-04-05 10:46:37,495 INFO available models: ['gemma-4-31b', 'qwen3.5-27b', 'google_gemma-4-31b-it']
+2026-04-05 10:46:37,496 INFO warmup: gemma4_31b_bf16 / R1
+2026-04-05 10:46:37,501 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:46:42,693 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:46:47,477 INFO [1/156] R1 | gemma4_31b_bf16 | repeat 1
+2026-04-05 10:46:47,479 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:46:52,254 INFO [2/156] R1 | gemma4_31b_bf16 | repeat 2
+2026-04-05 10:46:52,257 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:46:57,029 INFO [3/156] R1 | gemma4_31b_bf16 | repeat 3
+2026-04-05 10:46:57,031 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:47:01,795 INFO warmup: qwen35_27b_q8 / R1
+2026-04-05 10:47:01,798 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:47:05,691 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:47:08,982 INFO [4/156] R1 | qwen35_27b_q8 | repeat 1
+2026-04-05 10:47:08,985 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:47:34,783 INFO [5/156] R1 | qwen35_27b_q8 | repeat 2
+2026-04-05 10:47:34,786 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:48:00,519 INFO [6/156] R1 | qwen35_27b_q8 | repeat 3
+2026-04-05 10:48:00,522 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:48:26,708 INFO warmup: gemma4_31b_bf16 / R2
+2026-04-05 10:48:26,710 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:48:28,044 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:48:29,009 INFO [7/156] R2 | gemma4_31b_bf16 | repeat 1
+2026-04-05 10:48:29,011 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:48:30,012 INFO [8/156] R2 | gemma4_31b_bf16 | repeat 2
+2026-04-05 10:48:30,015 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:48:31,035 INFO [9/156] R2 | gemma4_31b_bf16 | repeat 3
+2026-04-05 10:48:31,037 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:48:32,062 INFO warmup: qwen35_27b_q8 / R2
+2026-04-05 10:48:32,064 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:48:35,940 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:48:39,341 INFO [10/156] R2 | qwen35_27b_q8 | repeat 1
+2026-04-05 10:48:39,343 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:48:52,907 INFO [11/156] R2 | qwen35_27b_q8 | repeat 2
+2026-04-05 10:48:52,910 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:49:07,108 INFO [12/156] R2 | qwen35_27b_q8 | repeat 3
+2026-04-05 10:49:07,110 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:49:21,724 INFO warmup: gemma4_31b_bf16 / R3
+2026-04-05 10:49:21,727 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:49:26,610 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:49:31,604 INFO [13/156] R3 | gemma4_31b_bf16 | repeat 1
+2026-04-05 10:49:31,607 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:49:36,680 INFO [14/156] R3 | gemma4_31b_bf16 | repeat 2
+2026-04-05 10:49:36,682 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:49:41,799 INFO [15/156] R3 | gemma4_31b_bf16 | repeat 3
+2026-04-05 10:49:41,801 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:49:47,053 INFO warmup: qwen35_27b_q8 / R3
+2026-04-05 10:49:47,056 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:49:52,082 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:49:56,473 INFO [16/156] R3 | qwen35_27b_q8 | repeat 1
+2026-04-05 10:49:56,476 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:50:15,306 INFO [17/156] R3 | qwen35_27b_q8 | repeat 2
+2026-04-05 10:50:15,308 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:50:37,066 INFO [18/156] R3 | qwen35_27b_q8 | repeat 3
+2026-04-05 10:50:37,069 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:51:01,819 INFO warmup: gemma4_31b_bf16 / R4
+2026-04-05 10:51:01,821 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:51:05,588 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:51:08,886 INFO [19/156] R4 | gemma4_31b_bf16 | repeat 1
+2026-04-05 10:51:08,889 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:51:11,870 INFO [20/156] R4 | gemma4_31b_bf16 | repeat 2
+2026-04-05 10:51:11,873 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:51:14,994 INFO [21/156] R4 | gemma4_31b_bf16 | repeat 3
+2026-04-05 10:51:14,996 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:51:18,193 INFO warmup: qwen35_27b_q8 / R4
+2026-04-05 10:51:18,196 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:51:26,989 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:51:34,976 INFO [22/156] R4 | qwen35_27b_q8 | repeat 1
+2026-04-05 10:51:34,978 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:52:10,916 INFO [23/156] R4 | qwen35_27b_q8 | repeat 2
+2026-04-05 10:52:10,919 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:52:52,357 INFO [24/156] R4 | qwen35_27b_q8 | repeat 3
+2026-04-05 10:52:52,360 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:53:37,041 INFO warmup: gemma4_31b_bf16 / R5
+2026-04-05 10:53:37,045 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:53:41,982 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:53:46,728 INFO [25/156] R5 | gemma4_31b_bf16 | repeat 1
+2026-04-05 10:53:46,731 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:53:51,551 INFO [26/156] R5 | gemma4_31b_bf16 | repeat 2
+2026-04-05 10:53:51,553 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:53:56,302 INFO [27/156] R5 | gemma4_31b_bf16 | repeat 3
+2026-04-05 10:53:56,304 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:54:01,137 INFO warmup: qwen35_27b_q8 / R5
+2026-04-05 10:54:01,140 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:54:13,359 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:54:24,371 INFO [28/156] R5 | qwen35_27b_q8 | repeat 1
+2026-04-05 10:54:24,374 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:55:06,471 INFO [29/156] R5 | qwen35_27b_q8 | repeat 2
+2026-04-05 10:55:06,474 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:55:45,672 INFO [30/156] R5 | qwen35_27b_q8 | repeat 3
+2026-04-05 10:55:45,675 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:56:24,024 INFO warmup: gemma4_31b_bf16 / C1
+2026-04-05 10:56:24,029 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:56:39,212 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:56:54,424 INFO [31/156] C1 | gemma4_31b_bf16 | repeat 1
+2026-04-05 10:56:54,426 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:57:28,706 INFO [32/156] C1 | gemma4_31b_bf16 | repeat 2
+2026-04-05 10:57:28,709 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:57:58,609 INFO [33/156] C1 | gemma4_31b_bf16 | repeat 3
+2026-04-05 10:57:58,612 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:58:26,548 INFO warmup: qwen35_27b_q8 / C1
+2026-04-05 10:58:26,551 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:58:33,212 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:58:39,349 INFO [34/156] C1 | qwen35_27b_q8 | repeat 1
+2026-04-05 10:58:39,351 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:59:17,120 INFO [35/156] C1 | qwen35_27b_q8 | repeat 2
+2026-04-05 10:59:17,123 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 10:59:56,326 INFO [36/156] C1 | qwen35_27b_q8 | repeat 3
+2026-04-05 10:59:56,329 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:00:36,406 INFO warmup: gemma4_31b_bf16 / C2
+2026-04-05 11:00:36,409 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:00:44,755 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:00:53,036 INFO [37/156] C2 | gemma4_31b_bf16 | repeat 1
+2026-04-05 11:00:53,038 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:01:01,267 INFO [38/156] C2 | gemma4_31b_bf16 | repeat 2
+2026-04-05 11:01:01,270 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:01:09,539 INFO [39/156] C2 | gemma4_31b_bf16 | repeat 3
+2026-04-05 11:01:09,542 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:01:17,792 INFO warmup: qwen35_27b_q8 / C2
+2026-04-05 11:01:17,795 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:01:24,674 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:01:31,475 INFO [40/156] C2 | qwen35_27b_q8 | repeat 1
+2026-04-05 11:01:31,478 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:02:22,873 WARNING unit test failed:   File "<string>", line 3
+    Looking at this function, I need to identify what's wrong with the rotation logic.
+                                                     ^
+SyntaxError: unterminated string
+2026-04-05 11:02:22,874 INFO [41/156] C2 | qwen35_27b_q8 | repeat 2
+2026-04-05 11:02:22,876 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:03:13,831 WARNING unit test failed:   File "<string>", line 3
+    Looking at this function, I need to identify what's wrong with the rotation logic.
+                                                     ^
+SyntaxError: unterminated string
+2026-04-05 11:03:13,832 INFO [42/156] C2 | qwen35_27b_q8 | repeat 3
+2026-04-05 11:03:13,835 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:04:04,434 WARNING unit test failed:   File "<string>", line 3
+    Looking at this function, I need to identify what's wrong with the rotation logic.
+                                                     ^
+SyntaxError: unterminated string
+2026-04-05 11:04:04,434 INFO warmup: gemma4_31b_bf16 / C3
+2026-04-05 11:04:04,437 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:04:15,521 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:04:26,512 INFO [43/156] C3 | gemma4_31b_bf16 | repeat 1
+2026-04-05 11:04:26,515 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:04:46,629 INFO [44/156] C3 | gemma4_31b_bf16 | repeat 2
+2026-04-05 11:04:46,631 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:05:06,721 INFO [45/156] C3 | gemma4_31b_bf16 | repeat 3
+2026-04-05 11:05:06,724 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:05:26,690 INFO warmup: qwen35_27b_q8 / C3
+2026-04-05 11:05:26,692 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:05:33,508 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:05:39,756 INFO [46/156] C3 | qwen35_27b_q8 | repeat 1
+2026-04-05 11:05:39,759 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:06:28,937 INFO [47/156] C3 | qwen35_27b_q8 | repeat 2
+2026-04-05 11:06:28,939 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:07:18,254 INFO [48/156] C3 | qwen35_27b_q8 | repeat 3
+2026-04-05 11:07:18,256 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:08:07,530 INFO warmup: gemma4_31b_bf16 / C4
+2026-04-05 11:08:07,533 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:08:18,226 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:08:28,863 INFO [49/156] C4 | gemma4_31b_bf16 | repeat 1
+2026-04-05 11:08:28,865 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:08:54,183 INFO [50/156] C4 | gemma4_31b_bf16 | repeat 2
+2026-04-05 11:08:54,186 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:09:19,828 INFO [51/156] C4 | gemma4_31b_bf16 | repeat 3
+2026-04-05 11:09:19,831 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:09:45,054 INFO warmup: qwen35_27b_q8 / C4
+2026-04-05 11:09:45,057 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:09:51,690 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:09:58,250 INFO [52/156] C4 | qwen35_27b_q8 | repeat 1
+2026-04-05 11:09:58,252 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:11:12,447 INFO [53/156] C4 | qwen35_27b_q8 | repeat 2
+2026-04-05 11:11:12,450 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:12:28,968 INFO [54/156] C4 | qwen35_27b_q8 | repeat 3
+2026-04-05 11:12:28,971 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:13:47,515 INFO warmup: gemma4_31b_bf16 / C5
+2026-04-05 11:13:47,518 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:13:59,195 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:14:10,842 INFO [55/156] C5 | gemma4_31b_bf16 | repeat 1
+2026-04-05 11:14:10,844 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:14:43,004 INFO [56/156] C5 | gemma4_31b_bf16 | repeat 2
+2026-04-05 11:14:43,007 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:15:15,003 INFO [57/156] C5 | gemma4_31b_bf16 | repeat 3
+2026-04-05 11:15:15,006 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:15:46,925 INFO warmup: qwen35_27b_q8 / C5
+2026-04-05 11:15:46,928 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:15:54,094 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:16:00,495 INFO [58/156] C5 | qwen35_27b_q8 | repeat 1
+2026-04-05 11:16:00,497 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:16:44,346 INFO [59/156] C5 | qwen35_27b_q8 | repeat 2
+2026-04-05 11:16:44,349 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:17:28,241 INFO [60/156] C5 | qwen35_27b_q8 | repeat 3
+2026-04-05 11:17:28,244 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:18:12,452 INFO warmup: gemma4_31b_bf16 / M1
+2026-04-05 11:18:12,455 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:18:13,975 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:18:15,519 INFO [61/156] M1 | gemma4_31b_bf16 | repeat 1
+2026-04-05 11:18:15,522 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:18:17,168 INFO [62/156] M1 | gemma4_31b_bf16 | repeat 2
+2026-04-05 11:18:17,170 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:18:18,723 INFO [63/156] M1 | gemma4_31b_bf16 | repeat 3
+2026-04-05 11:18:18,725 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:18:20,317 INFO warmup: qwen35_27b_q8 / M1
+2026-04-05 11:18:20,319 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:18:27,404 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:18:34,264 INFO [64/156] M1 | qwen35_27b_q8 | repeat 1
+2026-04-05 11:18:34,267 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:19:00,301 INFO [65/156] M1 | qwen35_27b_q8 | repeat 2
+2026-04-05 11:19:00,303 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:19:26,522 INFO [66/156] M1 | qwen35_27b_q8 | repeat 3
+2026-04-05 11:19:26,524 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:19:52,822 INFO warmup: gemma4_31b_bf16 / M2
+2026-04-05 11:19:52,824 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:19:54,253 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:19:55,588 INFO [67/156] M2 | gemma4_31b_bf16 | repeat 1
+2026-04-05 11:19:55,590 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:19:57,038 INFO [68/156] M2 | gemma4_31b_bf16 | repeat 2
+2026-04-05 11:19:57,040 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:19:58,455 INFO [69/156] M2 | gemma4_31b_bf16 | repeat 3
+2026-04-05 11:19:58,458 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:19:59,861 INFO warmup: qwen35_27b_q8 / M2
+2026-04-05 11:19:59,863 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:20:06,950 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:20:13,931 INFO [70/156] M2 | qwen35_27b_q8 | repeat 1
+2026-04-05 11:20:13,933 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:20:40,354 INFO [71/156] M2 | qwen35_27b_q8 | repeat 2
+2026-04-05 11:20:40,356 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:21:06,829 INFO [72/156] M2 | qwen35_27b_q8 | repeat 3
+2026-04-05 11:21:06,831 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:21:33,366 INFO warmup: gemma4_31b_bf16 / M3
+2026-04-05 11:21:33,368 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:21:44,799 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:21:56,188 INFO [73/156] M3 | gemma4_31b_bf16 | repeat 1
+2026-04-05 11:21:56,191 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:22:37,778 INFO [74/156] M3 | gemma4_31b_bf16 | repeat 2
+2026-04-05 11:22:37,781 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:23:19,591 INFO [75/156] M3 | gemma4_31b_bf16 | repeat 3
+2026-04-05 11:23:19,598 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:24:01,374 INFO warmup: qwen35_27b_q8 / M3
+2026-04-05 11:24:01,377 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:24:08,288 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:24:15,145 INFO [76/156] M3 | qwen35_27b_q8 | repeat 1
+2026-04-05 11:24:15,147 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:24:41,154 INFO [77/156] M3 | qwen35_27b_q8 | repeat 2
+2026-04-05 11:24:41,157 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:25:07,132 INFO [78/156] M3 | qwen35_27b_q8 | repeat 3
+2026-04-05 11:25:07,134 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:25:33,138 INFO warmup: gemma4_31b_bf16 / M4
+2026-04-05 11:25:33,140 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:25:34,781 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:25:36,547 INFO [79/156] M4 | gemma4_31b_bf16 | repeat 1
+2026-04-05 11:25:36,549 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:25:38,303 INFO [80/156] M4 | gemma4_31b_bf16 | repeat 2
+2026-04-05 11:25:38,305 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:25:40,037 INFO [81/156] M4 | gemma4_31b_bf16 | repeat 3
+2026-04-05 11:25:40,039 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:25:41,801 INFO warmup: qwen35_27b_q8 / M4
+2026-04-05 11:25:41,803 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:25:48,901 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:25:55,751 INFO [82/156] M4 | qwen35_27b_q8 | repeat 1
+2026-04-05 11:25:55,753 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:26:21,776 INFO [83/156] M4 | qwen35_27b_q8 | repeat 2
+2026-04-05 11:26:21,778 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:26:47,935 INFO [84/156] M4 | qwen35_27b_q8 | repeat 3
+2026-04-05 11:26:47,938 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:27:14,219 INFO warmup: gemma4_31b_bf16 / I1
+2026-04-05 11:27:14,222 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:27:20,457 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:27:26,635 INFO [85/156] I1 | gemma4_31b_bf16 | repeat 1
+2026-04-05 11:27:26,638 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:27:32,826 INFO [86/156] I1 | gemma4_31b_bf16 | repeat 2
+2026-04-05 11:27:32,828 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:27:39,005 INFO [87/156] I1 | gemma4_31b_bf16 | repeat 3
+2026-04-05 11:27:39,008 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:27:45,195 INFO warmup: qwen35_27b_q8 / I1
+2026-04-05 11:27:45,197 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:27:52,358 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:27:58,843 INFO [88/156] I1 | qwen35_27b_q8 | repeat 1
+2026-04-05 11:27:58,845 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:28:24,644 INFO [89/156] I1 | qwen35_27b_q8 | repeat 2
+2026-04-05 11:28:24,646 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:28:50,450 INFO [90/156] I1 | qwen35_27b_q8 | repeat 3
+2026-04-05 11:28:50,452 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:29:16,271 INFO warmup: gemma4_31b_bf16 / I2
+2026-04-05 11:29:16,273 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:29:20,099 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:29:23,819 INFO [91/156] I2 | gemma4_31b_bf16 | repeat 1
+2026-04-05 11:29:23,821 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:29:27,573 INFO [92/156] I2 | gemma4_31b_bf16 | repeat 2
+2026-04-05 11:29:27,576 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:29:31,347 INFO [93/156] I2 | gemma4_31b_bf16 | repeat 3
+2026-04-05 11:29:31,350 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:29:35,069 INFO warmup: qwen35_27b_q8 / I2
+2026-04-05 11:29:35,072 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:29:42,053 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:29:48,988 INFO [94/156] I2 | qwen35_27b_q8 | repeat 1
+2026-04-05 11:29:48,990 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:30:15,403 INFO [95/156] I2 | qwen35_27b_q8 | repeat 2
+2026-04-05 11:30:15,406 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:30:42,082 INFO [96/156] I2 | qwen35_27b_q8 | repeat 3
+2026-04-05 11:30:42,084 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:31:08,656 INFO warmup: gemma4_31b_bf16 / I3
+2026-04-05 11:31:08,658 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:31:10,452 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:31:12,505 INFO [97/156] I3 | gemma4_31b_bf16 | repeat 1
+2026-04-05 11:31:12,507 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:31:14,489 INFO [98/156] I3 | gemma4_31b_bf16 | repeat 2
+2026-04-05 11:31:14,491 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:31:16,488 INFO [99/156] I3 | gemma4_31b_bf16 | repeat 3
+2026-04-05 11:31:16,490 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:31:18,478 INFO warmup: qwen35_27b_q8 / I3
+2026-04-05 11:31:18,480 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:31:25,777 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:31:32,900 INFO [100/156] I3 | qwen35_27b_q8 | repeat 1
+2026-04-05 11:31:32,903 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:31:59,566 INFO [101/156] I3 | qwen35_27b_q8 | repeat 2
+2026-04-05 11:31:59,568 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:32:26,202 INFO [102/156] I3 | qwen35_27b_q8 | repeat 3
+2026-04-05 11:32:26,204 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:32:52,971 INFO warmup: gemma4_31b_bf16 / I4
+2026-04-05 11:32:52,974 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:32:57,013 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:33:00,938 INFO [103/156] I4 | gemma4_31b_bf16 | repeat 1
+2026-04-05 11:33:00,940 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:33:04,976 INFO [104/156] I4 | gemma4_31b_bf16 | repeat 2
+2026-04-05 11:33:04,978 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:33:08,879 INFO [105/156] I4 | gemma4_31b_bf16 | repeat 3
+2026-04-05 11:33:08,881 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:33:12,849 INFO warmup: qwen35_27b_q8 / I4
+2026-04-05 11:33:12,852 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:33:19,909 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:33:26,936 INFO [106/156] I4 | qwen35_27b_q8 | repeat 1
+2026-04-05 11:33:26,938 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:33:53,701 INFO constraint fail: word_count 0 != 17
+2026-04-05 11:33:53,701 INFO constraint fail: missing word 'index'
+2026-04-05 11:33:53,701 INFO constraint fail: missing word 'latency'
+2026-04-05 11:33:53,701 INFO constraint fail: missing word 'consistency'
+2026-04-05 11:33:53,701 INFO [107/156] I4 | qwen35_27b_q8 | repeat 2
+2026-04-05 11:33:53,703 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:34:20,508 INFO constraint fail: word_count 0 != 17
+2026-04-05 11:34:20,508 INFO constraint fail: missing word 'index'
+2026-04-05 11:34:20,508 INFO constraint fail: missing word 'latency'
+2026-04-05 11:34:20,508 INFO constraint fail: missing word 'consistency'
+2026-04-05 11:34:20,509 INFO [108/156] I4 | qwen35_27b_q8 | repeat 3
+2026-04-05 11:34:20,511 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:34:47,309 INFO constraint fail: word_count 0 != 17
+2026-04-05 11:34:47,309 INFO constraint fail: missing word 'index'
+2026-04-05 11:34:47,309 INFO constraint fail: missing word 'latency'
+2026-04-05 11:34:47,309 INFO constraint fail: missing word 'consistency'
+2026-04-05 11:34:47,309 INFO warmup: gemma4_31b_bf16 / W1
+2026-04-05 11:34:47,311 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:34:58,840 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:35:10,277 INFO [109/156] W1 | gemma4_31b_bf16 | repeat 1
+2026-04-05 11:35:10,280 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:35:39,550 INFO [110/156] W1 | gemma4_31b_bf16 | repeat 2
+2026-04-05 11:35:39,553 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:36:04,623 INFO [111/156] W1 | gemma4_31b_bf16 | repeat 3
+2026-04-05 11:36:04,625 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:36:31,778 INFO warmup: qwen35_27b_q8 / W1
+2026-04-05 11:36:31,780 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:36:39,223 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:36:45,811 INFO [112/156] W1 | qwen35_27b_q8 | repeat 1
+2026-04-05 11:36:45,813 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:37:38,186 INFO [113/156] W1 | qwen35_27b_q8 | repeat 2
+2026-04-05 11:37:38,188 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:38:30,547 INFO [114/156] W1 | qwen35_27b_q8 | repeat 3
+2026-04-05 11:38:30,549 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:39:22,983 INFO warmup: gemma4_31b_bf16 / W2
+2026-04-05 11:39:22,985 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:39:34,422 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:39:45,832 INFO [115/156] W2 | gemma4_31b_bf16 | repeat 1
+2026-04-05 11:39:45,835 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:39:57,225 INFO [116/156] W2 | gemma4_31b_bf16 | repeat 2
+2026-04-05 11:39:57,227 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:40:08,912 INFO [117/156] W2 | gemma4_31b_bf16 | repeat 3
+2026-04-05 11:40:08,914 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:40:18,693 INFO warmup: qwen35_27b_q8 / W2
+2026-04-05 11:40:18,695 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:40:25,843 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:40:32,378 INFO [118/156] W2 | qwen35_27b_q8 | repeat 1
+2026-04-05 11:40:32,380 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:41:24,391 INFO [119/156] W2 | qwen35_27b_q8 | repeat 2
+2026-04-05 11:41:24,394 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:42:16,352 INFO [120/156] W2 | qwen35_27b_q8 | repeat 3
+2026-04-05 11:42:16,354 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:43:08,436 INFO warmup: gemma4_31b_bf16 / W3
+2026-04-05 11:43:08,438 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:43:19,593 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:43:30,840 INFO [121/156] W3 | gemma4_31b_bf16 | repeat 1
+2026-04-05 11:43:30,842 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:43:55,157 INFO [122/156] W3 | gemma4_31b_bf16 | repeat 2
+2026-04-05 11:43:55,159 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:44:19,981 INFO [123/156] W3 | gemma4_31b_bf16 | repeat 3
+2026-04-05 11:44:19,984 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:44:43,456 INFO warmup: qwen35_27b_q8 / W3
+2026-04-05 11:44:43,458 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:44:50,425 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:44:57,331 INFO [124/156] W3 | qwen35_27b_q8 | repeat 1
+2026-04-05 11:44:57,334 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:45:49,289 INFO [125/156] W3 | qwen35_27b_q8 | repeat 2
+2026-04-05 11:45:49,292 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:46:41,437 INFO [126/156] W3 | qwen35_27b_q8 | repeat 3
+2026-04-05 11:46:41,440 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:47:34,377 INFO warmup: gemma4_31b_bf16 / W4
+2026-04-05 11:47:34,380 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:47:45,893 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:47:57,158 INFO [127/156] W4 | gemma4_31b_bf16 | repeat 1
+2026-04-05 11:47:57,161 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:48:21,313 INFO [128/156] W4 | gemma4_31b_bf16 | repeat 2
+2026-04-05 11:48:21,316 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:48:45,608 INFO [129/156] W4 | gemma4_31b_bf16 | repeat 3
+2026-04-05 11:48:45,611 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:49:08,398 INFO warmup: qwen35_27b_q8 / W4
+2026-04-05 11:49:08,401 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:49:15,524 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:49:22,612 INFO [130/156] W4 | qwen35_27b_q8 | repeat 1
+2026-04-05 11:49:22,615 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:50:16,649 INFO [131/156] W4 | qwen35_27b_q8 | repeat 2
+2026-04-05 11:50:16,651 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:51:12,146 INFO [132/156] W4 | qwen35_27b_q8 | repeat 3
+2026-04-05 11:51:12,149 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:51:44,678 INFO warmup: gemma4_31b_bf16 / T1
+2026-04-05 11:51:44,680 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:51:56,622 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:52:08,422 INFO [133/156] T1 | gemma4_31b_bf16 | repeat 1
+2026-04-05 11:52:08,426 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:52:21,037 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:52:44,806 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:52:59,712 INFO [134/156] T1 | gemma4_31b_bf16 | repeat 2
+2026-04-05 11:52:59,715 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:53:12,168 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:53:36,112 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:53:52,251 INFO [135/156] T1 | gemma4_31b_bf16 | repeat 3
+2026-04-05 11:53:52,255 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:54:04,648 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:54:28,720 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:54:44,097 INFO warmup: qwen35_27b_q8 / T1
+2026-04-05 11:54:44,100 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:54:51,530 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:54:58,837 INFO [136/156] T1 | qwen35_27b_q8 | repeat 1
+2026-04-05 11:54:58,840 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:55:18,492 INFO expected tool 'create_refund' not called, got: []
+2026-04-05 11:55:18,492 INFO [137/156] T1 | qwen35_27b_q8 | repeat 2
+2026-04-05 11:55:18,495 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:55:36,094 INFO expected tool 'create_refund' not called, got: []
+2026-04-05 11:55:36,094 INFO [138/156] T1 | qwen35_27b_q8 | repeat 3
+2026-04-05 11:55:36,097 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:55:53,192 INFO expected tool 'create_refund' not called, got: []
+2026-04-05 11:55:53,193 INFO warmup: gemma4_31b_bf16 / T2
+2026-04-05 11:55:53,195 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:56:05,835 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:56:17,923 INFO [139/156] T2 | gemma4_31b_bf16 | repeat 1
+2026-04-05 11:56:17,926 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:56:32,700 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:56:59,891 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:57:16,991 INFO [140/156] T2 | gemma4_31b_bf16 | repeat 2
+2026-04-05 11:57:16,994 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:57:33,100 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:58:00,897 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:58:16,659 INFO [141/156] T2 | gemma4_31b_bf16 | repeat 3
+2026-04-05 11:58:16,662 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:58:31,656 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:58:59,285 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:59:15,960 INFO warmup: qwen35_27b_q8 / T2
+2026-04-05 11:59:15,963 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:59:23,719 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 11:59:30,689 INFO [142/156] T2 | qwen35_27b_q8 | repeat 1
+2026-04-05 11:59:30,692 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:00:07,315 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:00:44,967 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:01:20,119 INFO [143/156] T2 | qwen35_27b_q8 | repeat 2
+2026-04-05 12:01:20,122 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:01:55,330 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:02:34,599 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:03:09,932 INFO [144/156] T2 | qwen35_27b_q8 | repeat 3
+2026-04-05 12:03:09,935 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:03:46,417 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:04:26,367 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:05:01,917 INFO warmup: gemma4_31b_bf16 / T3
+2026-04-05 12:05:01,920 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:05:10,468 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:05:18,870 INFO [145/156] T3 | gemma4_31b_bf16 | repeat 1
+2026-04-05 12:05:18,873 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:05:29,014 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:05:40,584 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:05:52,697 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:06:06,678 INFO [146/156] T3 | gemma4_31b_bf16 | repeat 2
+2026-04-05 12:06:06,681 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:06:17,010 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:06:28,404 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:06:41,138 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:06:56,097 INFO [147/156] T3 | gemma4_31b_bf16 | repeat 3
+2026-04-05 12:06:56,100 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:07:06,902 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:07:19,468 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:07:32,400 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:07:47,221 INFO warmup: qwen35_27b_q8 / T3
+2026-04-05 12:07:47,224 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:07:55,374 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:08:03,422 INFO [148/156] T3 | qwen35_27b_q8 | repeat 1
+2026-04-05 12:08:03,425 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:08:12,124 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:08:18,534 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:08:24,632 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:09:25,176 INFO [149/156] T3 | qwen35_27b_q8 | repeat 2
+2026-04-05 12:09:25,178 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:09:31,996 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:09:38,481 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:09:44,519 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:10:45,667 INFO [150/156] T3 | qwen35_27b_q8 | repeat 3
+2026-04-05 12:10:45,670 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:10:52,522 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:10:58,963 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:11:05,064 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:12:06,777 INFO warmup: gemma4_31b_bf16 / T4
+2026-04-05 12:12:06,780 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:12:14,263 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:12:21,598 INFO [151/156] T4 | gemma4_31b_bf16 | repeat 1
+2026-04-05 12:12:21,601 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:12:32,625 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:12:55,564 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:13:11,525 INFO [152/156] T4 | gemma4_31b_bf16 | repeat 2
+2026-04-05 12:13:11,528 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:13:22,334 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:13:44,734 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:14:00,034 INFO [153/156] T4 | gemma4_31b_bf16 | repeat 3
+2026-04-05 12:14:00,037 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:14:10,308 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:14:33,042 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:14:48,551 INFO warmup: qwen35_27b_q8 / T4
+2026-04-05 12:14:48,554 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:14:56,379 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:15:04,182 INFO [154/156] T4 | qwen35_27b_q8 | repeat 1
+2026-04-05 12:15:04,184 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:15:15,829 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:15:36,872 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:16:13,170 INFO [155/156] T4 | qwen35_27b_q8 | repeat 2
+2026-04-05 12:16:13,172 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:16:23,171 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:16:44,085 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:17:20,052 INFO [156/156] T4 | qwen35_27b_q8 | repeat 3
+2026-04-05 12:17:20,055 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:17:29,952 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:17:50,609 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:18:31,189 INFO benchmark complete. results: results/runs.csv, transcripts: results/transcripts.jsonl
+2026-04-05 12:19:19,253 INFO HTTP Request: GET http://localhost:1234/v1/models "HTTP/1.1 200 OK"
+2026-04-05 12:19:19,253 INFO available models: ['gemma-4-31b', 'qwen3.5-27b', 'google_gemma-4-31b-it']
+2026-04-05 12:19:19,254 INFO warmup: gemma4_31b_bf16 / R1
+2026-04-05 12:19:19,270 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:19:27,601 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:19:36,024 INFO [1/156] R1 | gemma4_31b_bf16 | repeat 1
+2026-04-05 12:19:36,039 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:19:44,340 INFO [2/156] R1 | gemma4_31b_bf16 | repeat 2
+2026-04-05 12:19:44,356 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:19:52,542 INFO [3/156] R1 | gemma4_31b_bf16 | repeat 3
+2026-04-05 12:19:52,556 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:20:00,560 INFO warmup: qwen35_27b_q8 / R1
+2026-04-05 12:20:00,574 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:20:07,137 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:20:12,970 INFO [4/156] R1 | qwen35_27b_q8 | repeat 1
+2026-04-05 12:20:12,983 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:21:00,468 INFO [5/156] R1 | qwen35_27b_q8 | repeat 2
+2026-04-05 12:21:00,482 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:21:49,237 INFO [6/156] R1 | qwen35_27b_q8 | repeat 3
+2026-04-05 12:21:49,250 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:22:37,947 INFO warmup: gemma4_31b_bf16 / R2
+2026-04-05 12:22:37,961 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:22:40,362 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:22:43,258 INFO [7/156] R2 | gemma4_31b_bf16 | repeat 1
+2026-04-05 12:22:43,272 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:22:46,127 INFO [8/156] R2 | gemma4_31b_bf16 | repeat 2
+2026-04-05 12:22:46,141 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:22:49,014 INFO [9/156] R2 | gemma4_31b_bf16 | repeat 3
+2026-04-05 12:22:49,032 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:22:51,916 INFO warmup: qwen35_27b_q8 / R2
+2026-04-05 12:22:51,930 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:23:00,015 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:23:06,235 INFO [10/156] R2 | qwen35_27b_q8 | repeat 1
+2026-04-05 12:23:06,250 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:23:30,751 INFO [11/156] R2 | qwen35_27b_q8 | repeat 2
+2026-04-05 12:23:30,764 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:23:55,450 INFO [12/156] R2 | qwen35_27b_q8 | repeat 3
+2026-04-05 12:23:55,464 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:24:07,748 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:24:16,932 INFO HTTP Request: GET http://localhost:1234/v1/models "HTTP/1.1 200 OK"
+2026-04-05 12:24:16,933 INFO available models: ['gemma-4-31b', 'qwen3.5-27b', 'google_gemma-4-31b-it']
+2026-04-05 12:24:16,933 INFO warmup: gemma4_31b_bf16 / R1
+2026-04-05 12:24:16,949 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:24:22,586 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:24:31,430 INFO [1/156] R1 | gemma4_31b_bf16 | repeat 1
+2026-04-05 12:24:31,445 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:24:39,908 INFO [2/156] R1 | gemma4_31b_bf16 | repeat 2
+2026-04-05 12:24:39,923 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:24:48,392 INFO [3/156] R1 | gemma4_31b_bf16 | repeat 3
+2026-04-05 12:24:48,406 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:24:56,858 INFO warmup: qwen35_27b_q8 / R1
+2026-04-05 12:24:56,873 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:25:03,279 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:25:09,709 INFO [4/156] R1 | qwen35_27b_q8 | repeat 1
+2026-04-05 12:25:09,723 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:26:01,278 INFO [5/156] R1 | qwen35_27b_q8 | repeat 2
+2026-04-05 12:26:01,293 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:26:43,883 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:28:28,855 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:29:27,766 INFO HTTP Request: GET http://localhost:1234/v1/models "HTTP/1.1 200 OK"
+2026-04-05 12:29:27,767 INFO available models: ['gemma-4-31b', 'qwen3.5-27b', 'google_gemma-4-31b-it']
+2026-04-05 12:29:27,767 INFO warmup: gemma4_31b_bf16 / R1
+2026-04-05 12:29:27,784 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:29:34,200 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:29:41,794 INFO [1/156] R1 | gemma4_31b_bf16 | repeat 1
+2026-04-05 12:29:41,808 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:29:49,667 INFO [2/156] R1 | gemma4_31b_bf16 | repeat 2
+2026-04-05 12:29:49,682 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:29:57,602 INFO [3/156] R1 | gemma4_31b_bf16 | repeat 3
+2026-04-05 12:29:57,617 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:30:05,541 INFO warmup: qwen35_27b_q8 / R1
+2026-04-05 12:30:05,555 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:30:12,131 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:30:17,946 INFO [4/156] R1 | qwen35_27b_q8 | repeat 1
+2026-04-05 12:30:17,959 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:32:08,263 INFO [5/156] R1 | qwen35_27b_q8 | repeat 2
+2026-04-05 12:32:08,276 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:34:03,934 INFO [6/156] R1 | qwen35_27b_q8 | repeat 3
+2026-04-05 12:34:03,947 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:36:11,370 INFO warmup: gemma4_31b_bf16 / R2
+2026-04-05 12:36:11,384 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:36:13,356 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:36:15,520 INFO [7/156] R2 | gemma4_31b_bf16 | repeat 1
+2026-04-05 12:36:15,533 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:36:17,669 INFO [8/156] R2 | gemma4_31b_bf16 | repeat 2
+2026-04-05 12:36:17,684 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:36:19,825 INFO [9/156] R2 | gemma4_31b_bf16 | repeat 3
+2026-04-05 12:36:19,842 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:36:21,957 INFO warmup: qwen35_27b_q8 / R2
+2026-04-05 12:36:21,970 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:36:29,082 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:36:35,934 INFO [10/156] R2 | qwen35_27b_q8 | repeat 1
+2026-04-05 12:36:35,948 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:38:59,755 INFO [11/156] R2 | qwen35_27b_q8 | repeat 2
+2026-04-05 12:38:59,769 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:41:23,615 INFO [12/156] R2 | qwen35_27b_q8 | repeat 3
+2026-04-05 12:41:23,628 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:43:43,185 INFO warmup: gemma4_31b_bf16 / R3
+2026-04-05 12:43:43,198 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:43:50,799 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:43:58,536 INFO [13/156] R3 | gemma4_31b_bf16 | repeat 1
+2026-04-05 12:43:58,552 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:44:05,784 INFO [14/156] R3 | gemma4_31b_bf16 | repeat 2
+2026-04-05 12:44:05,798 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:44:13,053 INFO [15/156] R3 | gemma4_31b_bf16 | repeat 3
+2026-04-05 12:44:13,067 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:44:20,286 INFO warmup: qwen35_27b_q8 / R3
+2026-04-05 12:44:20,300 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:44:27,400 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:44:33,677 INFO [16/156] R3 | qwen35_27b_q8 | repeat 1
+2026-04-05 12:44:33,690 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:45:32,400 INFO [17/156] R3 | qwen35_27b_q8 | repeat 2
+2026-04-05 12:45:32,413 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:46:31,244 INFO [18/156] R3 | qwen35_27b_q8 | repeat 3
+2026-04-05 12:46:31,258 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:47:29,980 INFO warmup: gemma4_31b_bf16 / R4
+2026-04-05 12:47:29,993 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:47:32,489 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:47:35,172 INFO [19/156] R4 | gemma4_31b_bf16 | repeat 1
+2026-04-05 12:47:35,185 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:47:37,881 INFO [20/156] R4 | gemma4_31b_bf16 | repeat 2
+2026-04-05 12:47:37,895 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:47:40,931 INFO [21/156] R4 | gemma4_31b_bf16 | repeat 3
+2026-04-05 12:47:40,946 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:47:43,452 INFO warmup: qwen35_27b_q8 / R4
+2026-04-05 12:47:43,464 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:47:51,248 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:47:57,691 INFO [22/156] R4 | qwen35_27b_q8 | repeat 1
+2026-04-05 12:47:57,706 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:48:41,018 INFO [23/156] R4 | qwen35_27b_q8 | repeat 2
+2026-04-05 12:48:41,032 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:49:24,348 INFO [24/156] R4 | qwen35_27b_q8 | repeat 3
+2026-04-05 12:49:24,365 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:50:07,937 INFO warmup: gemma4_31b_bf16 / R5
+2026-04-05 12:50:07,950 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:50:10,922 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:50:13,716 INFO [25/156] R5 | gemma4_31b_bf16 | repeat 1
+2026-04-05 12:50:13,731 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:50:16,851 INFO [26/156] R5 | gemma4_31b_bf16 | repeat 2
+2026-04-05 12:50:16,866 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:50:19,730 INFO [27/156] R5 | gemma4_31b_bf16 | repeat 3
+2026-04-05 12:50:19,744 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:50:22,718 INFO warmup: qwen35_27b_q8 / R5
+2026-04-05 12:50:22,732 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:50:29,836 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:50:36,047 INFO [28/156] R5 | qwen35_27b_q8 | repeat 1
+2026-04-05 12:50:36,060 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:51:38,460 INFO [29/156] R5 | qwen35_27b_q8 | repeat 2
+2026-04-05 12:51:38,475 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:52:41,033 INFO [30/156] R5 | qwen35_27b_q8 | repeat 3
+2026-04-05 12:52:41,047 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:53:44,033 INFO warmup: gemma4_31b_bf16 / C1
+2026-04-05 12:53:44,045 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:53:55,213 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:54:06,220 INFO [31/156] C1 | gemma4_31b_bf16 | repeat 1
+2026-04-05 12:54:06,239 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:54:33,853 INFO [32/156] C1 | gemma4_31b_bf16 | repeat 2
+2026-04-05 12:54:33,867 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:55:01,279 INFO [33/156] C1 | gemma4_31b_bf16 | repeat 3
+2026-04-05 12:55:01,294 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:55:28,263 INFO warmup: qwen35_27b_q8 / C1
+2026-04-05 12:55:28,277 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:55:35,038 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:55:41,192 INFO [34/156] C1 | qwen35_27b_q8 | repeat 1
+2026-04-05 12:55:41,204 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:56:18,849 INFO [35/156] C1 | qwen35_27b_q8 | repeat 2
+2026-04-05 12:56:18,862 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:56:56,585 INFO [36/156] C1 | qwen35_27b_q8 | repeat 3
+2026-04-05 12:56:56,598 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:57:34,535 INFO warmup: gemma4_31b_bf16 / C2
+2026-04-05 12:57:34,548 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:57:43,327 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:57:51,711 INFO [37/156] C2 | gemma4_31b_bf16 | repeat 1
+2026-04-05 12:57:51,726 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:57:59,719 INFO [38/156] C2 | gemma4_31b_bf16 | repeat 2
+2026-04-05 12:57:59,733 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:58:07,717 INFO [39/156] C2 | gemma4_31b_bf16 | repeat 3
+2026-04-05 12:58:07,731 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:58:15,702 INFO warmup: qwen35_27b_q8 / C2
+2026-04-05 12:58:15,716 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:58:22,254 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:58:28,648 INFO [40/156] C2 | qwen35_27b_q8 | repeat 1
+2026-04-05 12:58:28,661 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 12:59:40,958 INFO [41/156] C2 | qwen35_27b_q8 | repeat 2
+2026-04-05 12:59:40,972 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:00:53,218 INFO [42/156] C2 | qwen35_27b_q8 | repeat 3
+2026-04-05 13:00:53,231 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:02:05,138 INFO warmup: gemma4_31b_bf16 / C3
+2026-04-05 13:02:05,151 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:02:16,142 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:02:27,150 INFO [43/156] C3 | gemma4_31b_bf16 | repeat 1
+2026-04-05 13:02:27,164 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:02:48,209 INFO [44/156] C3 | gemma4_31b_bf16 | repeat 2
+2026-04-05 13:02:48,224 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:03:08,383 INFO [45/156] C3 | gemma4_31b_bf16 | repeat 3
+2026-04-05 13:03:08,396 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:03:28,238 INFO warmup: qwen35_27b_q8 / C3
+2026-04-05 13:03:28,252 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:03:35,057 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:03:41,072 INFO [46/156] C3 | qwen35_27b_q8 | repeat 1
+2026-04-05 13:03:41,085 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:04:30,771 INFO [47/156] C3 | qwen35_27b_q8 | repeat 2
+2026-04-05 13:04:30,784 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:05:20,969 INFO [48/156] C3 | qwen35_27b_q8 | repeat 3
+2026-04-05 13:05:20,982 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:06:11,637 INFO warmup: gemma4_31b_bf16 / C4
+2026-04-05 13:06:11,650 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:06:22,479 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:06:33,151 INFO [49/156] C4 | gemma4_31b_bf16 | repeat 1
+2026-04-05 13:06:33,164 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:06:58,573 INFO [50/156] C4 | gemma4_31b_bf16 | repeat 2
+2026-04-05 13:06:58,587 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:07:24,429 INFO [51/156] C4 | gemma4_31b_bf16 | repeat 3
+2026-04-05 13:07:24,444 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:07:50,780 INFO warmup: qwen35_27b_q8 / C4
+2026-04-05 13:07:50,795 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:07:57,322 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:08:03,736 INFO [52/156] C4 | qwen35_27b_q8 | repeat 1
+2026-04-05 13:08:03,749 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:09:23,183 INFO [53/156] C4 | qwen35_27b_q8 | repeat 2
+2026-04-05 13:09:23,196 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:10:43,851 INFO [54/156] C4 | qwen35_27b_q8 | repeat 3
+2026-04-05 13:10:43,864 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:12:05,910 INFO warmup: gemma4_31b_bf16 / C5
+2026-04-05 13:12:05,923 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:12:17,647 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:12:29,692 INFO [55/156] C5 | gemma4_31b_bf16 | repeat 1
+2026-04-05 13:12:29,708 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:13:02,081 INFO [56/156] C5 | gemma4_31b_bf16 | repeat 2
+2026-04-05 13:13:02,096 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:13:34,648 INFO [57/156] C5 | gemma4_31b_bf16 | repeat 3
+2026-04-05 13:13:34,663 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:14:06,416 INFO warmup: qwen35_27b_q8 / C5
+2026-04-05 13:14:06,431 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:14:13,436 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:14:19,648 INFO [58/156] C5 | qwen35_27b_q8 | repeat 1
+2026-04-05 13:14:19,662 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:15:02,453 INFO [59/156] C5 | qwen35_27b_q8 | repeat 2
+2026-04-05 13:15:02,467 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:15:45,341 INFO [60/156] C5 | qwen35_27b_q8 | repeat 3
+2026-04-05 13:15:45,355 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:16:28,115 INFO warmup: gemma4_31b_bf16 / M1
+2026-04-05 13:16:28,129 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:16:29,662 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:16:31,194 INFO [61/156] M1 | gemma4_31b_bf16 | repeat 1
+2026-04-05 13:16:31,207 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:16:32,755 INFO [62/156] M1 | gemma4_31b_bf16 | repeat 2
+2026-04-05 13:16:32,768 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:16:34,262 INFO [63/156] M1 | gemma4_31b_bf16 | repeat 3
+2026-04-05 13:16:34,280 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:16:35,769 INFO warmup: qwen35_27b_q8 / M1
+2026-04-05 13:16:35,782 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:16:42,592 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:16:49,190 INFO [64/156] M1 | qwen35_27b_q8 | repeat 1
+2026-04-05 13:16:49,203 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:18:25,490 INFO [65/156] M1 | qwen35_27b_q8 | repeat 2
+2026-04-05 13:18:25,503 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:20:00,436 INFO [66/156] M1 | qwen35_27b_q8 | repeat 3
+2026-04-05 13:20:00,449 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:21:37,523 INFO warmup: gemma4_31b_bf16 / M2
+2026-04-05 13:21:37,536 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:21:39,109 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:21:40,423 INFO [67/156] M2 | gemma4_31b_bf16 | repeat 1
+2026-04-05 13:21:40,436 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:21:41,859 INFO [68/156] M2 | gemma4_31b_bf16 | repeat 2
+2026-04-05 13:21:41,872 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:21:43,242 INFO [69/156] M2 | gemma4_31b_bf16 | repeat 3
+2026-04-05 13:21:43,255 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:21:44,618 INFO warmup: qwen35_27b_q8 / M2
+2026-04-05 13:21:44,631 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:21:51,835 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:21:58,667 INFO [70/156] M2 | qwen35_27b_q8 | repeat 1
+2026-04-05 13:21:58,685 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:24:18,265 INFO [71/156] M2 | qwen35_27b_q8 | repeat 2
+2026-04-05 13:24:18,279 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:26:36,819 INFO [72/156] M2 | qwen35_27b_q8 | repeat 3
+2026-04-05 13:26:36,832 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:28:55,787 INFO warmup: gemma4_31b_bf16 / M3
+2026-04-05 13:28:55,800 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:29:07,014 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:29:18,541 INFO [73/156] M3 | gemma4_31b_bf16 | repeat 1
+2026-04-05 13:29:18,556 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:30:00,506 INFO [74/156] M3 | gemma4_31b_bf16 | repeat 2
+2026-04-05 13:30:00,521 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:30:42,325 INFO [75/156] M3 | gemma4_31b_bf16 | repeat 3
+2026-04-05 13:30:42,339 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:31:23,705 INFO warmup: qwen35_27b_q8 / M3
+2026-04-05 13:31:23,720 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:31:30,480 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:31:37,141 INFO [76/156] M3 | qwen35_27b_q8 | repeat 1
+2026-04-05 13:31:37,154 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:34:03,975 INFO [77/156] M3 | qwen35_27b_q8 | repeat 2
+2026-04-05 13:34:03,988 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:36:30,747 INFO [78/156] M3 | qwen35_27b_q8 | repeat 3
+2026-04-05 13:36:30,760 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:39:00,271 INFO warmup: gemma4_31b_bf16 / M4
+2026-04-05 13:39:00,285 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:39:01,954 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:39:03,779 INFO [79/156] M4 | gemma4_31b_bf16 | repeat 1
+2026-04-05 13:39:03,792 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:39:05,538 INFO [80/156] M4 | gemma4_31b_bf16 | repeat 2
+2026-04-05 13:39:05,551 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:39:07,276 INFO [81/156] M4 | gemma4_31b_bf16 | repeat 3
+2026-04-05 13:39:07,289 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:39:09,218 INFO warmup: qwen35_27b_q8 / M4
+2026-04-05 13:39:09,233 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:39:16,454 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:39:23,245 INFO [82/156] M4 | qwen35_27b_q8 | repeat 1
+2026-04-05 13:39:23,258 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:40:44,512 INFO [83/156] M4 | qwen35_27b_q8 | repeat 2
+2026-04-05 13:40:44,525 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:42:08,348 INFO [84/156] M4 | qwen35_27b_q8 | repeat 3
+2026-04-05 13:42:08,361 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:43:32,821 INFO warmup: gemma4_31b_bf16 / I1
+2026-04-05 13:43:32,835 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:43:39,329 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:43:45,802 INFO [85/156] I1 | gemma4_31b_bf16 | repeat 1
+2026-04-05 13:43:45,816 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:43:52,274 INFO [86/156] I1 | gemma4_31b_bf16 | repeat 2
+2026-04-05 13:43:52,288 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:43:58,758 INFO [87/156] I1 | gemma4_31b_bf16 | repeat 3
+2026-04-05 13:43:58,772 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:44:05,424 INFO warmup: qwen35_27b_q8 / I1
+2026-04-05 13:44:05,441 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:44:12,841 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:44:19,476 INFO [88/156] I1 | qwen35_27b_q8 | repeat 1
+2026-04-05 13:44:19,490 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:45:11,162 INFO [89/156] I1 | qwen35_27b_q8 | repeat 2
+2026-04-05 13:45:11,176 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:46:02,606 INFO [90/156] I1 | qwen35_27b_q8 | repeat 3
+2026-04-05 13:46:02,619 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:46:53,926 INFO warmup: gemma4_31b_bf16 / I2
+2026-04-05 13:46:53,940 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:46:57,903 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:47:01,698 INFO [91/156] I2 | gemma4_31b_bf16 | repeat 1
+2026-04-05 13:47:01,712 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:47:05,619 INFO [92/156] I2 | gemma4_31b_bf16 | repeat 2
+2026-04-05 13:47:05,633 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:47:09,797 INFO [93/156] I2 | gemma4_31b_bf16 | repeat 3
+2026-04-05 13:47:09,813 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:47:13,858 INFO warmup: qwen35_27b_q8 / I2
+2026-04-05 13:47:13,875 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:47:21,516 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:47:28,568 INFO [94/156] I2 | qwen35_27b_q8 | repeat 1
+2026-04-05 13:47:28,582 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:50:57,963 INFO [95/156] I2 | qwen35_27b_q8 | repeat 2
+2026-04-05 13:50:57,977 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:54:27,316 INFO [96/156] I2 | qwen35_27b_q8 | repeat 3
+2026-04-05 13:54:27,329 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:57:47,813 INFO warmup: gemma4_31b_bf16 / I3
+2026-04-05 13:57:47,826 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:57:49,564 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:57:51,405 INFO [97/156] I3 | gemma4_31b_bf16 | repeat 1
+2026-04-05 13:57:51,418 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:57:53,235 INFO [98/156] I3 | gemma4_31b_bf16 | repeat 2
+2026-04-05 13:57:53,248 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:57:55,042 INFO [99/156] I3 | gemma4_31b_bf16 | repeat 3
+2026-04-05 13:57:55,056 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:57:56,911 INFO warmup: qwen35_27b_q8 / I3
+2026-04-05 13:57:56,924 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:58:03,569 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:58:09,912 INFO [100/156] I3 | qwen35_27b_q8 | repeat 1
+2026-04-05 13:58:09,925 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:58:57,950 INFO [101/156] I3 | qwen35_27b_q8 | repeat 2
+2026-04-05 13:58:57,963 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 13:59:43,693 INFO [102/156] I3 | qwen35_27b_q8 | repeat 3
+2026-04-05 13:59:43,710 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:00:28,681 INFO warmup: gemma4_31b_bf16 / I4
+2026-04-05 14:00:28,694 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:00:32,069 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:00:35,283 INFO [103/156] I4 | gemma4_31b_bf16 | repeat 1
+2026-04-05 14:00:35,296 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:00:38,523 INFO [104/156] I4 | gemma4_31b_bf16 | repeat 2
+2026-04-05 14:00:38,537 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:00:41,807 INFO [105/156] I4 | gemma4_31b_bf16 | repeat 3
+2026-04-05 14:00:41,820 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:00:45,090 INFO warmup: qwen35_27b_q8 / I4
+2026-04-05 14:00:45,103 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:00:50,781 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:00:56,197 INFO [106/156] I4 | qwen35_27b_q8 | repeat 1
+2026-04-05 14:00:56,210 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:02:07,109 INFO constraint fail: word_count 235 != 17
+2026-04-05 14:02:07,110 INFO constraint fail: forbidden char ','
+2026-04-05 14:02:07,110 INFO [107/156] I4 | qwen35_27b_q8 | repeat 2
+2026-04-05 14:02:07,122 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:03:17,823 INFO constraint fail: word_count 235 != 17
+2026-04-05 14:03:17,823 INFO constraint fail: forbidden char ','
+2026-04-05 14:03:17,823 INFO [108/156] I4 | qwen35_27b_q8 | repeat 3
+2026-04-05 14:03:17,836 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:04:26,958 INFO constraint fail: word_count 235 != 17
+2026-04-05 14:04:26,958 INFO constraint fail: forbidden char ','
+2026-04-05 14:04:26,958 INFO warmup: gemma4_31b_bf16 / W1
+2026-04-05 14:04:26,971 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:04:36,482 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:04:45,908 INFO [109/156] W1 | gemma4_31b_bf16 | repeat 1
+2026-04-05 14:04:45,922 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:05:07,844 INFO [110/156] W1 | gemma4_31b_bf16 | repeat 2
+2026-04-05 14:05:07,857 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:05:28,527 INFO [111/156] W1 | gemma4_31b_bf16 | repeat 3
+2026-04-05 14:05:28,541 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:05:50,679 INFO warmup: qwen35_27b_q8 / W1
+2026-04-05 14:05:50,693 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:05:56,278 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:06:01,250 INFO [112/156] W1 | qwen35_27b_q8 | repeat 1
+2026-04-05 14:06:01,263 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:11:15,404 INFO [113/156] W1 | qwen35_27b_q8 | repeat 2
+2026-04-05 14:11:15,417 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:16:27,351 INFO [114/156] W1 | qwen35_27b_q8 | repeat 3
+2026-04-05 14:16:27,364 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:17:06,902 INFO warmup: gemma4_31b_bf16 / W2
+2026-04-05 14:17:06,915 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:17:16,126 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:17:25,294 INFO [115/156] W2 | gemma4_31b_bf16 | repeat 1
+2026-04-05 14:17:25,307 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:17:34,428 INFO [116/156] W2 | gemma4_31b_bf16 | repeat 2
+2026-04-05 14:17:34,441 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:17:43,865 INFO [117/156] W2 | gemma4_31b_bf16 | repeat 3
+2026-04-05 14:17:43,878 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:17:51,682 INFO warmup: qwen35_27b_q8 / W2
+2026-04-05 14:17:51,695 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:17:57,216 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:18:02,124 INFO [118/156] W2 | qwen35_27b_q8 | repeat 1
+2026-04-05 14:18:02,137 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:19:11,792 INFO [119/156] W2 | qwen35_27b_q8 | repeat 2
+2026-04-05 14:19:11,805 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:20:01,739 INFO [120/156] W2 | qwen35_27b_q8 | repeat 3
+2026-04-05 14:20:01,752 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:22:11,898 INFO warmup: gemma4_31b_bf16 / W3
+2026-04-05 14:22:11,911 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:22:20,894 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:22:29,792 INFO [121/156] W3 | gemma4_31b_bf16 | repeat 1
+2026-04-05 14:22:29,806 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:22:49,839 INFO [122/156] W3 | gemma4_31b_bf16 | repeat 2
+2026-04-05 14:22:49,855 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:23:08,930 INFO [123/156] W3 | gemma4_31b_bf16 | repeat 3
+2026-04-05 14:23:08,943 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:23:28,185 INFO warmup: qwen35_27b_q8 / W3
+2026-04-05 14:23:28,200 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:23:33,566 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:23:38,790 INFO [124/156] W3 | qwen35_27b_q8 | repeat 1
+2026-04-05 14:23:38,803 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:24:40,724 INFO [125/156] W3 | qwen35_27b_q8 | repeat 2
+2026-04-05 14:24:40,741 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:25:21,498 INFO [126/156] W3 | qwen35_27b_q8 | repeat 3
+2026-04-05 14:25:21,511 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:26:11,864 INFO warmup: gemma4_31b_bf16 / W4
+2026-04-05 14:26:11,877 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:26:20,810 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:26:29,701 INFO [127/156] W4 | gemma4_31b_bf16 | repeat 1
+2026-04-05 14:26:29,716 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:26:49,168 INFO [128/156] W4 | gemma4_31b_bf16 | repeat 2
+2026-04-05 14:26:49,182 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:27:08,374 INFO [129/156] W4 | gemma4_31b_bf16 | repeat 3
+2026-04-05 14:27:08,388 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:27:26,630 INFO warmup: qwen35_27b_q8 / W4
+2026-04-05 14:27:26,643 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:27:31,894 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:27:36,941 INFO [130/156] W4 | qwen35_27b_q8 | repeat 1
+2026-04-05 14:27:36,954 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:31:43,166 INFO [131/156] W4 | qwen35_27b_q8 | repeat 2
+2026-04-05 14:31:43,179 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:36:39,450 INFO [132/156] W4 | qwen35_27b_q8 | repeat 3
+2026-04-05 14:36:39,462 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:37:00,553 INFO warmup: gemma4_31b_bf16 / T1
+2026-04-05 14:37:00,566 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:37:09,229 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:37:17,887 INFO [133/156] T1 | gemma4_31b_bf16 | repeat 1
+2026-04-05 14:37:17,901 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:37:26,774 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:37:44,055 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:37:54,794 INFO [134/156] T1 | gemma4_31b_bf16 | repeat 2
+2026-04-05 14:37:54,808 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:38:03,676 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:38:20,825 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:38:31,531 INFO [135/156] T1 | gemma4_31b_bf16 | repeat 3
+2026-04-05 14:38:31,545 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:38:40,390 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:38:57,710 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:39:08,256 INFO warmup: qwen35_27b_q8 / T1
+2026-04-05 14:39:08,269 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:39:13,133 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:39:17,792 INFO [136/156] T1 | qwen35_27b_q8 | repeat 1
+2026-04-05 14:39:17,805 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:39:30,221 INFO expected tool 'create_refund' not called, got: []
+2026-04-05 14:39:30,221 INFO [137/156] T1 | qwen35_27b_q8 | repeat 2
+2026-04-05 14:39:30,234 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:39:41,480 INFO expected tool 'create_refund' not called, got: []
+2026-04-05 14:39:41,480 INFO [138/156] T1 | qwen35_27b_q8 | repeat 3
+2026-04-05 14:39:41,494 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:39:52,492 INFO expected tool 'create_refund' not called, got: []
+2026-04-05 14:39:52,492 INFO warmup: gemma4_31b_bf16 / T2
+2026-04-05 14:39:52,505 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:40:01,126 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:40:09,716 INFO [139/156] T2 | gemma4_31b_bf16 | repeat 1
+2026-04-05 14:40:09,730 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:40:20,137 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:40:39,027 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:40:50,289 INFO [140/156] T2 | gemma4_31b_bf16 | repeat 2
+2026-04-05 14:40:50,302 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:41:00,537 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:41:19,556 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:41:30,560 INFO [141/156] T2 | gemma4_31b_bf16 | repeat 3
+2026-04-05 14:41:30,573 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:41:40,881 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:41:59,796 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:42:10,903 INFO warmup: qwen35_27b_q8 / T2
+2026-04-05 14:42:10,916 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:42:15,865 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:42:20,192 INFO [142/156] T2 | qwen35_27b_q8 | repeat 1
+2026-04-05 14:42:20,205 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:42:42,623 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:43:06,133 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:43:28,450 INFO [143/156] T2 | qwen35_27b_q8 | repeat 2
+2026-04-05 14:43:28,463 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:43:51,506 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:44:16,366 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:44:38,601 INFO [144/156] T2 | qwen35_27b_q8 | repeat 3
+2026-04-05 14:44:38,614 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:45:01,034 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:45:25,522 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:45:47,850 INFO warmup: gemma4_31b_bf16 / T3
+2026-04-05 14:45:47,863 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:45:53,726 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:45:59,496 INFO [145/156] T3 | gemma4_31b_bf16 | repeat 1
+2026-04-05 14:45:59,510 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:46:06,447 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:46:14,309 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:46:22,620 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:46:34,039 INFO [146/156] T3 | gemma4_31b_bf16 | repeat 2
+2026-04-05 14:46:34,053 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:46:40,899 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:46:48,679 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:46:56,926 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:47:08,253 INFO [147/156] T3 | gemma4_31b_bf16 | repeat 3
+2026-04-05 14:47:08,267 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:47:15,102 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:47:22,870 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:47:31,088 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:47:42,387 INFO warmup: qwen35_27b_q8 / T3
+2026-04-05 14:47:42,401 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:47:47,390 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:47:52,227 INFO [148/156] T3 | qwen35_27b_q8 | repeat 1
+2026-04-05 14:47:52,240 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:47:57,441 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:48:01,315 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:48:05,072 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:48:41,830 INFO [149/156] T3 | qwen35_27b_q8 | repeat 2
+2026-04-05 14:48:41,843 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:48:45,965 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:48:49,808 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:48:53,488 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:49:29,780 INFO [150/156] T3 | qwen35_27b_q8 | repeat 3
+2026-04-05 14:49:29,793 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:49:33,869 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:49:37,692 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:49:41,222 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:50:17,514 INFO warmup: gemma4_31b_bf16 / T4
+2026-04-05 14:50:17,527 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:50:22,483 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:50:27,365 INFO [151/156] T4 | gemma4_31b_bf16 | repeat 1
+2026-04-05 14:50:27,378 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:50:34,217 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:50:49,313 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:50:59,300 INFO [152/156] T4 | gemma4_31b_bf16 | repeat 2
+2026-04-05 14:50:59,313 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:51:06,069 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:51:20,914 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:51:30,891 INFO [153/156] T4 | gemma4_31b_bf16 | repeat 3
+2026-04-05 14:51:30,904 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:51:37,608 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:51:52,510 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:52:02,464 INFO warmup: qwen35_27b_q8 / T4
+2026-04-05 14:52:02,478 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:52:07,381 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:52:12,207 INFO [154/156] T4 | qwen35_27b_q8 | repeat 1
+2026-04-05 14:52:12,220 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:52:19,543 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:52:32,373 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:52:54,752 INFO [155/156] T4 | qwen35_27b_q8 | repeat 2
+2026-04-05 14:52:54,765 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:53:00,942 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:53:13,854 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:53:36,121 INFO [156/156] T4 | qwen35_27b_q8 | repeat 3
+2026-04-05 14:53:36,134 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:53:42,357 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:53:55,332 INFO HTTP Request: POST http://localhost:1234/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-05 14:54:17,658 INFO benchmark complete. results: results/runs.csv, transcripts: results/transcripts.jsonl

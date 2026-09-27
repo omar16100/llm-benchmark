@@ -72,6 +72,10 @@ How to read it:
 
 Per-model notes and run history: [docs/results.md](docs/results.md).
 
+The earlier Gemma 4 31B vs Qwen 3.5 27B run (5 Apr 2026) has no results file; what survives in
+the LM Studio server logs and the harness log is recovered, with every unrecoverable number
+listed, in [docs/27092026_recovered_gemma4_qwen35_run.md](docs/27092026_recovered_gemma4_qwen35_run.md).
+
 ## Architecture
 
 ```
