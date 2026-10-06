@@ -1,0 +1,19 @@
+{
+  "variant": "singleton_ring_snapshot_reference",
+  "production_fix": false,
+  "cache_events": {
+    "ring_updates": 29000,
+    "ring_wraps": 0,
+    "trim_calls": 3425,
+    "trim_tokens": 3425
+  },
+  "block_size": 2,
+  "verify_calls": 580,
+  "verify_first_position": 2048,
+  "verify_last_position": 3069,
+  "input_tokens": 2048,
+  "output_tokens": 1024,
+  "token_sha256": "37a4ed4fda328209faf30c440eaf9441780b47fafe2bc3600ff935bbea2ef73f",
+  "generation_seconds": 24.92643825011328,
+  "peak_memory_bytes": 17866597648
+}

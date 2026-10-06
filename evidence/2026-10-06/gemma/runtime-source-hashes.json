@@ -1,0 +1,8 @@
+{
+  "models/gemma4/language.py": "c15718b60a0ad6f65aefd1bd6df149469d2d09d9b0f1f534d4f750cc19367ec4",
+  "models/gemma4/speculative_verifier.py": "48beb8f06cc9ae32bd0b7bdd75222ff8ebecb89b90afa2c52a68a324df051c73",
+  "models/cache.py": "b715008771817eb4fe05d8591e537bef30b827104950d65eea01a8abf0f2a3b0",
+  "speculative/mtp.py": "4ed467918bd24e26c60730d6d3529c6a9e633448b2fc6028829965bb1f4daad1",
+  "speculative/utils.py": "93d2ed29ac7b7c378536bf09d22eb570d5abb1f2d338dc550e59a84468b6a9ff",
+  "generate/ar.py": "6f60faefc70bc7dec60e8fdec8f11fe9609eee4966f8240617cbcaf101046e19"
+}

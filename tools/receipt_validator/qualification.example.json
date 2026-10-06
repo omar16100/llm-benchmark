@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "context_tokens": 260864,
+  "min_output_tokens": 1024,
+  "min_decode_tps": 100,
+  "telemetry": {
+    "gpu_temp_c": {"min": 1, "max": 80},
+    "gpu_coverage_complete": {"equals": true},
+    "discovery_errors": {"equals": 0}
+  }
+}

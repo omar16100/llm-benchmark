@@ -1,0 +1,46 @@
+--- a/bailing_hybrid.py
++++ b/bailing_hybrid.py
+@@ -19,7 +19,7 @@
+     scaled_dot_product_attention,
+ )
+ from mlx_lm.models.cache import ArraysCache, KVCache
+-from mlx_lm.models.gated_delta import gated_delta_update
++from mlx_lm.models.gated_delta import gated_delta_update, normalize_qk
+ from mlx_lm.models.mla import MultiLinear
+ from mlx_lm.models.rope_utils import initialize_rope
+ from mlx_lm.models.switch_layers import SwitchGLU
+@@ -311,6 +311,7 @@
+         self.conv_kernel = args.short_conv_kernel_size
+         self.projection_dim = self.num_heads * self.head_dim
+         self.no_kda_lora = args.no_kda_lora
++        self.lower_bound = args.kda_lower_bound
+         self.scale = float(self.head_dim) ** -0.5
+ 
+         hidden = args.hidden_size
+@@ -382,8 +383,7 @@
+         k = k.reshape(batch, length, self.num_heads, self.head_dim)
+         v = v.reshape(batch, length, self.num_heads, self.head_dim)
+ 
+-        q = (self.scale**2) * mx.fast.rms_norm(q, None, 1e-6)
+-        k = self.scale * mx.fast.rms_norm(k, None, 1e-6)
++        q, k = normalize_qk(q, k, inv_scale=self.scale, eps=1e-6)
+ 
+         if self.no_kda_lora:
+             decay_logits = self.f_proj(x)
+@@ -395,7 +395,7 @@
+             self.num_heads,
+             self.head_dim,
+         )
+-        beta_logits = self.b_proj(x).reshape(batch, length, self.num_heads)
++        beta_logits = self.b_proj(x).astype(mx.float32).reshape(batch, length, self.num_heads)
+ 
+         output, recurrent_state = gated_delta_update(
+             q,
+@@ -408,6 +408,7 @@
+             state=recurrent_state,
+             mask=mask,
+             use_kernel=not self.training,
++            lower_bound=self.lower_bound,
+         )
+ 
+         if cache is not None:

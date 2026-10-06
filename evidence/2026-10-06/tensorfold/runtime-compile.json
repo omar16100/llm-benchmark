@@ -1,0 +1,31 @@
+{
+  "source_commit": "88c424e5350a702372771915507bcbed9d513546",
+  "shader": "zig/kernels/metal/nemotron/coop_eh_1_0_sk.metal",
+  "shader_sha256": "231d0a1b6abf4051b94ce5fc6aeee2934548a2a07e0aba43abd826b342c2d63f",
+  "binary_sha256": "5d0279260287b815adcc34a10fe67af09c2c634bb70cadcaf9828677d99542ed",
+  "model_weights_used": false,
+  "records": [
+    {
+      "repeat": 1,
+      "returncode": 1,
+      "seconds": 0.6907180829439312,
+      "unknown_uint4b_format": true,
+      "log_sha256": "32087bc8c4480a83dd0e9544e2f7f7479328c8c1697c4994869dfbd133e84a85"
+    },
+    {
+      "repeat": 2,
+      "returncode": 1,
+      "seconds": 0.09633283386938274,
+      "unknown_uint4b_format": true,
+      "log_sha256": "32087bc8c4480a83dd0e9544e2f7f7479328c8c1697c4994869dfbd133e84a85"
+    },
+    {
+      "repeat": 3,
+      "returncode": 1,
+      "seconds": 0.10249199997633696,
+      "unknown_uint4b_format": true,
+      "log_sha256": "32087bc8c4480a83dd0e9544e2f7f7479328c8c1697c4994869dfbd133e84a85"
+    }
+  ],
+  "completed_utc": "2026-10-06T11:50:09.425770+00:00"
+}

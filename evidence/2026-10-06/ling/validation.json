@@ -1,0 +1,30 @@
+{
+  "passed": true,
+  "device": "CPU",
+  "dtype": "float32",
+  "shape": [
+    1,
+    9,
+    32,
+    128
+  ],
+  "checks": [
+    {
+      "scale": 1.0,
+      "stock_output_and_state": true,
+      "split_output_and_state": true,
+      "max_output_difference": 0.0
+    },
+    {
+      "scale": 0.001,
+      "stock_output_and_state": true,
+      "split_output_and_state": true,
+      "max_output_difference": 0.0
+    }
+  ],
+  "mlx": "0.32.2",
+  "mlx_lm": "0.32.1.dev4+g53b9af378",
+  "stock_source_sha256": "3c3252447e82b7477a48082266bb9057e042079d1d6d6eda7f31ede6c1a6da05",
+  "model_weights_used": false,
+  "full_model_equivalence": false
+}

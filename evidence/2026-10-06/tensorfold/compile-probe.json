@@ -1,0 +1,26 @@
+{
+  "source_commit": "88c424e5350a702372771915507bcbed9d513546",
+  "source_file": "zig/kernels/metal/nemotron/coop_eh_1_0_sk.metal",
+  "source_sha256": "231d0a1b6abf4051b94ce5fc6aeee2934548a2a07e0aba43abd826b342c2d63f",
+  "command": [
+    "xcrun",
+    "-sdk",
+    "macosx",
+    "metal",
+    "-std=metal4.0",
+    "-fmetal-math-mode=safe",
+    "-fmetal-math-fp32-functions=fast",
+    "-c",
+    "zig/kernels/metal/nemotron/coop_eh_1_0_sk.metal",
+    "-o",
+    "compile-probe.air"
+  ],
+  "returncode": 0,
+  "error_contains_uint4b_format": false,
+  "macos": "26.3",
+  "macos_build": "25D125",
+  "xcode": "26.5 (17F42)",
+  "metal_compiler": "32023.883",
+  "gpu": "Apple M3 Ultra",
+  "completed_utc": "2026-10-06T11:46:53.041837+00:00"
+}

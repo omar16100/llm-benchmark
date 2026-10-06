@@ -1,0 +1,385 @@
+diff --git a/build.zig b/build.zig
+index f882202..f1bf14b 100644
+--- a/build.zig
++++ b/build.zig
+@@ -232,7 +232,7 @@ fn metalTargets(b: *std.Build, target: std.Build.ResolvedTarget, optimize: std.b
+         .link_libc = true,
+         .imports = &.{ .{ .name = "metal", .module = metal }, .{ .name = "kernel_sources", .module = sources }, .{ .name = "nemotron_draft_ids", .module = draft_ids }, .{ .name = "lanes", .module = lanes }, .{ .name = "fabric", .module = fabric } },
+     });
+-    const engine_programs = [_]struct { name: []const u8, path: []const u8, about: []const u8 }{
++    const engine_programs = [_]struct { name: []const u8, path: []const u8, about: []const u8, c_source: ?[]const u8 = null }{
+         .{ .name = "tensorfold", .path = "zig/src/main.zig", .about = "The native engine's command line" },
+         .{ .name = "tf-nemotron-fixtures", .path = "zig/tests/nemotron_fixtures.zig", .about = "Nemotron kernels against the Python engine's captured ops" },
+         .{ .name = "tf-nemotron-bench", .path = "zig/tests/nemotron_bench.zig", .about = "One-row projection kernels timed by tile count" },
+@@ -243,6 +243,7 @@ fn metalTargets(b: *std.Build, target: std.Build.ResolvedTarget, optimize: std.b
+         .{ .name = "tf-nemotron-sample-check", .path = "zig/tests/nemotron_sample_check.zig", .about = "tf_sample_full against its host reference on synthetic rows, timed beside tf_gpu_sample" },
+         .{ .name = "tf-flashnext-run", .path = "zig/tests/flashnext_run.zig", .about = "Flash Next one-row greedy steps on the Python engine's recorded kernels, against its tokens" },
+         .{ .name = "tf-grid-sync-bench", .path = "zig/tests/grid_sync_bench.zig", .about = "A GPU-wide barrier in one persistent dispatch against dependent relaunches" },
++        .{ .name = "tf-weight-read-check", .path = "zig/tests/weight_read_check.zig", .about = "Check native file reads and failed-read cleanup", .c_source = "zig/tests/pread_fault.c" },
+     };
+     for (engine_programs) |p| {
+         const mod = b.createModule(.{
+@@ -252,6 +253,9 @@ fn metalTargets(b: *std.Build, target: std.Build.ResolvedTarget, optimize: std.b
+             .link_libc = true,
+             .imports = &.{ .{ .name = "metal", .module = metal }, .{ .name = "tensorfold", .module = engine }, .{ .name = "cluster", .module = cluster }, .{ .name = "kernel_sources", .module = sources } },
+         });
++        if (p.c_source) |file| {
++            mod.addCSourceFile(.{ .file = b.path(file), .flags = &.{"-std=c11"} });
++        }
+         const exe = b.addExecutable(.{ .name = p.name, .root_module = mod });
+         b.installArtifact(exe);
+         b.step(p.name, p.about).dependOn(&b.addInstallArtifact(exe, .{}).step);
+diff --git a/tools/zig/check_weight_reads.py b/tools/zig/check_weight_reads.py
+new file mode 100644
+index 0000000..6823bda
+--- /dev/null
++++ b/tools/zig/check_weight_reads.py
+@@ -0,0 +1,81 @@
++"""Check native weight reads with synthetic files and bounded I/O faults."""
++import argparse
++import array
++import hashlib
++import json
++import os
++from pathlib import Path
++import struct
++import subprocess
++import sys
++import tempfile
++
++SOURCE = Path(__file__).resolve().parents[2]
++WORDS = 524288
++
++
++def fixture(padding, family):
++    values = array.array("I", range(1, WORDS + 1))
++    if sys.byteorder != "little":
++        values.byteswap()
++    payload = values.tobytes()
++    header = {}
++    if padding:
++        header["prefix"] = {"dtype": "U32", "shape": [padding // 4], "data_offsets": [0, padding]}
++    if family == "flashnext-group":
++        for shard in range(2):
++            begin = padding + shard * len(payload) // 2
++            name = f"language_model.model.layers.1.ple.ple_embedding.ngram_embedding.shard_{shard}.weight"
++            header[name] = {"dtype": "U32", "shape": [WORDS // 2], "data_offsets": [begin, begin + len(payload) // 2]}
++    else:
++        header["probe"] = {"dtype": "U32", "shape": [WORDS], "data_offsets": [padding, padding + len(payload)]}
++    text = json.dumps(header).encode("utf-8")
++    text += b" " * ((-len(text)) % 8)
++    return struct.pack("<Q", len(text)) + text + bytes(padding) + payload
++
++
++def main():
++    parser = argparse.ArgumentParser(description=__doc__)
++    parser.add_argument("--binary", type=Path, default=SOURCE / "zig-out/bin/tf-weight-read-check")
++    parser.add_argument("--storage-directory", type=Path, default=Path(tempfile.gettempdir()))
++    parser.add_argument("--output", type=Path, required=True)
++    parser.add_argument("--repeats", type=int, default=3)
++    parser.add_argument("--faults-only", action="store_true")
++    args = parser.parse_args()
++    if args.repeats < 1 or not args.storage_directory.is_dir() or not args.binary.is_file():
++        parser.error("Use existing paths and a positive repeat count.")
++    args.output.mkdir(parents=True, exist_ok=False)
++    records = []
++    with tempfile.TemporaryDirectory(prefix="tensorfold-loader-probe-", dir=args.storage_directory) as directory:
++        for family in ["nemotron", "flashnext", "flashnext-group"]:
++            for padding in [0, 64]:
++                cases = [] if args.faults_only else [(mode, repeat) for repeat in range(1, args.repeats + 1) for mode in ["normal", "delayed"]]
++                cases += [(mode, 1) for mode in ["eof", "eio", "eintr"]]
++                for mode, repeat in cases:
++                    name = f"{family}-{mode}-offset{padding}-{repeat}"
++                    path = Path(directory) / ("tensorfold-loader-probe-" + name + ".safetensors")
++                    with path.open("wb") as stream:
++                        stream.write(fixture(padding, family))
++                        stream.flush()
++                        os.fsync(stream.fileno())
++                    command = [str(args.binary.resolve()), family, str(path), mode]
++                    result = subprocess.run(command, capture_output=True, text=True, timeout=60)
++                    log = result.stdout + result.stderr
++                    (args.output / (name + ".log")).write_text(log, encoding="utf-8")
++                    lines = [line for line in log.splitlines() if line.startswith("{")]
++                    record = json.loads(lines[-1]) if lines else {"output": log}
++                    record.update(case=name, tensor_offset=padding, returncode=result.returncode)
++                    records.append(record)
++                    path.unlink()
++                    print(json.dumps(record), flush=True)
++    receipt = {"binary_sha256": hashlib.sha256(args.binary.read_bytes()).hexdigest(),
++               "loader_source_sha256": {name: hashlib.sha256((SOURCE / name).read_bytes()).hexdigest() for name in ["zig/src/core/checkpoint_metal.zig", "zig/src/families/flashnext/replay.zig"]},
++               "fixture_payload_bytes": WORDS * 4, "delay_microseconds": 5000, "partial_read_limit": 32768,
++               "page_cache": "uncontrolled", "temporary_files_removed": True, "cases": records,
++               "passed": sum(x["returncode"] == 0 for x in records), "failed": sum(x["returncode"] != 0 for x in records)}
++    (args.output / "result.json").write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
++    return int(receipt["failed"] != 0)
++
++
++if __name__ == "__main__":
++    raise SystemExit(main())
+diff --git a/tools/zig/weight_reads.md b/tools/zig/weight_reads.md
+new file mode 100644
+index 0000000..0d95fa5
+--- /dev/null
++++ b/tools/zig/weight_reads.md
+@@ -0,0 +1,37 @@
++# Native weight-read checks
++
++The probe calls `Checkpoint.addFile`, `Run.load`, and `Run.group` on Apple Silicon with Metal.
++It uses synthetic 2 MiB safetensors files and requires no model weights.
++Python 3.9 or later supplies the test driver.
++
++1. Build the probe with the Zig version in `.zig-version`.
++
++   ```sh
++   zig build tf-weight-read-check -Dcpu=apple_m1
++   ```
++
++2. Execute the test driver with a new output directory.
++
++   ```sh
++   python3 tools/zig/check_weight_reads.py --output /tmp/tensorfold-weight-results
++   ```
++
++Use `--storage-directory /path/to/storage` to select a filesystem for the temporary fixtures.
++The driver removes its fixtures after the tests.
++It retains the logs and `result.json` in the output directory.
++The probe overwrites only test files with the filename prefix `tensorfold-loader-probe-`.
++
++The default run has 54 cases across three read paths and tensor offsets 0 and 64.
++Normal reads and delayed partial reads each repeat three times.
++The partial-read mode limits each `pread` call to 32 KiB and adds a 5 ms delay.
++After each successful load, the probe overwrites the source file and verifies all 524,288 values through a Metal copy.
++The probe also checks for subsequent `pread` calls.
++
++Each read path and offset has one premature EOF, one `EIO`, and one `EINTR` case.
++Each case requires `ShortRead` and unchanged Metal `currentAllocatedSize` after the error.
++These cases do not require a new error policy or an `EINTR` retry.
++Use `--faults-only` for these 18 cases.
++
++The page-cache state is uncontrolled.
++These small tests do not establish cold NAS reliability, model exactness, or decode speed.
++The regular `zig build test` target does not execute this GPU probe.
+diff --git a/zig/src/core/checkpoint_metal.zig b/zig/src/core/checkpoint_metal.zig
+index dfab9d3..e47e2cc 100644
+--- a/zig/src/core/checkpoint_metal.zig
++++ b/zig/src/core/checkpoint_metal.zig
+@@ -55,8 +55,11 @@ pub const Checkpoint = struct {
+         const data_len: usize = @as(usize, @intCast(end)) - data_start;
+ 
+         const buffer = try device.buffer(@max(data_len, 16), mtl.ResourceOptions.shared | mtl.ResourceOptions.untracked);
+-        try readParallel(fd, buffer.contents()[0..data_len], data_start);
+-        try self.shards.append(self.allocator, .{ .buffer = buffer, .bytes = data_len });
++        {
++            errdefer buffer.deinit();
++            try readParallel(fd, buffer.contents()[0..data_len], data_start);
++            try self.shards.append(self.allocator, .{ .buffer = buffer, .bytes = data_len });
++        }
+         try self.index(buffer, header, data_len, prefix);
+     }
+ 
+diff --git a/zig/src/families/flashnext/replay.zig b/zig/src/families/flashnext/replay.zig
+index d8a3ddd..8e400ce 100644
+--- a/zig/src/families/flashnext/replay.zig
++++ b/zig/src/families/flashnext/replay.zig
+@@ -894,6 +894,7 @@ pub const Run = struct {
+     pub fn load(r: *Run, name: []const u8) !Buf {
+         const e = try r.entry(name);
+         const b = try r.device.buffer(@max(e.len, 64), opts);
++        errdefer b.deinit();
+         try readAll(e.fd, b.contents()[0..e.len], e.at);
+         r.loaded += e.len;
+         return .{ .b = b };
+@@ -911,6 +912,7 @@ pub const Run = struct {
+         const fmt = "language_model.model.layers.1.ple.ple_embedding.ngram_embedding.{s}{d}.{s}";
+         for (first..first + count) |s| total += (try r.entry(try std.fmt.bufPrint(&name, fmt, .{ r.ngram, s, suffix }))).len;
+         const b = try r.device.buffer(total, opts);
++        errdefer b.deinit();
+         var at: usize = 0;
+         for (first..first + count) |s| {
+             const e = try r.entry(try std.fmt.bufPrint(&name, fmt, .{ r.ngram, s, suffix }));
+diff --git a/zig/tests/pread_fault.c b/zig/tests/pread_fault.c
+new file mode 100644
+index 0000000..097ef33
+--- /dev/null
++++ b/zig/tests/pread_fault.c
+@@ -0,0 +1,66 @@
++// Inject bounded delays and partial reads into the test process only.
++#include <dlfcn.h>
++#include <errno.h>
++#include <fcntl.h>
++#include <pthread.h>
++#include <stdatomic.h>
++#include <stdint.h>
++#include <stdlib.h>
++#include <sys/types.h>
++#include <unistd.h>
++
++static ssize_t (*system_pread)(int, void *, size_t, off_t);
++static pthread_once_t ready = PTHREAD_ONCE_INIT;
++static _Atomic uint64_t calls;
++static unsigned delay_us;
++static size_t read_limit;
++static off_t eof_at;
++static int failure_kind;
++
++static void resolve(void) {
++    system_pread = dlsym(RTLD_NEXT, "pread");
++    if (!system_pread) abort();
++}
++
++void tf_probe_config(unsigned delay, size_t limit, int inject_eof) {
++    pthread_once(&ready, resolve);
++    delay_us = delay;
++    read_limit = limit;
++    eof_at = inject_eof ? 32768 : 0;
++    failure_kind = inject_eof;
++    atomic_store(&calls, 0);
++}
++
++uint64_t tf_probe_calls(void) { return atomic_load(&calls); }
++
++ssize_t pread(int fd, void *buffer, size_t size, off_t offset) {
++    pthread_once(&ready, resolve);
++    atomic_fetch_add(&calls, 1);
++    if (delay_us) usleep(delay_us);
++    if (eof_at && offset >= eof_at) {
++        if (failure_kind == 1) return 0;
++        errno = failure_kind == 2 ? EIO : EINTR;
++        return -1;
++    }
++    if (read_limit && size > read_limit) size = read_limit;
++    return system_pread(fd, buffer, size, offset);
++}
++
++// Replace the test file bytes after the loader returns.
++int tf_probe_poison(const char *path) {
++    int fd = open(path, O_RDWR);
++    if (fd < 0) return -1;
++    off_t length = lseek(fd, 0, SEEK_END);
++    if (length < 0) { close(fd); return -1; }
++    char zeros[4096] = {0};
++    for (off_t at = 0; at < length; ) {
++        size_t size = (size_t)(length - at);
++        if (size > sizeof zeros) size = sizeof zeros;
++        ssize_t n = pwrite(fd, zeros, size, at);
++        if (n <= 0) { close(fd); return -1; }
++        at += n;
++    }
++    int result = fsync(fd);
++    close(fd);
++    return result;
++}
+diff --git a/zig/tests/weight_read_check.zig b/zig/tests/weight_read_check.zig
+new file mode 100644
+index 0000000..d5acf5e
+--- /dev/null
++++ b/zig/tests/weight_read_check.zig
+@@ -0,0 +1,108 @@
++//! Check the actual native loaders with a synthetic file and bounded I/O faults.
++const std = @import("std");
++const mtl = @import("metal");
++const tf = @import("tensorfold");
++
++extern "c" fn tf_probe_config(delay: c_uint, limit: usize, inject_eof: c_int) void;
++extern "c" fn tf_probe_calls() u64;
++extern "c" fn tf_probe_poison(path: [*:0]const u8) c_int;
++
++const source =
++    \\#include <metal_stdlib>
++    \\using namespace metal;
++    \\kernel void copy_words(device const uint *x [[buffer(0)]], device uint *y [[buffer(1)]],
++    \\    constant uint &n [[buffer(2)]], uint i [[thread_position_in_grid]]) {
++    \\    if (i < n) y[i] = x[i];
++    \\}
++;
++
++pub fn main(init: std.process.Init) !void {
++    const a = init.arena.allocator();
++    const args = try init.minimal.args.toSlice(a);
++    if (args.len != 4) return error.ExpectedFamilyFileMode;
++    if (!std.mem.startsWith(u8, std.fs.path.basename(args[2]), "tensorfold-loader-probe-")) return error.TestFileRequired;
++    const nemotron = std.mem.eql(u8, args[1], "nemotron");
++    const grouped = std.mem.eql(u8, args[1], "flashnext-group");
++    if (!nemotron and !grouped and !std.mem.eql(u8, args[1], "flashnext")) return error.UnknownFamily;
++    const delayed = std.mem.eql(u8, args[3], "delayed");
++    const failure_kind: c_int = if (std.mem.eql(u8, args[3], "eof")) 1 else if (std.mem.eql(u8, args[3], "eio")) 2 else if (std.mem.eql(u8, args[3], "eintr")) 3 else 0;
++    const eof = failure_kind != 0;
++    if (!delayed and !eof and !std.mem.eql(u8, args[3], "normal")) return error.UnknownMode;
++    const path = try std.fmt.allocPrintSentinel(a, "{s}", .{args[2]}, 0);
++    const pool = mtl.objc.Pool.push();
++    defer pool.pop();
++    const device = try mtl.Device.init();
++    defer device.deinit();
++    const queue = try device.queue();
++    defer queue.deinit();
++    const library = try mtl.Library.fromSource(device, source, mtl.CompileOptions.mlx());
++    defer library.deinit();
++    const pipeline = try mtl.Pipeline.init(device, library, "copy_words", false);
++    defer pipeline.deinit();
++    var checkpoint = tf.checkpoint.Checkpoint.init(a);
++    defer checkpoint.deinit();
++    var replay: tf.flashnext_replay.Run = .{ .arena = a, .device = device, .queue = queue };
++    const start = mtl.clock.seconds();
++    tf_probe_config(if (delayed) 5000 else 0, if (delayed or eof) 32768 else 0, failure_kind);
++    const allocated_before = mtl.objc.msg(usize, device.id, "currentAllocatedSize", .{});
++    var input: mtl.Buffer = undefined;
++    var offset: usize = 0;
++    var bytes: usize = 0;
++    if (nemotron) {
++        checkpoint.addFile(device, path, "") catch |err| {
++            if (!eof or err != error.ShortRead) return err;
++            const allocated_after = mtl.objc.msg(usize, device.id, "currentAllocatedSize", .{});
++            std.debug.print("{{\"family\":\"{s}\",\"mode\":\"{s}\",\"error\":\"ShortRead\",\"pread_calls\":{d},\"allocated_before\":{d},\"allocated_after\":{d},\"payload_check_reached\":false}}\n", .{ args[1], args[3], tf_probe_calls(), allocated_before, allocated_after });
++            if (allocated_after != allocated_before) return error.BufferLeak;
++            return;
++        };
++        const tensor = try checkpoint.get("probe");
++        input = tensor.buffer;
++        offset = tensor.offset;
++        bytes = tensor.bytes;
++    } else {
++        try replay.indexFile(path);
++        const entry = try replay.entry(if (grouped) "language_model.model.layers.1.ple.ple_embedding.ngram_embedding.shard_0.weight" else "probe");
++        defer _ = std.c.close(entry.fd);
++        const result = if (grouped) replay.group(0, 2, "weight") else replay.load("probe");
++        const buffer = result catch |err| {
++            if (!eof or err != error.ShortRead) return err;
++            const allocated_after = mtl.objc.msg(usize, device.id, "currentAllocatedSize", .{});
++            std.debug.print("{{\"family\":\"{s}\",\"mode\":\"{s}\",\"error\":\"ShortRead\",\"pread_calls\":{d},\"allocated_before\":{d},\"allocated_after\":{d},\"payload_check_reached\":false}}\n", .{ args[1], args[3], tf_probe_calls(), allocated_before, allocated_after });
++            if (allocated_after != allocated_before) return error.BufferLeak;
++            return;
++        };
++        input = buffer.b;
++        bytes = if (grouped) entry.len * 2 else entry.len;
++    }
++    defer if (!nemotron) input.deinit();
++    if (eof) return error.ExpectedShortRead;
++    const load_seconds = mtl.clock.seconds() - start;
++    const reads = tf_probe_calls();
++    if (reads == 0) return error.InterpositionInactive;
++    if (delayed and reads < 64) return error.PartialReadsNotTested;
++    if (bytes != 2 * 1024 * 1024) return error.WrongTestSize;
++    if (tf_probe_poison(path) != 0) return error.FilePoisonFailed;
++    const count: u32 = @intCast(bytes / 4);
++    const output = try device.buffer(bytes, mtl.ResourceOptions.shared);
++    defer output.deinit();
++    const cb = queue.commandBuffer();
++    const enc = cb.compute(.serial);
++    enc.setPipeline(pipeline);
++    enc.setBuffer(input, offset, 0);
++    enc.setBuffer(output, 0, 1);
++    enc.setValue(count, 2);
++    enc.dispatchThreads(mtl.Size.of(count, 1, 1), mtl.Size.of(256, 1, 1));
++    enc.end();
++    cb.commit();
++    cb.wait();
++    if (cb.failure()) |failure| {
++        std.debug.print("{s}\n", .{failure});
++        return error.MetalFailure;
++    }
++    for (output.slice(u32, count), 0..) |value, index| {
++        if (value != @as(u32, @intCast(index)) + 1) return error.PayloadMismatch;
++    }
++    if (tf_probe_calls() != reads) return error.ReadAfterLoad;
++    std.debug.print("{{\"family\":\"{s}\",\"mode\":\"{s}\",\"payload_bytes\":{d},\"pread_calls\":{d},\"load_seconds\":{d:.6},\"gpu_seconds\":{d:.6},\"source_poisoned\":true,\"exact_words\":{d},\"reads_after_load\":0}}\n", .{ args[1], args[3], bytes, reads, load_seconds, cb.gpuSeconds(), count });
++}

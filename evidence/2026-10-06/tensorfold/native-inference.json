@@ -1,0 +1,12 @@
+{
+  "source_commit": "88c424e5350a702372771915507bcbed9d513546",
+  "binary_sha256": "b910c3629c588d0e84c5b3486f84debda7fdd7cc70b38291137eb4a31cfc5829",
+  "model_config_sha256": "2d4bdc543efd8ccd68fccbf1231b1d1216ab2a0482229ea5638d448127973b27",
+  "records": [],
+  "performance_benchmark": false,
+  "startup_exit_code": 1,
+  "error": "The native server exited before its health check.",
+  "owned_server_exit_code": 1,
+  "owned_server_stopped": true,
+  "completed_utc": "2026-10-06T11:47:26.798822+00:00"
+}

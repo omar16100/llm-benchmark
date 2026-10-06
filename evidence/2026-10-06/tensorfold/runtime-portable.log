@@ -1,0 +1,21 @@
+device=Apple M3 Ultra language=262144 source_bytes=2905
+error: library source (2905 bytes): program_source:37:17: error: unknown type name 'uint4b_format'
+  tensor<device uint4b_format, dextents<int32_t, 2>, tensor_inline> b0((device uchar*)Wq, dextents<int32_t, 2>(GS, 64));
+                ^
+program_source:37:52: error: expected unqualified-id
+  tensor<device uint4b_format, dextents<int32_t, 2>, tensor_inline> b0((device uchar*)Wq, dextents<int32_t, 2>(GS, 64));
+                                                   ^
+program_source:38:82: error: use of undeclared identifier 'b0'
+  auto P = op.template get_destination_cooperative_tensor<decltype(a0), decltype(b0), float>();
+                                                                                 ^
+program_source:47:19: error: unknown type name 'uint4b_format'
+    tensor<device uint4b_format, dextents<int32_t, 2>, tensor_inline> b(
+                  ^
+program_source:47:54: error: expected unqualified-id
+    tensor<device uint4b_format, dextents<int32_t, 2>, tensor_inline> b(
+                                                     ^
+program_source:49:15: error: use of undeclared identifier 'b'
+    op.run(a, b, P);
+              ^
+
+error: LibraryLoad

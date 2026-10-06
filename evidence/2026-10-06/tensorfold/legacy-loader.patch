@@ -1,0 +1,160 @@
+diff --git a/src/tensorfold/families/glm5_next/weights.py b/src/tensorfold/families/glm5_next/weights.py
+index 017ec5b..ee33db1 100644
+--- a/src/tensorfold/families/glm5_next/weights.py
++++ b/src/tensorfold/families/glm5_next/weights.py
+@@ -41,7 +41,7 @@ class Weights:
+     def has(self, name: str) -> bool:
+         return name in self.where
+ 
+-    def get(self, name: str) -> mx.array:
++    def get(self, name: str, *, eager: bool = True) -> mx.array:
+         shard = self.where[name]
+         loaded = self._cache.get(shard)
+         if loaded is None:
+@@ -52,9 +52,12 @@ class Weights:
+                 if short is not None:
+                     loaded[short] = value
+             self._cache = {shard: loaded}          # one shard at a time: arrays already taken stay alive
+-        return loaded[name]
++        value = loaded[name]
++        if eager:
++            mx.eval(value)  # Complete the stored-array read before GPU transforms.
++        return value
+ 
+-    def q(self, prefix: str) -> Q:
++    def q(self, prefix: str, *, eager: bool = True) -> Q:
+         """A quantized linear at the format the config states for it, checked against its shapes."""
+ 
+         fmt = self.overrides.get(prefix, self.default)
+@@ -63,10 +66,10 @@ class Weights:
+             raise ValueError(f"{prefix}: stored {stored}; GLM-5.3-Flash's Mac engine reads MLX affine weights of "
+                              f"{', '.join(map(str, BITS))} bits in groups of {', '.join(map(str, GROUPS))}")
+         try:
+-            s, b = self.get(f"{prefix}.scales"), self.get(f"{prefix}.biases")
++            s, b = self.get(f"{prefix}.scales", eager=eager), self.get(f"{prefix}.biases", eager=eager)
+             if s.dtype == mx.float16:                      # exact in fp32; MLX would promote them on every call
+                 s, b = s.astype(mx.float32), b.astype(mx.float32)
+-            return Q(self.get(f"{prefix}.weight"), s, b, bits=fmt[0], group=fmt[1])
++            return Q(self.get(f"{prefix}.weight", eager=eager), s, b, bits=fmt[0], group=fmt[1])
+         except ValueError as exc:
+             raise ValueError(f"{prefix}: {exc}") from None
+ 
+@@ -92,7 +95,7 @@ def _placeholder(w: Weights, m: str, proj: str) -> Q:
+     """A routed projection's format and shapes with no experts: a stream's pool holds them (``stream.attach``)."""
+ 
+     name = f"{m}.switch_mlp.{proj}" if w.has(f"{m}.switch_mlp.{proj}.weight") else f"{m}.experts.0.{proj}"
+-    q = w.q(name)                                        # lazy: its bytes are never read
++    q = w.q(name, eager=False)                           # Retain lazy reads for expert placeholders.
+     return Q(*(mx.zeros((0, *a.shape[-2:]), dtype=a.dtype) for a in q.arrays()), bits=q.bits, group=q.group)
+ 
+ 
+@@ -223,4 +226,3 @@ def load(model_dir: Path, *, ssd_experts: float | None = None) -> tuple[GLM5, An
+         stream.attach(model, Path(model_dir), float(ssd_experts))
+     tokenizer = GlmTokenizer(load_tokenizer(Path(model_dir), eos_token_ids=model.args.eos_token_id or None))
+     return model, tokenizer
+-
+diff --git a/tests/test_glm5_eager_reads.py b/tests/test_glm5_eager_reads.py
+new file mode 100644
+index 0000000..25d2054
+--- /dev/null
++++ b/tests/test_glm5_eager_reads.py
+@@ -0,0 +1,99 @@
++"""Stored arrays must finish their reads before GPU transforms; expert placeholders stay lazy."""
++import pytest
++
++mx = pytest.importorskip("mlx.core")
++
++from tensorfold.families.glm5_next import weights
++
++
++@pytest.fixture(autouse=True)
++def cpu():
++    previous = mx.default_device()
++    mx.set_default_device(mx.cpu)
++    yield
++    mx.set_default_device(previous)
++
++
++def reader(tmp_path, tensors):
++    shard = tmp_path / "probe.safetensors"
++    mx.save_safetensors(str(shard), tensors)
++    w = weights.Weights.__new__(weights.Weights)
++    w.dir = tmp_path
++    w.where = {name: shard.name for name in tensors}
++    w._cache = {}
++    w._short = lambda name: name
++    w.default = (4, 64, "affine")
++    w.overrides = {}
++    return w
++
++
++def test_get_evaluates_the_selected_array_before_return(tmp_path, monkeypatch):
++    expected = mx.array([[1, -2], [3, 4]], dtype=mx.float16)
++    w = reader(tmp_path, {"probe": expected, "other": mx.ones((2, 2))})
++    events = []
++    original_load, original_eval = mx.load, mx.eval
++
++    def load(*args, **kwargs):
++        events.append("read")
++        return original_load(*args, **kwargs)
++
++    def evaluate(*arrays):
++        assert len(arrays) == 1
++        events.append("evaluate")
++        return original_eval(*arrays)
++
++    monkeypatch.setattr(mx, "load", load)
++    monkeypatch.setattr(mx, "eval", evaluate)
++    value = w.get("probe")
++    assert events == ["read", "evaluate"]
++    assert value.dtype == mx.float16
++    assert value.tolist() == expected.tolist()
++    w.get("other")
++    assert events == ["read", "evaluate", "evaluate"]
++
++
++def test_explicit_lazy_read_has_no_evaluation(tmp_path, monkeypatch):
++    w = reader(tmp_path, {"probe": mx.ones((4,))})
++    calls = []
++    monkeypatch.setattr(mx, "eval", lambda *arrays: calls.append(arrays))
++    value = w.get("probe", eager=False)
++    assert value.shape == (4,)
++    assert not calls
++
++
++@pytest.mark.parametrize("stacked", [False, True])
++def test_stream_placeholder_does_not_evaluate_experts(tmp_path, monkeypatch, stacked):
++    prefix = "layers.0.mlp.switch_mlp.gate_proj" if stacked else "layers.0.mlp.experts.0.gate_proj"
++    shape = (2, 64, 64) if stacked else (64, 64)
++    q, s, b = mx.quantize(mx.ones(shape, dtype=mx.float16), group_size=64, bits=4)
++    w = reader(tmp_path, {prefix+".weight": q, prefix+".scales": s, prefix+".biases": b})
++    calls = []
++    monkeypatch.setattr(mx, "eval", lambda *arrays: calls.append(arrays))
++    placeholder = weights._placeholder(w, "layers.0.mlp", "gate_proj")
++    assert placeholder.weight.shape[0] == 0
++    assert placeholder.bits == 4 and placeholder.group == 64
++    assert not calls
++
++
++def test_quantized_projection_evaluates_three_stored_arrays(tmp_path, monkeypatch):
++    q, s, b = mx.quantize(mx.ones((64, 64), dtype=mx.float16), group_size=64, bits=4)
++    w = reader(tmp_path, {"q.weight": q, "q.scales": s, "q.biases": b})
++    calls = []
++    evaluate = mx.eval
++
++    def record(*arrays):
++        calls.append(arrays[0].dtype)
++        return evaluate(*arrays)
++
++    monkeypatch.setattr(mx, "eval", record)
++    projection = w.q("q")
++    assert calls == [mx.float16, mx.float16, mx.uint32]
++    assert projection.scales.dtype == mx.float32
++    assert projection.weight.tolist() == q.tolist()
++
++
++def test_file_error_propagates(tmp_path):
++    w = reader(tmp_path, {"probe": mx.ones((4,))})
++    (tmp_path / "probe.safetensors").unlink()
++    with pytest.raises((RuntimeError, ValueError, OSError)):
++        w.get("probe")
