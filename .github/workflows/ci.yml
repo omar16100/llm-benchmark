@@ -19,3 +19,7 @@ jobs:
       - uses: astral-sh/setup-uv@v10.2.0
       - name: unit tests
         run: uv run --locked pytest tests/ -v -rs
+      - name: receipt validator tests
+        run: python3 -m unittest discover -s tools/receipt_validator -v
+      - name: saved Gemma evidence
+        run: python3 evidence/2026-10-06/gemma/check_evidence.py

@@ -1,0 +1,4 @@
+zig/kernels/metal/nemotron/coop_eh_1_0_sk.metal:25:16: warning: unused variable 'sg' [-Wunused-variable]
+  const ushort sg = simdgroup_index_in_threadgroup;
+               ^
+1 warning generated.

@@ -1,0 +1,13 @@
+{
+  "variant": "singleton_reference",
+  "production_fix": false,
+  "block_size": 3,
+  "verify_calls": 433,
+  "verify_first_position": 2048,
+  "verify_last_position": 3069,
+  "input_tokens": 2048,
+  "output_tokens": 1024,
+  "token_sha256": "2f0e11165d46f38c8642fe9bd74dd3b40391c98bdb691397c70c468897d64578",
+  "generation_seconds": 16.617770791053772,
+  "peak_memory_bytes": 16955353550
+}

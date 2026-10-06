@@ -206,3 +206,9 @@ Reported conclusions should be framed as "practical winner on this hardware," no
 ## License
 
 MIT
+
+## Receipt validation and regression evidence
+
+The [receipt validator](tools/receipt_validator) checks saved receipts with the Python standard library.
+It reports integrity separately from qualification under an explicit policy.
+The [model evidence](evidence/2026-10-06) contains Gemma, Ling, and TensorFold reproduction records and their limits.

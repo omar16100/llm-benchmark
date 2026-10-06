@@ -1,0 +1,15 @@
+{
+  "arm": "serial",
+  "block_size": 3,
+  "input_tokens": 2048,
+  "output_tokens": 1152,
+  "prompt_sha256": "f187c0b99203dd00fed307819872f7f761d61c071218f0ca6054e8c57ce5965b",
+  "token_sha256": "3794cdb4acd394a3006f8f74c2b94f72af8a64ec0818c5bfee211d62ac364c84",
+  "versions": {
+    "mlx": "0.32.2",
+    "mlx-lm": "0.32.1.dev4+g53b9af378",
+    "mlx-vlm": "0.7.4"
+  },
+  "model_config_sha256": "29910322dd085f45c8f95c6c0f1611b20f722d6f6c8394321b34817e98a972fa",
+  "custom_model_hooks": false
+}

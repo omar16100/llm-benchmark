@@ -1,0 +1,15 @@
+To understand how two strangers can agree on a secret over an open network (like the internet), you first have to understand the problem with "normal" cryptography.
+
+### The Problem: The "Locked Box" Dilemma
+Imagine you want to send a secret message to a friend. You put it in a box and lock it with a padlock. You mail the box to your friend. 
+
+The problem? **How do you get the key to your friend?** If you mail the key, a thief could intercept it. If you don't mail the key, your friend can't open the box. This is the "Key Exchange Problem," and for centuries, it was the biggest headache in cryptography.
+
+Public-key cryptography solves this using **Math Magic.**
+
+---
+
+### The Solution: The "Color Mixing" Analogy
+Since math can be hard to visualize, let’s use an analogy involving **paint colors.**
+
+Imagine there is a rule in this world

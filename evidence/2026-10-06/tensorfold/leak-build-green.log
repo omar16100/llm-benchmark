@@ -1,0 +1,54 @@
+Build Summary: 46/46 steps succeeded; 19/19 tests passed
+test-native success
++- run test 1 pass (1 total) 450ms MaxRSS:6M
+   +- compile test fast native-native success 5s MaxRSS:402M
+      +- WriteFile draft_ids.txt cached
+test success
++- run test cached
+|  +- compile test debug native-native cached 199ms MaxRSS:31M
++- run test cached
+|  +- compile test fast native-native cached 196ms MaxRSS:31M
++- run test cached
+|  +- compile test fast native-native cached 64ms MaxRSS:31M
++- run test cached
+|  +- compile test fast native-native cached 66ms MaxRSS:31M
+|     +- WriteFile tensorfold.metallib cached
+|        +- run xcrun (tensorfold.metallib) cached
+|           +- run xcrun (runtime_tests.air) cached
+|           +- run xcrun (nemotron_expert_up.air) cached
+|           +- run xcrun (nemotron_expert_down.air) cached
++- run test 18 pass (18 total) 439ms MaxRSS:21M
+|  +- compile test fast native-native success 8s MaxRSS:530M
+|     +- WriteFile draft_ids.txt (reused)
++- run test cached
+|  +- compile test fast native-native cached 197ms MaxRSS:31M
++- run test cached
+|  +- compile test fast native-native cached 64ms MaxRSS:31M
++- run test cached
+|  +- compile test fast native-native cached 60ms MaxRSS:31M
++- run test cached
+|  +- compile test fast native-native cached 63ms MaxRSS:31M
++- run test cached
+|  +- compile test debug native cached 58ms MaxRSS:31M
+|     +- options cached
++- run test cached
+|  +- compile test debug native cached 64ms MaxRSS:31M
++- run test cached
+|  +- compile test debug native cached 63ms MaxRSS:31M
++- run test cached
+|  +- compile test debug native cached 166ms MaxRSS:31M
+|     +- WriteFile draft_ids.txt (reused)
+|     +- options (reused)
++- run test cached
+|  +- compile test debug native cached 63ms MaxRSS:31M
++- run test cached
+|  +- compile test debug native cached 166ms MaxRSS:31M
+|     +- options (reused)
+|     +- WriteFile draft_ids.txt (reused)
++- run test cached
+   +- compile test fast native-native cached 197ms MaxRSS:31M
+tf-weight-read-check success
++- install tf-weight-read-check success
+   +- compile exe tf-weight-read-check fast native-native success 6s MaxRSS:431M
+      +- WriteFile draft_ids.txt (reused)
+

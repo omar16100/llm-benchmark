@@ -1,0 +1,376 @@
+{
+  "api": [
+    {
+      "case": "stock-serial-1",
+      "exact_tokens": true,
+      "first_difference": null,
+      "serial_token": null,
+      "case_token": null,
+      "arm": "serial",
+      "block_size": 3,
+      "input_tokens": 2048,
+      "output_tokens": 1024,
+      "prompt_sha256": "f187c0b99203dd00fed307819872f7f761d61c071218f0ca6054e8c57ce5965b",
+      "token_sha256": "37a4ed4fda328209faf30c440eaf9441780b47fafe2bc3600ff935bbea2ef73f",
+      "versions": {
+        "mlx": "0.32.2",
+        "mlx-lm": "0.32.1.dev4+g53b9af378",
+        "mlx-vlm": "0.7.4"
+      },
+      "model_config_sha256": "29910322dd085f45c8f95c6c0f1611b20f722d6f6c8394321b34817e98a972fa",
+      "custom_model_hooks": false
+    },
+    {
+      "case": "stock-serial-2",
+      "exact_tokens": true,
+      "first_difference": null,
+      "serial_token": null,
+      "case_token": null,
+      "arm": "serial",
+      "block_size": 3,
+      "input_tokens": 2048,
+      "output_tokens": 1024,
+      "prompt_sha256": "f187c0b99203dd00fed307819872f7f761d61c071218f0ca6054e8c57ce5965b",
+      "token_sha256": "37a4ed4fda328209faf30c440eaf9441780b47fafe2bc3600ff935bbea2ef73f",
+      "versions": {
+        "mlx": "0.32.2",
+        "mlx-lm": "0.32.1.dev4+g53b9af378",
+        "mlx-vlm": "0.7.4"
+      },
+      "model_config_sha256": "29910322dd085f45c8f95c6c0f1611b20f722d6f6c8394321b34817e98a972fa",
+      "custom_model_hooks": false
+    },
+    {
+      "case": "stock-serial-3",
+      "exact_tokens": true,
+      "first_difference": null,
+      "serial_token": null,
+      "case_token": null,
+      "arm": "serial",
+      "block_size": 3,
+      "input_tokens": 2048,
+      "output_tokens": 1024,
+      "prompt_sha256": "f187c0b99203dd00fed307819872f7f761d61c071218f0ca6054e8c57ce5965b",
+      "token_sha256": "37a4ed4fda328209faf30c440eaf9441780b47fafe2bc3600ff935bbea2ef73f",
+      "versions": {
+        "mlx": "0.32.2",
+        "mlx-lm": "0.32.1.dev4+g53b9af378",
+        "mlx-vlm": "0.7.4"
+      },
+      "model_config_sha256": "29910322dd085f45c8f95c6c0f1611b20f722d6f6c8394321b34817e98a972fa",
+      "custom_model_hooks": false
+    },
+    {
+      "case": "stock-mtp-2",
+      "exact_tokens": false,
+      "first_difference": 177,
+      "serial_token": 2132,
+      "case_token": 5250,
+      "arm": "mtp",
+      "block_size": 2,
+      "input_tokens": 2048,
+      "output_tokens": 1024,
+      "prompt_sha256": "f187c0b99203dd00fed307819872f7f761d61c071218f0ca6054e8c57ce5965b",
+      "token_sha256": "7956325f83afb64df06f207eec0071dabd6712a6a3fcaa9422cbfebc17c065c0",
+      "versions": {
+        "mlx": "0.32.2",
+        "mlx-lm": "0.32.1.dev4+g53b9af378",
+        "mlx-vlm": "0.7.4"
+      },
+      "model_config_sha256": "29910322dd085f45c8f95c6c0f1611b20f722d6f6c8394321b34817e98a972fa",
+      "custom_model_hooks": false
+    },
+    {
+      "case": "stock-mtp-3",
+      "exact_tokens": false,
+      "first_difference": 177,
+      "serial_token": 2132,
+      "case_token": 5250,
+      "arm": "mtp",
+      "block_size": 3,
+      "input_tokens": 2048,
+      "output_tokens": 1024,
+      "prompt_sha256": "f187c0b99203dd00fed307819872f7f761d61c071218f0ca6054e8c57ce5965b",
+      "token_sha256": "729d57864a5e201b6f2e974b82e1ca675574872b65f568edf3d54920d1cb8e7b",
+      "versions": {
+        "mlx": "0.32.2",
+        "mlx-lm": "0.32.1.dev4+g53b9af378",
+        "mlx-vlm": "0.7.4"
+      },
+      "model_config_sha256": "29910322dd085f45c8f95c6c0f1611b20f722d6f6c8394321b34817e98a972fa",
+      "custom_model_hooks": false
+    }
+  ],
+  "cli": [
+    {
+      "case": "cli-serial-1",
+      "stdout_sha256": "b9aeffef22fc4b717cfa8b8dfb75cfab5b6566bd3c16771ce91ce3128f454113",
+      "exact_stdout": true,
+      "first_character_difference": null,
+      "answer_sha256": "b9aeffef22fc4b717cfa8b8dfb75cfab5b6566bd3c16771ce91ce3128f454113",
+      "exact_answer": true,
+      "first_answer_character_difference": null,
+      "serial_answer_excerpt": null,
+      "case_answer_excerpt": null
+    },
+    {
+      "case": "cli-serial-2",
+      "stdout_sha256": "b9aeffef22fc4b717cfa8b8dfb75cfab5b6566bd3c16771ce91ce3128f454113",
+      "exact_stdout": true,
+      "first_character_difference": null,
+      "answer_sha256": "b9aeffef22fc4b717cfa8b8dfb75cfab5b6566bd3c16771ce91ce3128f454113",
+      "exact_answer": true,
+      "first_answer_character_difference": null,
+      "serial_answer_excerpt": null,
+      "case_answer_excerpt": null
+    },
+    {
+      "case": "cli-serial-3",
+      "stdout_sha256": "b9aeffef22fc4b717cfa8b8dfb75cfab5b6566bd3c16771ce91ce3128f454113",
+      "exact_stdout": true,
+      "first_character_difference": null,
+      "answer_sha256": "b9aeffef22fc4b717cfa8b8dfb75cfab5b6566bd3c16771ce91ce3128f454113",
+      "exact_answer": true,
+      "first_answer_character_difference": null,
+      "serial_answer_excerpt": null,
+      "case_answer_excerpt": null
+    },
+    {
+      "case": "cli-mtp-2",
+      "stdout_sha256": "ef3fcc627f62054ab20eb090603a095e7c476aa453941b4966b8e1d0ae21723c",
+      "exact_stdout": false,
+      "first_character_difference": 0,
+      "answer_sha256": "da4db73866633c484a0cc40163ca5539d4eaf1f61c76d2a32990050469ca72a8",
+      "exact_answer": false,
+      "first_answer_character_difference": 315,
+      "serial_answer_excerpt": "n a box and lock it with a padlock. You send the box to your friend. \n\nThe problem? **How do you get the key to your friend?** If you mail t",
+      "case_answer_excerpt": "n a box and lock it with a padlock. You mail the box to your friend. \n\nThe problem? **How do you get the key to your friend?** If you mail t"
+    },
+    {
+      "case": "cli-mtp-3",
+      "stdout_sha256": "44dd07efc94b2cb9a4fa4ba4d3243774a2c939fe43e8efb518af3e1364ccc893",
+      "exact_stdout": false,
+      "first_character_difference": 0,
+      "answer_sha256": "51941e8848a436796477932ec8bdf24cbae6d76786dbc563a022d8323ac24281",
+      "exact_answer": false,
+      "first_answer_character_difference": 315,
+      "serial_answer_excerpt": "n a box and lock it with a padlock. You send the box to your friend. \n\nThe problem? **How do you get the key to your friend?** If you mail t",
+      "case_answer_excerpt": "n a box and lock it with a padlock. You mail the box to your friend. \n\nThe problem? **How do you get the key to your friend?** If you mail t"
+    }
+  ],
+  "cli_normalization": "Remove only the stock drafter path line and final speculative statistics line.",
+  "diagnostics": [
+    {
+      "case": "singleton-mtp-3",
+      "exact_tokens": false,
+      "first_difference": 177,
+      "serial_token": 2132,
+      "case_token": 5250,
+      "variant": "singleton_reference",
+      "production_fix": false,
+      "block_size": 3,
+      "verify_calls": 433,
+      "verify_first_position": 2048,
+      "verify_last_position": 3069,
+      "input_tokens": 2048,
+      "output_tokens": 1024,
+      "token_sha256": "2f0e11165d46f38c8642fe9bd74dd3b40391c98bdb691397c70c468897d64578",
+      "generation_seconds": 16.617770791053772,
+      "peak_memory_bytes": 16955353550
+    },
+    {
+      "case": "buffered-serial",
+      "exact_tokens": false,
+      "first_difference": 170,
+      "serial_token": 653,
+      "case_token": 48531,
+      "arm": "serial",
+      "block_size": 3,
+      "input_tokens": 2048,
+      "output_tokens": 1024,
+      "prompt_sha256": "f187c0b99203dd00fed307819872f7f761d61c071218f0ca6054e8c57ce5965b",
+      "token_sha256": "03a5c26ad9b8fab273e96a62148ddee97a50dea7629cbc4707184b8a47b2cd9f",
+      "versions": {
+        "mlx": "0.32.2",
+        "mlx-lm": "0.32.1.dev4+g53b9af378",
+        "mlx-vlm": "0.7.4"
+      },
+      "model_config_sha256": "29910322dd085f45c8f95c6c0f1611b20f722d6f6c8394321b34817e98a972fa",
+      "custom_model_hooks": false,
+      "cache_variant": "MTP buffered cache in serial decode"
+    },
+    {
+      "case": "buffered-after-prefill",
+      "exact_tokens": false,
+      "first_difference": 177,
+      "serial_token": 2132,
+      "case_token": 5250,
+      "arm": "serial",
+      "block_size": 3,
+      "input_tokens": 2048,
+      "output_tokens": 1024,
+      "prompt_sha256": "f187c0b99203dd00fed307819872f7f761d61c071218f0ca6054e8c57ce5965b",
+      "token_sha256": "53ce03857d70e73db9e026e973c5fb3246cf85eadd1a21a8d3d80b4c62669d35",
+      "versions": {
+        "mlx": "0.32.2",
+        "mlx-lm": "0.32.1.dev4+g53b9af378",
+        "mlx-vlm": "0.7.4"
+      },
+      "model_config_sha256": "29910322dd085f45c8f95c6c0f1611b20f722d6f6c8394321b34817e98a972fa",
+      "custom_model_hooks": true,
+      "cache_variant": "MTP buffered cache after stock prefill",
+      "conversion_offsets": [
+        2048
+      ]
+    },
+    {
+      "case": "singleton-ring-mtp-3",
+      "exact_tokens": true,
+      "first_difference": null,
+      "serial_token": null,
+      "case_token": null,
+      "variant": "singleton_ring_snapshot_reference",
+      "production_fix": false,
+      "block_size": 3,
+      "verify_calls": 446,
+      "verify_first_position": 2048,
+      "verify_last_position": 3069,
+      "input_tokens": 2048,
+      "output_tokens": 1024,
+      "token_sha256": "37a4ed4fda328209faf30c440eaf9441780b47fafe2bc3600ff935bbea2ef73f",
+      "generation_seconds": 31.291436875006184,
+      "peak_memory_bytes": 17866660004
+    },
+    {
+      "case": "singleton-ring-mtp-2",
+      "exact_tokens": true,
+      "first_difference": null,
+      "serial_token": null,
+      "case_token": null,
+      "variant": "singleton_ring_snapshot_reference",
+      "production_fix": false,
+      "cache_events": {
+        "ring_updates": 29000,
+        "ring_wraps": 0,
+        "trim_calls": 3425,
+        "trim_tokens": 3425
+      },
+      "block_size": 2,
+      "verify_calls": 580,
+      "verify_first_position": 2048,
+      "verify_last_position": 3069,
+      "input_tokens": 2048,
+      "output_tokens": 1024,
+      "token_sha256": "37a4ed4fda328209faf30c440eaf9441780b47fafe2bc3600ff935bbea2ef73f",
+      "generation_seconds": 24.92643825011328,
+      "peak_memory_bytes": 17866597648
+    },
+    {
+      "case": "singleton-ring-mtp-3-repeat",
+      "exact_tokens": true,
+      "first_difference": null,
+      "serial_token": null,
+      "case_token": null,
+      "variant": "singleton_ring_snapshot_reference",
+      "production_fix": false,
+      "cache_events": {
+        "ring_updates": 33450,
+        "ring_wraps": 25,
+        "trim_calls": 5075,
+        "trim_tokens": 7850
+      },
+      "block_size": 3,
+      "verify_calls": 446,
+      "verify_first_position": 2048,
+      "verify_last_position": 3069,
+      "input_tokens": 2048,
+      "output_tokens": 1024,
+      "token_sha256": "37a4ed4fda328209faf30c440eaf9441780b47fafe2bc3600ff935bbea2ef73f",
+      "generation_seconds": 28.857147458009422,
+      "peak_memory_bytes": 17866645796
+    }
+  ],
+  "models": [
+    {
+      "key": "gemma26",
+      "repo": "mlx-community/gemma-4-26B-A4B-it-qat-4bit",
+      "revision": "0e3cbab38ce568cf6e23543010d08d03b731910c"
+    },
+    {
+      "key": "gemma_assistant",
+      "repo": "mlx-community/gemma-4-26B-A4B-it-qat-assistant-4bit",
+      "revision": "bb94eae1b70a80dac16cbf959bb4b7d56bd1fb8c"
+    }
+  ],
+  "boundary": [
+    {
+      "case": "boundary-serial",
+      "exact_tokens": true,
+      "first_difference": null,
+      "arm": "serial",
+      "block_size": 3,
+      "input_tokens": 2048,
+      "output_tokens": 1152,
+      "prompt_sha256": "f187c0b99203dd00fed307819872f7f761d61c071218f0ca6054e8c57ce5965b",
+      "token_sha256": "3794cdb4acd394a3006f8f74c2b94f72af8a64ec0818c5bfee211d62ac364c84",
+      "versions": {
+        "mlx": "0.32.2",
+        "mlx-lm": "0.32.1.dev4+g53b9af378",
+        "mlx-vlm": "0.7.4"
+      },
+      "model_config_sha256": "29910322dd085f45c8f95c6c0f1611b20f722d6f6c8394321b34817e98a972fa",
+      "custom_model_hooks": false
+    },
+    {
+      "case": "boundary-ring-2",
+      "exact_tokens": true,
+      "first_difference": null,
+      "variant": "singleton_ring_snapshot_reference",
+      "production_fix": false,
+      "cache_events": {
+        "ring_updates": 32500,
+        "ring_wraps": 25,
+        "trim_calls": 3725,
+        "trim_tokens": 3725
+      },
+      "block_size": 2,
+      "verify_calls": 650,
+      "verify_first_position": 2048,
+      "verify_last_position": 3197,
+      "input_tokens": 2048,
+      "output_tokens": 1152,
+      "token_sha256": "3794cdb4acd394a3006f8f74c2b94f72af8a64ec0818c5bfee211d62ac364c84",
+      "generation_seconds": 22.94831108301878,
+      "peak_memory_bytes": 17866592528
+    },
+    {
+      "case": "boundary-ring-3",
+      "exact_tokens": true,
+      "first_difference": null,
+      "variant": "singleton_ring_snapshot_reference",
+      "production_fix": false,
+      "cache_events": {
+        "ring_updates": 37275,
+        "ring_wraps": 25,
+        "trim_calls": 5525,
+        "trim_tokens": 8500
+      },
+      "block_size": 3,
+      "verify_calls": 497,
+      "verify_first_position": 2048,
+      "verify_last_position": 3196,
+      "input_tokens": 2048,
+      "output_tokens": 1152,
+      "token_sha256": "3794cdb4acd394a3006f8f74c2b94f72af8a64ec0818c5bfee211d62ac364c84",
+      "generation_seconds": 31.017201708164066,
+      "peak_memory_bytes": 17866650916
+    }
+  ],
+  "cross_case": {
+    "left": "stock-mtp-3",
+    "right": "buffered-after-prefill",
+    "first_difference": 180,
+    "left_token": 24554,
+    "right_token": 150712
+  }
+}
